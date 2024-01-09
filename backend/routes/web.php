@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +14,5 @@ use App\Http\Controllers\RegistrationController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-})->name('index');
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('/home');
-
-Auth::routes();
-
-// Route::middleware(['auth'])->group(function(){
-    Route::get('/register', [RegistrationController::class, 'register'])->name('register');
-// });
-
-
+    return view('welcome');
+});
