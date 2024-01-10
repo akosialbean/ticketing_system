@@ -15,22 +15,24 @@
 @section('navigation')
     <nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand h1" href="#">WMC</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse float-end" id="collapsibleNavbar">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
+                @if(Auth::user())
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                    </ul>
+                @endif
             </div>
         </div>
     </nav>
@@ -39,5 +41,38 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <h1>Hello World!</h1>
+    <div class="container mt-3 p-5 w-100">
+        <div class="card">
+            <div class="card-header">Login</div>
+            <div class="card-body px-5">
+                <form action="#" method="POST">
+                    @csrf
+                    @method('POST')
+                    <div class="container px-5">
+                        <div class="row justify-content-center">
+                            <div class="col-2 px-5 py-3">
+                                <label for="username">Username</label>
+                            </div>
+                            <div class="col-5 px-5">
+                                <input type="text" id="username" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-2 px-5 py-3">
+                                <label for="username">Password</label>
+                            </div>
+                            <div class="col-5 px-5">
+                                <input type="password" id="password" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center py-3">
+                            <div class="col-2">
+                                <button class="btn btn-primary btn-sm ms-auto float-start">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
