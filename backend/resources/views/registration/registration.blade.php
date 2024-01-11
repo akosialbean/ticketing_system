@@ -9,7 +9,9 @@
     <div class="card">
         <div class="card-header"><strong>New User</strong></div>
         <div class="card-body">
-            <form>
+            <form action="/adduser" method="POST">
+                @csrf
+                @method('POST')
                 <div class="mb-3">
                     <label for="u_fname" class="form-label">First Name</label>
                     <input type="text" class="form-control" id="u_fname" aria-describedby="emailHelp" name="u_fname" required>
@@ -56,11 +58,6 @@
                 <div class="mb-3">
                     <label for="u_password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="u_password" name="u_password" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="u_password2" class="form-label">Re-type Password</label>
-                    <input type="password" class="form-control" id="u_password2" name="u_password2" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>

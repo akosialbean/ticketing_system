@@ -21,6 +21,7 @@ use App\Http\Controllers\CategoryController;
 Route::get('/', [LoginController::class, 'login'])->name('login');
 
 Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
+Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
 
 Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
 
