@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('u_fname');
             $table->string('u_lname');
             $table->string('u_mname');
-            $table->string('u_department')->references('d_id')->on('departments');
-            $table->string('u_role');
+            $table->integer('u_department')->references('d_id')->on('departments');
+            $table->integer('u_role');
             $table->string('u_email')->unique()->default('no email');
             $table->string('u_password');
+            $table->integer('u_status');
             $table->timestamps();
         });
     }
