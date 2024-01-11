@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use App\Http\Controllers\RegisterController;
 
 Route::get('/', [LoginController::class, 'login'])->name('login');
 
-Route::get('/register', [RegisterController::class, 'registration'])->name('registration');
+Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
+
+Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
 
 
