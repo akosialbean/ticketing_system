@@ -9,6 +9,18 @@
     <div class="card">
         <div class="card-header"><strong>New User</strong></div>
         <div class="card-body">
+            @if (session()->has('success'))
+                <div class="alert alert-success">
+                    <strong>{{ session()->get('success') }}</strong>
+                </div>
+            @endif
+
+            @if (session()->has('error'))
+                <div class="alert alert-danger">
+                    <strong>{{ session()->get('error') }}</strong>
+                </div>
+            @endif
+
             <form action="/adduser" method="POST">
                 @csrf
                 @method('POST')
@@ -48,16 +60,6 @@
                         <option value="1">Admin</option>
                         <option value="2">User</option>
                     </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="u_username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="u_username" name="u_username" required>
-                </div>
-        
-                <div class="mb-3">
-                    <label for="u_password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="u_password" name="u_password" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>

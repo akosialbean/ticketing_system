@@ -22,11 +22,11 @@ class RegisterController extends Controller
         $newuser = $request->validate([
             'u_fname' => ['required'],
             'u_lname' => ['required'],
-            'u_mname',
-            'u_username' => ['required'],
+            'u_mname' => ['nullable'],
+            'u_username',
             'u_department' => ['required'],
             'u_role' => ['required'],
-            'u_email',
+            'u_email' => ['nullable'],
             'u_password',
             'u_status',
             'created_at',
@@ -38,12 +38,27 @@ class RegisterController extends Controller
         $newuser['u_status'] = 1;
         $newuser['created_at'] = now();
 
+        $fname = strtolower($newuser['u_fname']);
+        $mname = strtolower($newuser['u_mname']);
+        $lname = strtolower($newuser['u_lname']);
+        $newuser['u_username'] = strtolower(lcfirst($fname[0]) . lcfirst($mname[0]) . $lname);
+
+        $checkemail = User::where('u_email', $newuser['u_email'])->first();
+        if($checkemail){
+            return redirect('/register')->with('error', 'Email already exists!');
+        }
+
+        $checkusername = User::where('u_username', 'LIKE', '%' . $newuser['u_username'] . '%')->count();
+        if($checkusername > 1){
+            $newuser['u_username'] = ($newuser['u_username'] . $checkusername);
+        }
+
         $adduser = User::insert($newuser);
 
         if($adduser){
-            return redirect('/register')->with('message', 'New user created!');
+            return redirect('/register')->with('success', 'New user created!');
         }else{
-            return redirect('/register')->with('message', 'Failed to create!');
+            return redirect('/register')->with('error', 'Failed to create!');
         }
     }
 }
