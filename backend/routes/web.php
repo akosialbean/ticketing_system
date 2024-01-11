@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SeverityController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,4 @@ Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->na
 
 Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
 
-
+Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
