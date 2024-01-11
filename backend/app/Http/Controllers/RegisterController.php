@@ -17,8 +17,6 @@ class RegisterController extends Controller
 
     public function adduser(Request $request){
 
-        // dd($request);
-
         $newuser = $request->validate([
             'u_fname' => ['required'],
             'u_lname' => ['required'],
@@ -31,8 +29,6 @@ class RegisterController extends Controller
             'u_status',
             'created_at',
         ]);
-
-        // dd($newuser);
 
         $newuser['u_password'] = Hash::make('abcd_123');
         $newuser['u_status'] = 1;
