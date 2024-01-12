@@ -9,22 +9,29 @@
         <div class="card">
             <div class="card-header"><strong>New Category</strong></div>
             <div class="card-body">
-                <form>
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>{{ session()->get('success') }}</strong>
+                    </div>
+                @endif
+
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        <strong>{{ session()->get('error') }}</strong>
+                    </div>
+                @endif
+
+                <form action="/addcategory" method="POST">
+                    @csrf
+                    @method('POST')
                     <div class="mb-3">
-                        <label for="c_title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="d_description" name="d_description" required>
+                        <label for="c_code" class="form-label">Category Code</label>
+                        <input type="text" class="form-control" id="c_code" name="c_code" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="c_description" class="form-label">Description</label>
-                        <input type="text" class="form-control" id="d_description" name="d_description" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="c_severity" class="form-label">Severity</label>
-                        <select type="text" class="form-control" id="d_description" name="d_description" required>
-                            <option value="">--</option>
-                        </select>
+                        <input type="text" class="form-control" id="c_description" name="c_description" required>
                     </div>
 
                     <hr>

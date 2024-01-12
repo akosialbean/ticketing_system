@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Category extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'd_code',
-        'd_description',
-        'd_createdby',
-        'd_updatedby',
-        'd_status',
+        'c_code',
+        'c_description',
+        'c_createdby',
+        'c_updatedby',
+        'c_status',
     ];
 }

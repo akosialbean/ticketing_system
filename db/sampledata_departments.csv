@@ -1,0 +1,35 @@
+d_id,d_code,d_description,d_createdby,d_updatedby,d_status,created_at,updated_at
+34,LINEN,Linen,1,1,1,"2024-01-12 02:11:48",NULL
+33,"CARDIO / PULMO","Cardio / Pulmo",1,1,1,"2024-01-12 02:11:39",NULL
+32,PURCHASING,Purchasing,1,1,1,"2024-01-12 02:11:23",NULL
+31,CASHIER,Cashier,1,1,1,"2024-01-12 02:11:13",NULL
+30,"MEDICAL RECORDS","Medical Records",1,1,1,"2024-01-12 02:11:03",NULL
+29,OPD,Outpatient,1,1,1,"2024-01-12 02:10:49",NULL
+28,"CENTRAL REGISTRATION","Central Registration",1,1,1,"2024-01-12 02:10:06",NULL
+27,DPO,"Data Privacy Officer",1,1,1,"2024-01-12 02:09:45",NULL
+26,"MEDICAL AFFAIRS","Medical Affairs",1,1,1,"2024-01-12 02:08:50",NULL
+25,ADMIN,Administration,1,1,1,"2024-01-12 02:08:29",NULL
+24,INFO,Information,1,1,1,"2024-01-12 02:03:38",NULL
+23,HRD,"Human Resource",1,1,1,"2024-01-12 02:05:09",NULL
+22,MARKETING,Marketing,1,1,1,"2024-01-12 02:04:52",NULL
+21,QM,"Quality Management",1,1,1,"2024-01-12 02:04:39",NULL
+20,"CREDIT AND COLLECTION","Credit And Collection",1,1,1,"2024-01-12 02:04:14",NULL
+19,WAREHOUSE,Warehouse,1,1,1,"2024-01-12 02:03:38",NULL
+18,PHARMACY,Pharmacy,1,1,1,"2024-01-12 02:03:28",NULL
+17,DIETARY,Dietary,1,1,1,"2024-01-12 02:03:00",NULL
+16,NICU,"Neo-natal Intensive Care Unit",1,1,1,"2024-01-12 02:02:38",NULL
+15,ICU,"Intensive Care Unit",1,1,1,"2024-01-12 02:02:09",NULL
+14,"5TH FLR GNU","5th Flr Gnu",1,1,1,"2024-01-12 02:01:50",NULL
+13,"4TH FLR GNU","4th Flr GNU",1,1,1,"2024-01-12 02:00:34",NULL
+12,LABORATORY,Laboratory,1,1,1,"2024-01-12 02:00:03",NULL
+11,IMAGING,"CT Scan / X Ray / Obs / Radiology",1,1,1,"2024-01-12 01:59:12",NULL
+10,DIALYSIS,Dialysis,1,1,1,"2024-01-12 01:57:58",NULL
+9,REHAB,"Physical Medicine And Rehab",1,1,1,"2024-01-12 01:57:43",NULL
+8,NSD,"Nurse Services",1,1,1,"2024-01-12 01:53:17",NULL
+7,FINANCE,Finance,1,1,1,"2024-01-12 01:49:10",NULL
+6,ER,Emergency,1,1,1,"2024-01-12 01:46:01",NULL
+5,SSD,"Support Services",1,1,1,"2024-01-12 01:45:48",NULL
+4,CED,"Customer Experience",1,1,1,"2024-01-12 01:45:19",NULL
+3,ACCOUNTING,Accounting,1,1,1,"2024-01-12 01:44:54",NULL
+2,BILLING,Billing,1,1,1,"2024-01-12 01:44:02",NULL
+1,ICT,"Information and Communications Technology",1,1,1,"2024-01-12 01:43:35",NULL

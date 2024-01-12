@@ -30,3 +30,4 @@ Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->n
 Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
 
 Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
+Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
