@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SeverityController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,6 @@ Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('ne
 
 Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
 Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
+
+Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
+

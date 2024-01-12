@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
+use App\Models\Department;
 
 class RegisterController extends Controller
 {
     public function newuser(){
-        return view('registration.registration');
+        $getDepartments = Department::orderby('d_description', 'asc')->get();
+        return view('registration.registration', ['departments' => $getDepartments]);
     }
 
     public function adduser(Request $request){

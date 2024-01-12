@@ -48,8 +48,9 @@
                     <label for="u_department" class="form-label">Department</label>
                     <select class="form-select" name="u_department" id="u_department" required>
                         <option value="">--</option>
-                        <option value="1">Credit and Collections Deparartment</option>
-                        <option value="2">User</option>
+                        @foreach($departments as $department)
+                            <option value="{{$department->d_id}}">{{$department->d_description}}</option>
+                        @endforeach
                     </select>
                 </div>
 

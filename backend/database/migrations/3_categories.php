@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('c_id');
             $table->string('c_code');
             $table->string('c_description');
-            $table->integer('c_createdby')->default(1);
-            $table->integer('c_updatedby')->default(1);
+            $table->integer('c_createdby')->references('u_id')->on('users')->default(1);
+            $table->integer('c_updatedby')->references('u_id')->on('users')->default(1);
             $table->integer('c_status')->default(1);
             $table->timestamps();
         });
