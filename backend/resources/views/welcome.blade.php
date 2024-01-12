@@ -45,29 +45,42 @@
         <div class="card">
             <div class="card-header">Login</div>
             <div class="card-body px-5">
-                <form action="#" method="POST">
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>{{ session()->get('success') }}</strong>
+                    </div>
+                @endif
+
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        <strong>{{ session()->get('error') }}</strong>
+                    </div>
+                @endif
+
+                {{-- {{Auth::user->u_id}} --}}
+
+                <form action="/log" method="POST">
                     @csrf
-                    @method('POST')
                     <div class="container px-5">
                         <div class="row justify-content-center">
                             <div class="col-2 px-5 py-3">
-                                <label for="username">Username</label>
+                                <label for="u_username">Username</label>
                             </div>
                             <div class="col-5 px-5">
-                                <input type="text" id="username" class="form-control" required>
+                                <input type="text" id="u_username" class="form-control" name="u_username" required>
                             </div>
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-2 px-5 py-3">
-                                <label for="username">Password</label>
+                                <label for="u_password">Password</label>
                             </div>
                             <div class="col-5 px-5">
-                                <input type="password" id="password" class="form-control" required>
+                                <input type="password" id="u_password" name="password" class="form-control" required>
                             </div>
                         </div>
                         <div class="row justify-content-center py-3">
                             <div class="col-2">
-                                <button class="btn btn-primary btn-sm ms-auto float-start">Login</button>
+                                <button type="submit" class="btn btn-primary btn-sm ms-auto float-start">Login</button>
                             </div>
                         </div>
                     </div>

@@ -25,12 +25,12 @@ class RegisterController extends Controller
             'u_department' => ['required'],
             'u_role' => ['required'],
             'u_email' => ['nullable'],
-            'u_password',
+            'password',
             'u_status',
             'created_at',
         ]);
 
-        $newuser['u_password'] = Hash::make('abcd_123');
+        $newuser['password'] = Hash::make('abcd_123');
         $newuser['u_status'] = 1;
         $newuser['created_at'] = now();
 

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('u_role');
             $table->string('u_email')->unique()->default('no email');
             $table->string('u_username');
-            $table->string('u_password');
+            $table->string('password');
             $table->integer('u_status');
             $table->timestamps();
         });

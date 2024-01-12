@@ -19,11 +19,13 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::get('/', [LoginController::class, 'login'])->name('login');
+Route::post('/log', [LoginController::class, 'log'])->name('log');
 
 Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
 Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
 
 Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
+Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');
 
 Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
 
