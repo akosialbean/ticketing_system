@@ -57,7 +57,29 @@
                         <div class="mb-3">
                             <p>Requested by: {{$ticket->u_fname}} {{$ticket->u_lname}}</p>
                         </div>
-                            
+
+                        <div class="mb-3">
+                            @if(($ticket->t_status == 2))
+                                <form action="/acknowledge" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                    <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
+                                </form>
+                            @endif
+                        </div>
+
+                        <hr>
+
+                        @if($ticket->t_status == 3)
+                            <div class="mb-3">
+                                <label for="t_resolution" class="form-label">Resolution</label>
+                                <textarea name="t_resolution" id="t_resolution" class="form-control"></textarea>
+                                <div class="mt-3">
+                                    <button class="btn btn-sm btn-success">Resolve</button>
+                                </div>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

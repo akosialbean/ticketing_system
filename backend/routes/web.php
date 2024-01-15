@@ -38,3 +38,4 @@ Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
 Route::get('/alltickets', [TicketController::class, 'alltickets'])->name('alltickets');
 Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
 Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
+Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');

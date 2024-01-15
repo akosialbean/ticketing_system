@@ -80,4 +80,27 @@ class TicketController extends Controller
 
         return view('tickets.ticket', ['data' => $getTicket]);
     }
+
+    public function acknowledge(Request $request){
+        $ticket = $request->validate([
+            't_id' => ['required'],
+            't_updatedby',
+            't_status',
+            'updated_at'
+        ]);
+
+        $update = Ticket::where('t_id', $ticket['t_id'])
+        ->update([
+            'updated_at' => now(),
+            't_updatedby' => 1,
+            't_status' => 3,
+            't_acknowledgedby' => 1,
+        ]);
+
+        if($update){
+            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' acknowledged!');
+        }else{
+            return redirect('/alltickets')->with('error', 'Failed to open acknowledge ' . $ticket['t_id'] . '!');
+        }
+    }
 }
