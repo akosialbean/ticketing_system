@@ -35,4 +35,5 @@ Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcatego
 
 Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
 Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
-
+Route::get('/alltickets', [TicketController::class, 'alltickets'])->name('alltickets');
+Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
