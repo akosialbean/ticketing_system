@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Category;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -34,9 +36,9 @@ class TicketController extends Controller
         $save = Ticket::insert($newticket);
 
         if($save){
-            return redirect('/newticket')->with('success', 'New ticket created!');
+            return redirect('/alltickets')->with('success', 'New ticket created!');
         }else{
-            return redirect('/newticket')->with('error', 'Failed to create!');
+            return redirect('/alltickets')->with('error', 'Failed to create!');
         }
     }
 
@@ -59,12 +61,23 @@ class TicketController extends Controller
             'updated_at' => now(),
             't_updatedby' => 1,
             't_status' => 2,
+            't_openedby' => 1,
         ]);
 
         if($update){
-            return redirect('/alltickets')->with('success', 'Ticket opened!');
+            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' opened!');
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to open ticket!');
+            return redirect('/alltickets')->with('error', 'Failed to open ticket ' . $ticket['t_id'] . '!');
         }
+    }
+
+    public function ticket($ticket){
+        $getTicket = DB::table('tickets')
+            ->rightJoin('categories', 'categories.c_id', 'tickets.t_category')
+            ->rightJoin('users', 'users.u_id', 'tickets.t_createdby')
+            ->where('tickets.t_id', $ticket)
+            ->get();
+
+        return view('tickets.ticket', ['data' => $getTicket]);
     }
 }
