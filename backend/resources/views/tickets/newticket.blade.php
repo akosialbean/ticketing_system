@@ -21,7 +21,7 @@
                 </div>
             @endif
 
-            <form action="/adduser" method="POST">
+            <form action="/addticket" method="POST">
                 @csrf
                 @method('POST')
                 <div class="mb-3">
@@ -35,8 +35,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="t_todepartment" class="form-label">Category</label>
-                    <select class="form-select" name="t_todepartment" id="u_department" required>
+                    <label for="t_category" class="form-label">Category</label>
+                    <select class="form-select" name="t_category" id="t_category" required>
                         <option value="">--</option>
                         @foreach($categories as $category)
                             <option value="{{$category->c_id}}">{{$category->c_description}}</option>
@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="u_email" class="form-label">To</i></label>
-                    <select class="form-select" name="u_department" id="u_department" required>
+                    <label for="t_todepartment" class="form-label">To</i></label>
+                    <select class="form-select" name="t_todepartment" id="t_todepartment" required>
                         <option value="">--</option>
                         @foreach($departments as $department)
                             <option value="{{$department->d_id}}">{{$department->d_code}} - {{$department->d_description}}</option>

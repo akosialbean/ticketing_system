@@ -34,4 +34,5 @@ Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('ne
 Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
 
 Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
+Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
 
