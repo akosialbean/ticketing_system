@@ -48,8 +48,8 @@ class TicketController extends Controller
         ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
         ->join('users', 'tickets.t_createdby', '=', 'users.u_id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->orderby('t_id', 'desc')->get();
-        return view('tickets.alltickets', ['alltickets' => $alltickets]);
+        ->orderby('t_id', 'desc')->paginate(10);
+        return view('tickets.alltickets', compact('alltickets'));
     }
 
     public function openticket(Request $request){

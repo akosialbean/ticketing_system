@@ -32,4 +32,9 @@ class SeverityController extends Controller
             return redirect('/newseverity')->with('error', 'Failed to create!');
         }
     }
+
+    public function severities(){
+        $get = Severity::orderby('s_id', 'desc')->get();
+        return view('severities.severities', compact('get'));
+    }
 }

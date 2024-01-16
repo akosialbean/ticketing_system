@@ -35,7 +35,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="/departments" class="btn btn-sm btn-danger my-3">Back</a>
+                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </div>
                 </form>
             </div>

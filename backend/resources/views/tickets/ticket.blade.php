@@ -69,7 +69,7 @@
                             @endif
 
                             @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
-                                <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
+                                <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
                             @endif
                         </div>
 
@@ -94,6 +94,8 @@
                             <div class="mb-3">
                                 <label for="t_title" class="form-label h2">Resolution</label>
                                 <p>{{$ticket->t_resolution}}</p>
+                                <p><strong>Resolved by: </strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</p>
+                                <p><strong>Date Resolved: </strong>{{$ticket->t_date}}</p>
                             </div>
                         @endif
 
@@ -108,7 +110,15 @@
                             </form>
                         @endif
 
-                        <a href="/alltickets" class="btn btn-sm btn-danger">Cancel</a>
+                        @if(($ticket->t_status == 6))
+                            <div class="mb-3">
+                                <label for="t_cancellationreason" class="form-label h6"><strong>Cancellation Reason</strong></label>
+                                <p>{{$ticket->t_cancelreason}}</p>
+                                <p><strong>Cancelled by: </strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</p>
+                            </div>
+                        @endif
+
+                        <a href="/alltickets" class="btn btn-sm btn-danger">Back</a>
 
                     @endforeach
                 </div>

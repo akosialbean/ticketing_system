@@ -37,7 +37,7 @@
                                 <a class="nav-link" href="/departments">Departments</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Severities</a>
+                                <a class="nav-link" href="/severities">Severities</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/users">Users</a>

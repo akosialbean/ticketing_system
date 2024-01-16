@@ -5,9 +5,9 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <div class="container my-3">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 9vh;">
         <div class="card">
-            <div class="card-header">Departments</div>
+            <div class="card-header"><strong>Severities</strong></div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -21,30 +21,28 @@
                     </div>
                 @endif
 
-                <a href="/newdepartment" class="btn btn-sm btn-primary my-3">Add Department</a>
-                
-                <table class="table table-sm table-hover table-striped table-bordered">
+                <table class="table table-sm table-hover table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Code</th>
-                            <th>Department</th>
+                            <th>Severity</th>
+                            <th>Description</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach($departments as $department)
-                        <tr>
-                            <td>{{$department->d_id}}</td>
-                            <td>{{$department->d_code}}</td>
-                            <td>{{$department->d_description}}</td>
-                            <td>{{$department->d_status}}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary">edit</button>
-                            </td>
-                        </tr>
+                        @foreach($get as $severity)
+                            <tr>
+                                <td>{{$severity->s_id}}</td>
+                                <td>{{$severity->s_title}}</td>
+                                <td>{{$severity->s_description}}</td>
+                                <td>{{$severity->s_status}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">edit</button>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

@@ -33,6 +33,7 @@ Route::get('/departments', [DepartmentController::class, 'departments'])->name('
 
 Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
 Route::post('/addseverity', [SeverityController::class, 'add'])->name('addseverity');
+Route::get('/severities', [SeverityController::class, 'severities'])->name('severities');
 
 Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
 Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
