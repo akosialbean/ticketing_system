@@ -100,7 +100,66 @@ class TicketController extends Controller
         if($update){
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' acknowledged!');
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to open acknowledge ' . $ticket['t_id'] . '!');
+            return redirect('/alltickets')->with('error', 'Failed to acknowledge ' . $ticket['t_id'] . '!');
+        }
+    }
+
+    public function resolve(Request $request){
+        // dd($request);
+        $ticket = $request->validate([
+            't_id' => ['required'],
+            't_resolution' => ['required'],
+            't_updatedby',
+            'updated_at',
+            't_status',
+        ]);
+
+        $ticket['t_updatedby'] = 1;
+        $ticket['updated_at'] = now();
+        $ticket['t_status'] = 4;
+
+        $resolve = Ticket::where('t_id', $ticket['t_id'])
+        ->update([
+            'updated_at' => now(),
+            't_updatedby' => 1,
+            't_status' => 4,
+            't_resolvedby' => 1,
+            't_resolution' => $ticket['t_resolution'],
+        ]);
+
+        if($resolve){
+            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' resolved!');
+        }else{
+            return redirect('/alltickets')->with('error', 'Failed to resolve ' . $ticket['t_id'] . '!');
+        }
+    }
+
+    public function close(Request $request){
+        $ticket = $request->validate([
+            't_id' => ['required'],
+            't_updatedby',
+            'updated_at',
+            't_status',
+            't_closedby',
+        ]);
+
+        $ticket['t_updatedby'] = 1;
+        $ticket['t_closedby'] = 1;
+        $ticket['updated_at'] = now();
+        $ticket['t_status'] = 5;
+
+        $resolve = Ticket::where('t_id', $ticket['t_id'])
+        ->update([
+            'updated_at' => now(),
+            't_updatedby' => 1,
+            't_status' => 5,
+            't_closedby' => 1,
+        ]);
+
+        if($resolve){
+            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' closed!');
+        }else{
+            return redirect('/alltickets')->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
         }
     }
 }

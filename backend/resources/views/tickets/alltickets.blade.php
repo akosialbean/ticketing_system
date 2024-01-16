@@ -47,7 +47,7 @@
                                 <button type="submit" class="btn btn-sm btn-info">view</button>
                             </form>
                         @else
-                            <a href="#" class="btn btn-sm btn-primary">
+                            <a href="/ticket/{{$tickets->t_id}}" class="btn btn-sm btn-primary">
                                 view
                             </a>
                         @endif

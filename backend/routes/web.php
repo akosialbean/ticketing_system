@@ -39,3 +39,5 @@ Route::get('/alltickets', [TicketController::class, 'alltickets'])->name('alltic
 Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
 Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
 Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');
+Route::patch('/resolve', [TicketController::class, 'resolve'])->name('resolve');
+Route::patch('/close', [TicketController::class, 'close'])->name('close');

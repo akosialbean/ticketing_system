@@ -73,13 +73,37 @@
 
                         @if($ticket->t_status == 3)
                             <div class="mb-3">
-                                <label for="t_resolution" class="form-label">Resolution</label>
-                                <textarea name="t_resolution" id="t_resolution" class="form-control"></textarea>
-                                <div class="mt-3">
-                                    <button class="btn btn-sm btn-success">Resolve</button>
-                                </div>
+                                <form action="/resolve" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                    <label for="t_resolution" class="form-label">Resolution</label>
+                                    <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
+                                    <div class="mt-3">
+                                        <button type="submit" class="btn btn-sm btn-success">Resolve</button>
+                                    </div>
+                                </form>
                             </div>
                         @endif
+
+                        @if(($ticket->t_status == 4 || $ticket->t_status == 5))
+                            <div class="mb-3">
+                                <label for="t_title" class="form-label h2">Resolution</label>
+                                <p>{{$ticket->t_resolution}}</p>
+                            </div>
+                        @endif
+
+                        @if(($ticket->t_status == 4))
+                            <form action="/close" method="post">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                <div class="mt-3">
+                                    <button class="btn btn-sm btn-warning">Close Ticket</button>
+                                </div>
+                            </form>
+                        @endif
+
                     @endforeach
                 </div>
             </div>

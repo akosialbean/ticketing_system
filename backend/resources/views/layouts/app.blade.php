@@ -25,10 +25,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse float-end" id="collapsibleNavbar">
-                    @if(Auth::user())
+                    {{-- @if(Auth::user()) --}}
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="/alltickets">Tickets</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Link</a>
@@ -37,7 +37,7 @@
                                 <a class="nav-link" href="#">Link</a>
                             </li>
                         </ul>
-                    @endif
+                    {{-- @endif --}}
                 </div>
             </div>
         </nav>
