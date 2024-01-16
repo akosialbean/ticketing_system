@@ -41,4 +41,9 @@ class CategoryController extends Controller
             return redirect('/newcategory')->with('error', 'Failed to add category!');
         }
     }
+
+    public function categories(){
+        $get = Category::orderby('c_id', 'desc')->get();
+        return view('categories.categories', ['categories' => $get]);
+    }
 }

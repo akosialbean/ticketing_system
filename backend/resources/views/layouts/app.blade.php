@@ -31,10 +31,16 @@
                                 <a class="nav-link" href="/alltickets">Tickets</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="/categories">Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="/departments">Departments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Severities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users">Users</a>
                             </li>
                         </ul>
                     {{-- @endif --}}

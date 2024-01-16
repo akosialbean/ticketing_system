@@ -40,4 +40,9 @@ class DepartmentController extends Controller
             return redirect('/newdepartment')->with('error', 'Failed to add department!');
         }
     }
+
+    public function departments(){
+        $get = Department::orderby('d_id', 'desc')->get();
+        return view('departments.departments', ['departments' => $get]);
+    }
 }
