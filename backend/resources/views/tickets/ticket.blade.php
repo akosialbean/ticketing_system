@@ -59,13 +59,17 @@
                         </div>
 
                         <div class="mb-3">
-                            @if(($ticket->t_status == 2))
+                            @if($ticket->t_status == 2)
                                 <form action="/acknowledge" method="POST">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
                                     <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
                                 </form>
+                            @endif
+
+                            @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
+                                <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
                             @endif
                         </div>
 
@@ -104,9 +108,41 @@
                             </form>
                         @endif
 
+                        <a href="/alltickets" class="btn btn-sm btn-danger">Cancel</a>
+
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- The Modal -->
+    @foreach($data as $ticket)
+        <div class="modal" id="cancellationReason">
+            <div class="modal-sm modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cancel Ticket #{{$ticket->t_id}}?</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+            
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="/cancel" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="t_id" value="{{$ticket->t_id}}" class="form-control">
+                            <label for="t_cancelreason" class="form-label h6">Reason: </label>
+                            <textarea name="t_cancelreason" id="t_cancelreason" class="form-control" required></textarea>
+                            <button type="submit" class="btn btn-sm btn-danger my-3 float-end">Cancel Ticket</button>
+                        </form>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

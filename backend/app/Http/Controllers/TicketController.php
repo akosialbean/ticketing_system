@@ -5,6 +5,7 @@ use App\Models\Department;
 use App\Models\Category;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\Severity;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -43,7 +44,11 @@ class TicketController extends Controller
     }
 
     public function alltickets(){
-        $alltickets = Ticket::orderby('t_id', 'desc')->get();
+        $alltickets = DB::table('tickets')
+        ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
+        ->join('users', 'tickets.t_createdby', '=', 'users.u_id')
+        ->join('departments', 'users.u_department', '=', 'departments.d_id')
+        ->orderby('t_id', 'desc')->get();
         return view('tickets.alltickets', ['alltickets' => $alltickets]);
     }
 
@@ -160,6 +165,32 @@ class TicketController extends Controller
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' closed!');
         }else{
             return redirect('/alltickets')->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
+        }
+    }
+
+    public function cancel(Request $request){
+        $ticket = $request->validate([
+            't_cancelreason' => ['required'],
+            't_id' => ['required'],
+            't_updatedby',
+            't_status',
+            't_cancelledby',
+            'updated_at'
+        ]);
+
+        $cancel = Ticket::where('t_id', $ticket['t_id'])
+        ->update([
+            't_cancelreason' => $ticket['t_cancelreason'],
+            't_updatedby' => 1,
+            't_status' => 6,
+            't_cancelledby' => 1,
+            'updated_at' => now(),
+        ]);
+
+        if($cancel){
+            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' cancelled!');
+        }else{
+            return redirect('/alltickets')->with('error', 'Failed to cancel ' . $ticket['t_id'] . '!');
         }
     }
 }

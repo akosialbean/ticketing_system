@@ -54,7 +54,8 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="/alltickets" class="btn btn-sm btn-danger">Cancel</a>
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
             </form>
         </div>
     </div>
