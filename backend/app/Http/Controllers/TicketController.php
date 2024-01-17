@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Severity;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class TicketController extends Controller
         ]);
 
 
-        $newticket['t_createdby'] = 1;
+        $newticket['t_createdby'] = Auth::user()->id;
         $newticket['t_status'] = 1;
 
         $save = Ticket::insert($newticket);
@@ -46,7 +47,7 @@ class TicketController extends Controller
     public function alltickets(){
         $alltickets = DB::table('tickets')
         ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
-        ->join('users', 'tickets.t_createdby', '=', 'users.u_id')
+        ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
         ->orderby('t_id', 'desc')->paginate(10);
 

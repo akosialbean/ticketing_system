@@ -39,7 +39,7 @@
                     <tbody>
                         @foreach($users as $user)
                         <tr>
-                            <td>{{$user->u_id}}</td>
+                            <td>{{$user->id}}</td>
                             <td>{{$user->u_lname}}</td>
                             <td>{{$user->u_fname}}</td>
                             <td>{{$user->u_mname}}</td>

@@ -57,8 +57,6 @@
                     </div>
                 @endif
 
-                {{-- {{Auth::user->u_id}} --}}
-
                 <form action="/log" method="POST">
                     @csrf
                     <div class="container px-5">

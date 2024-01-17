@@ -11,7 +11,7 @@ class UserController extends Controller
     public function users(){
         $get = DB::table('users')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->orderby('users.u_id', 'desc')->get();
+        ->orderby('users.id', 'desc')->get();
         return view('users.users', ['users' => $get]);
     }
 }

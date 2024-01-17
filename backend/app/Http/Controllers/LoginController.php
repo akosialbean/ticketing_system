@@ -15,18 +15,28 @@ class LoginController extends Controller
         return view('welcome');
     }
 
-    public function log(Request $request): RedirectResponse{
-        $userattempt = $request->validate([
-            'username' => ['required'],
+    public function log(Request $request)
+    {
+        $credentials = $request->validate([
+            'u_username' => ['required'],
             'password' => ['required']
         ]);
 
-        if(auth()->attempt($userattempt)){
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            Auth::login($user, true);
             $request->session()->regenerate();
-            return true;
-        }else{
-            $request->session()->invalidate();
-            return false;
+            return redirect()->intended('/alltickets')->with('success', 'Login Successful!');
+        } else {
+            return redirect()->intended('/')->with('error', 'Failed to login!');
         }
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerate();
+
+        return redirect('/')->with('success', 'Logged out');
     }
 }

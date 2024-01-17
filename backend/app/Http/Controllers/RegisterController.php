@@ -39,7 +39,7 @@ class RegisterController extends Controller
         $fname = strtolower($newuser['u_fname']);
         $mname = strtolower($newuser['u_mname']);
         $lname = strtolower($newuser['u_lname']);
-        $newuser['u_username'] = strtolower(lcfirst($fname[0]) . lcfirst($mname[0]) . $lname);
+        $newuser['u_username'] = strtolower(lcfirst($fname[0]) . $lname);
 
         $checkemail = User::where('u_email', $newuser['u_email'])->first();
         if($checkemail){

@@ -26,23 +26,33 @@
                 </button>
                 <div class="collapse navbar-collapse float-end" id="collapsibleNavbar">
                     {{-- @if(Auth::user()) --}}
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/alltickets">Tickets</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/categories">Categories</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/departments">Departments</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/severities">Severities</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users">Users</a>
-                            </li>
-                        </ul>
+                        @if(Auth::user())
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/alltickets">Tickets</a>
+                                </li>
+                                @if(Auth::user()->u_role == 1)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/categories">Categories</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/departments">Departments</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/severities">Severities</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/users">Users</a>
+                                    </li>
+                                @endif
+                                <li class="nav-item">
+                                    <form action="/logout" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-secondary">{{Auth::user()->u_fname}}</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        @endif
                     {{-- @endif --}}
                 </div>
             </div>
