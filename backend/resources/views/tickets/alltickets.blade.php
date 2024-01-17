@@ -5,7 +5,7 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <div class="container mt-3">
+    <div class="container mt-5 pt-5">
         <div class="card">
             <div class="card-header">Tickets</div>
             <div class="card-body">

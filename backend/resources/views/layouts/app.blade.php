@@ -9,16 +9,13 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <header class="fixed-top mb-5">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <div class="container-fluid">
                 <span class="navbar-text small p-0 m-0">Ticketing System</span>
             </div>
         </nav>
-    </header>
-
-    <nav>
-        <nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand h1" href="#">WMC</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -57,7 +54,7 @@
                 </div>
             </div>
         </nav>
-    </nav>
+    </header>
 
     <main>
         @yield('content')
