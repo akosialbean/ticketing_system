@@ -39,15 +39,18 @@ Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('ne
 Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
 Route::get('/categories', [CategoryController::class, 'categories'])->name('categories');
 
-Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
-Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
-Route::get('/alltickets', [TicketController::class, 'alltickets'])->name('alltickets');
-Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
-Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
-Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');
-Route::patch('/resolve', [TicketController::class, 'resolve'])->name('resolve');
-Route::patch('/close', [TicketController::class, 'close'])->name('close');
-Route::patch('/cancel', [TicketController::class, 'cancel'])->name('cancel');
-Route::get('/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
+Route::middleware(['auth'])->group(function() {
+    Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
+    Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
+    Route::get('/alltickets', [TicketController::class, 'alltickets'])->name('alltickets');
+    Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
+    Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
+    Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');
+    Route::patch('/resolve', [TicketController::class, 'resolve'])->name('resolve');
+    Route::patch('/close', [TicketController::class, 'close'])->name('close');
+    Route::patch('/cancel', [TicketController::class, 'cancel'])->name('cancel');
+    Route::get('/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
+});
+
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
