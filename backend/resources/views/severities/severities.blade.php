@@ -21,6 +21,8 @@
                     </div>
                 @endif
 
+                <a href="/newseverity" class="btn btn-sm btn-primary my-3">Add Severity</a>
+
                 <table class="table table-sm table-hover table-striped">
                     <thead>
                         <tr>

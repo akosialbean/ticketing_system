@@ -58,7 +58,7 @@ class TicketController extends Controller
             't_id' => ['required'],
             't_updatedby',
             't_status',
-            'updated_at'
+            'updated_at',
         ]);
 
         $update = Ticket::where('t_id', $ticket['t_id'])
@@ -67,6 +67,7 @@ class TicketController extends Controller
             't_updatedby' => 1,
             't_status' => 2,
             't_openedby' => 1,
+            't_dateopened' => now(),
         ]);
 
         if($update){
@@ -100,6 +101,7 @@ class TicketController extends Controller
             't_updatedby' => 1,
             't_status' => 3,
             't_acknowledgedby' => 1,
+            't_acknowledgeddate' => now(),
         ]);
 
         if($update){
@@ -130,6 +132,7 @@ class TicketController extends Controller
             't_status' => 4,
             't_resolvedby' => 1,
             't_resolution' => $ticket['t_resolution'],
+            't_resolveddate' => now(),
         ]);
 
         if($resolve){
@@ -159,6 +162,7 @@ class TicketController extends Controller
             't_updatedby' => 1,
             't_status' => 5,
             't_closedby' => 1,
+            't_closeddate' => now(),
         ]);
 
         if($resolve){
@@ -185,6 +189,7 @@ class TicketController extends Controller
             't_status' => 6,
             't_cancelledby' => 1,
             'updated_at' => now(),
+            't_cancelleddate' => now(),
         ]);
 
         if($cancel){

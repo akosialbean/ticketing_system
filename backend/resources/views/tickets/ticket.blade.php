@@ -25,20 +25,7 @@
                     @foreach($data as $ticket)
                         <div class="mb-3">
                             <label for="t_title" class="form-label h1">
-                                Ticket #{{$ticket->t_id}} -
-                                @if($ticket->t_status == 1)
-                                    New
-                                @elseif($ticket->t_status == 2)
-                                    Open
-                                @elseif($ticket->t_status == 3)
-                                    Acknowledged
-                                @elseif($ticket->t_status == 4)
-                                    Resolved
-                                @elseif($ticket->t_status == 5)
-                                    Closed
-                                @elseif($ticket->t_status == 6)
-                                    Cancelled
-                                @endif
+                                #{{$ticket->t_id}}
                             </label>
                         </div>
 
@@ -95,7 +82,7 @@
                                 <label for="t_title" class="form-label h2">Resolution</label>
                                 <p>{{$ticket->t_resolution}}</p>
                                 <p><strong>Resolved by: </strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</p>
-                                <p><strong>Date Resolved: </strong>{{$ticket->t_date}}</p>
+                                <p><strong>Date Resolved: </strong>{{$ticket->updated_at}}</p>
                             </div>
                         @endif
 
