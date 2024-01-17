@@ -29,29 +29,39 @@ class TicketController extends Controller
             't_todepartment' => ['required'],
             't_createdby',
             't_status',
+            'created_at'
         ]);
 
 
         $newticket['t_createdby'] = Auth::user()->id;
         $newticket['t_status'] = 1;
+        $newticket['created_at'] = now();
 
         $save = Ticket::insert($newticket);
 
         if($save){
-            return redirect('/alltickets')->with('success', 'New ticket created!');
+            if(Auth::user()->u_role == 1){
+                return redirect('/alltickets')->with('success', 'New ticket created!');
+            }else{
+                return redirect('/mytickets')->with('success', 'New ticket created!');
+            }
         }else{
             return redirect('/alltickets')->with('error', 'Failed to create!');
         }
     }
 
     public function alltickets(){
-        $alltickets = DB::table('tickets')
-        ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
-        ->join('users', 'tickets.t_createdby', '=', 'users.id')
-        ->join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->orderby('t_id', 'desc')->paginate(10);
+        if(Auth::user()->u_role == 2){
+            return redirect()->intended('/mytickets');
+        }else{
+            $alltickets = DB::table('tickets')
+            ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
+            ->join('users', 'tickets.t_createdby', '=', 'users.id')
+            ->join('departments', 'users.u_department', '=', 'departments.d_id')
+            ->orderby('t_id', 'desc')->paginate(10);
 
-        return view('tickets.alltickets', compact('alltickets'));
+            return view('tickets.alltickets', compact('alltickets'));
+        }
     }
 
     public function openticket(Request $request){
@@ -63,12 +73,14 @@ class TicketController extends Controller
             'updated_at',
         ]);
 
+        $user = Auth::user()->id;
+
         $update = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             'updated_at' => now(),
-            't_updatedby' => 1,
+            't_updatedby' => $user,
             't_status' => 2,
-            't_openedby' => 1,
+            't_openedby' => $user,
             't_dateopened' => now(),
         ]);
 
@@ -82,35 +94,41 @@ class TicketController extends Controller
     public function ticket($ticket){
         $getTicket = DB::table('tickets')
             ->rightJoin('categories', 'categories.c_id', 'tickets.t_category')
-            ->rightJoin('users', 'users.u_id', 'tickets.t_createdby')
+            ->rightJoin('users', 'users.id', 'tickets.t_createdby')
             ->where('tickets.t_id', $ticket)
             ->get();
 
+        $createdby = DB::table('tickets')
+            ->leftJoin('users', 'tickets.t_createdby', '=', 'users.id')
+            ->where('tickets.t_id', $ticket)
+            ->first();
+
         $openedby = DB::table('tickets')
-            ->leftJoin('users', 'tickets.t_openedby', '=', 'users.u_id')
+            ->leftJoin('users', 'tickets.t_openedby', '=', 'users.id')
+            ->where('tickets.t_id', $ticket)
             ->first();
 
         $acknowledgedby = DB::table('tickets')
-            ->leftJoin('users', 'tickets.t_acknowledgedby', '=', 'users.u_id')
+            ->leftJoin('users', 'tickets.t_acknowledgedby', '=', 'users.id')
             ->where('tickets.t_id', $ticket)
             ->first();
 
         $resolvedby = DB::table('tickets')
-            ->leftJoin('users', 'tickets.t_resolvedby', '=', 'users.u_id')
+            ->leftJoin('users', 'tickets.t_resolvedby', '=', 'users.id')
             ->where('tickets.t_id', $ticket)
             ->first();
 
         $closedby = DB::table('tickets')
-            ->leftJoin('users', 'tickets.t_closedby', '=', 'users.u_id')
+            ->leftJoin('users', 'tickets.t_closedby', '=', 'users.id')
             ->where('tickets.t_id', $ticket)
             ->first();
 
         $cancelledby = DB::table('tickets')
-            ->leftJoin('users', 'tickets.t_cancelledby', '=', 'users.u_id')
+            ->leftJoin('users', 'tickets.t_cancelledby', '=', 'users.id')
             ->where('tickets.t_id', $ticket)
             ->first();
 
-        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby'));
+        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby'));
     }
 
     public function acknowledge(Request $request){
@@ -121,12 +139,14 @@ class TicketController extends Controller
             'updated_at'
         ]);
 
+        $user = Auth::user()->id;
+
         $update = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             'updated_at' => now(),
-            't_updatedby' => 1,
+            't_updatedby' => $user,
             't_status' => 3,
-            't_acknowledgedby' => 1,
+            't_acknowledgedby' => $user,
             't_acknowledgeddate' => now(),
         ]);
 
@@ -147,16 +167,18 @@ class TicketController extends Controller
             't_status',
         ]);
 
-        $ticket['t_updatedby'] = 1;
+        $user = Auth::user()->id;
+
+        $ticket['t_updatedby'] = $user;
         $ticket['updated_at'] = now();
         $ticket['t_status'] = 4;
 
         $resolve = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             'updated_at' => now(),
-            't_updatedby' => 1,
+            't_updatedby' => $user,
             't_status' => 4,
-            't_resolvedby' => 1,
+            't_resolvedby' => $user,
             't_resolution' => $ticket['t_resolution'],
             't_resolveddate' => now(),
         ]);
@@ -177,17 +199,19 @@ class TicketController extends Controller
             't_closedby',
         ]);
 
-        $ticket['t_updatedby'] = 1;
-        $ticket['t_closedby'] = 1;
+        $user = Auth::user()->id;
+
+        $ticket['t_updatedby'] = $user;
+        $ticket['t_closedby'] = $user;
         $ticket['updated_at'] = now();
         $ticket['t_status'] = 5;
 
         $resolve = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             'updated_at' => now(),
-            't_updatedby' => 1,
+            't_updatedby' => $user,
             't_status' => 5,
-            't_closedby' => 1,
+            't_closedby' => $user,
             't_closeddate' => now(),
         ]);
 
@@ -208,12 +232,14 @@ class TicketController extends Controller
             'updated_at'
         ]);
 
+        $user = Auth::user()->id;
+
         $cancel = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             't_cancelreason' => $ticket['t_cancelreason'],
-            't_updatedby' => 1,
+            't_updatedby' => $user,
             't_status' => 6,
-            't_cancelledby' => 1,
+            't_cancelledby' => $user,
             'updated_at' => now(),
             't_cancelleddate' => now(),
         ]);
@@ -223,5 +249,16 @@ class TicketController extends Controller
         }else{
             return redirect('/alltickets')->with('error', 'Failed to cancel ' . $ticket['t_id'] . '!');
         }
+    }
+
+    public function mytickets(){
+        $mytickets = DB::table('tickets')
+        ->where('t_createdby', Auth::user()->id)
+        ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
+        ->join('users', 'tickets.t_createdby', '=', 'users.id')
+        ->join('departments', 'users.u_department', '=', 'departments.d_id')
+        ->orderby('t_id', 'desc')->paginate(10);
+
+        return view('tickets.mytickets', compact('mytickets'));
     }
 }

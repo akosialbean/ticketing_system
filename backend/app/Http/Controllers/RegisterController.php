@@ -37,17 +37,16 @@ class RegisterController extends Controller
         $newuser['created_at'] = now();
 
         $fname = strtolower($newuser['u_fname']);
-        $mname = strtolower($newuser['u_mname']);
         $lname = strtolower($newuser['u_lname']);
         $newuser['u_username'] = strtolower(lcfirst($fname[0]) . $lname);
 
-        $checkemail = User::where('u_email', $newuser['u_email'])->first();
-        if($checkemail){
-            return redirect('/register')->with('error', 'Email already exists!');
-        }
+        // $checkemail = User::where('u_email', $newuser['u_email'])->first();
+        // if($checkemail){
+        //     return redirect('/register')->with('error', 'Email already exists!');
+        // }
 
         $checkusername = User::where('u_username', 'LIKE', '%' . $newuser['u_username'] . '%')->count();
-        if($checkusername > 1){
+        if($checkusername > 0){
             $newuser['u_username'] = ($newuser['u_username'] . $checkusername);
         }
 

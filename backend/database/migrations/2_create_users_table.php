@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id('id');
             $table->string('u_fname');
             $table->string('u_lname');
-            $table->string('u_mname')->default('N/A');
+            $table->string('u_mname')->nullable();
             $table->integer('u_department')->references('d_id')->on('departments');
             $table->integer('u_role');
-            $table->string('u_email')->unique()->default('no email');
-            $table->string('u_username');
+            $table->string('u_email')->nullable();
+            $table->string('u_username')->unique();
             $table->string('password');
             $table->integer('u_status');
             $table->string('remember_token')->nullable();

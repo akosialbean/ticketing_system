@@ -48,5 +48,6 @@ Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('ac
 Route::patch('/resolve', [TicketController::class, 'resolve'])->name('resolve');
 Route::patch('/close', [TicketController::class, 'close'])->name('close');
 Route::patch('/cancel', [TicketController::class, 'cancel'])->name('cancel');
+Route::get('/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

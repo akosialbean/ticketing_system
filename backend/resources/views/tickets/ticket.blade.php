@@ -46,13 +46,15 @@
                         </div>
 
                         <div class="mb-3">
-                            @if($ticket->t_status == 2)
-                                <form action="/acknowledge" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                    <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
-                                </form>
+                            @if(Auth::user()->u_role == 1)
+                                @if($ticket->t_status == 2)
+                                    <form action="/acknowledge" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                        <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
+                                    </form>
+                                @endif
                             @endif
 
                             @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
@@ -61,7 +63,8 @@
 
                             <hr>
 
-                            <p><Strong>History:</Strong></p>
+                            <p><Strong class="h3">History</Strong></p>
+                            <p><strong>Created by: </strong>{{$createdby->u_fname}} {{$createdby->u_lname}}</p>
                             <p><strong>Opened by: </strong>{{$openedby->u_fname}} {{$openedby->u_lname}}</p>
                             <p><strong>Acknowleged by: </strong>{{$acknowledgedby->u_fname}} {{$acknowledgedby->u_lname}}</p>
                             <p><strong>Resolved by: </strong>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</p>
@@ -71,27 +74,29 @@
 
                         <hr>
 
-                        @if($ticket->t_status == 3)
-                            <div class="mb-3">
-                                <form action="/resolve" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                    <label for="t_resolution" class="form-label">Resolution</label>
-                                    <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
-                                    <div class="mt-3">
-                                        <button type="submit" class="btn btn-sm btn-success">Resolve</button>
-                                    </div>
-                                </form>
-                            </div>
+                        @if(Auth::user()->u_role == 1)
+                            @if($ticket->t_status == 3)
+                                <div class="mb-3">
+                                    <form action="/resolve" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                        <label for="t_resolution" class="form-label">Resolution</label>
+                                        <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
+                                        <div class="mt-3">
+                                            <button type="submit" class="btn btn-sm btn-success">Resolve</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
                         @endif
 
                         @if(($ticket->t_status == 4 || $ticket->t_status == 5))
                             <div class="mb-3">
                                 <label for="t_title" class="form-label h2">Resolution</label>
                                 <p>{{$ticket->t_resolution}}</p>
-                                <p><strong>Resolved by: </strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</p>
-                                <p><strong>Date Resolved: </strong>{{$ticket->updated_at}}</p>
+                                <p><strong>Resolved by: </strong>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</p>
+                                <p><strong>Date Resolved: </strong>{{$ticket->t_resolveddate}}</p>
                             </div>
                         @endif
 
@@ -110,7 +115,7 @@
                             <div class="mb-3">
                                 <label for="t_cancellationreason" class="form-label h6"><strong>Cancellation Reason</strong></label>
                                 <p>{{$ticket->t_cancelreason}}</p>
-                                <p><strong>Cancelled by: </strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</p>
+                                <p><strong>Cancelled by: </strong>{{$cancelledby->u_fname}} {{$cancelledby->u_lname}}</p>
                             </div>
                         @endif
 
