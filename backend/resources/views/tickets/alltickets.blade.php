@@ -30,6 +30,7 @@
                             <th>Title</th>
                             <th>Department</th>
                             <th>Created by</th>
+                            <th>Date Created</th>
                             <th>Severity</th>
                             <th>Status</th>
                             <th></th>
@@ -39,12 +40,13 @@
                     <tbody>
                         @foreach($alltickets as $tickets)
                         <tr>
-                            <td>{{$tickets->t_id}}</td>
-                            <td>{{$tickets->t_title}}</td>
-                            <td>{{$tickets->d_code}}</td>
-                            <td>{{$tickets->u_fname}} {{$tickets->u_lname}}</td>
-                            <td>{{$tickets->s_title}}</td>
-                            <td>
+                            <td><small>{{$tickets->t_id}}</small></td>
+                            <td><small>{{$tickets->t_title}}</small></td>
+                            <td><small>{{$tickets->d_code}}</small></td>
+                            <td><small>{{$tickets->u_fname}} {{$tickets->u_lname}}</small></td>
+                            <td><small>{{$tickets->created_at}}</small></td>
+                            <td><small>{{$tickets->s_title}}</small></td>
+                            <td><small>
                                 @if($tickets->t_status == 1)
                                     New
                                 @elseif($tickets->t_status == 2)
@@ -58,7 +60,7 @@
                                 @else
                                     Cancelled
                                 @endif
-                            </td>
+                            </small></td>
                             <td>
                                 @if($tickets->t_status == 1)
                                     <form action="/openticket" method="POST">

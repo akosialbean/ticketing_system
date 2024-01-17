@@ -22,7 +22,7 @@
                         </div>
                     @endif
 
-                    @foreach($data as $ticket)
+                    @foreach($getTicket as $ticket)
                         <div class="mb-3">
                             <label for="t_title" class="form-label h1">
                                 #{{$ticket->t_id}}
@@ -58,6 +58,15 @@
                             @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
                                 <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
                             @endif
+
+                            <hr>
+
+                            <p><Strong>History:</Strong></p>
+                            <p><strong>Opened by: </strong>{{$openedby->u_fname}} {{$openedby->u_lname}}</p>
+                            <p><strong>Acknowleged by: </strong>{{$acknowledgedby->u_fname}} {{$acknowledgedby->u_lname}}</p>
+                            <p><strong>Resolved by: </strong>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</p>
+                            <p><strong>Closed by: </strong>{{$closedby->u_fname}} {{$closedby->u_lname}}</p>
+                            <p><strong>Cancelled by: </strong>{{$cancelledby->u_fname}} {{$cancelledby->u_lname}}</p>
                         </div>
 
                         <hr>
@@ -115,7 +124,7 @@
 
 
     <!-- The Modal -->
-    @foreach($data as $ticket)
+    @foreach($getTicket as $ticket)
         <div class="modal" id="cancellationReason">
             <div class="modal-sm modal-dialog modal-dialog-centered">
                 <div class="modal-content">

@@ -49,6 +49,7 @@ class TicketController extends Controller
         ->join('users', 'tickets.t_createdby', '=', 'users.u_id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
         ->orderby('t_id', 'desc')->paginate(10);
+
         return view('tickets.alltickets', compact('alltickets'));
     }
 
@@ -84,7 +85,31 @@ class TicketController extends Controller
             ->where('tickets.t_id', $ticket)
             ->get();
 
-        return view('tickets.ticket', ['data' => $getTicket]);
+        $openedby = DB::table('tickets')
+            ->leftJoin('users', 'tickets.t_openedby', '=', 'users.u_id')
+            ->first();
+
+        $acknowledgedby = DB::table('tickets')
+            ->leftJoin('users', 'tickets.t_acknowledgedby', '=', 'users.u_id')
+            ->where('tickets.t_id', $ticket)
+            ->first();
+
+        $resolvedby = DB::table('tickets')
+            ->leftJoin('users', 'tickets.t_resolvedby', '=', 'users.u_id')
+            ->where('tickets.t_id', $ticket)
+            ->first();
+
+        $closedby = DB::table('tickets')
+            ->leftJoin('users', 'tickets.t_closedby', '=', 'users.u_id')
+            ->where('tickets.t_id', $ticket)
+            ->first();
+
+        $cancelledby = DB::table('tickets')
+            ->leftJoin('users', 'tickets.t_cancelledby', '=', 'users.u_id')
+            ->where('tickets.t_id', $ticket)
+            ->first();
+
+        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby'));
     }
 
     public function acknowledge(Request $request){
