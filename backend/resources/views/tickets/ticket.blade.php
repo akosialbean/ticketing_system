@@ -5,7 +5,7 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <div class="container">
+    <div class="container my-5 pt-5">
         <div class="card">
             <div class="card-header"><strong>Ticket</strong></div>
             <div class="card-body">
@@ -46,6 +46,12 @@
                         </div>
 
                         <div class="mb-3">
+                            @if($ticket->t_createdby == Auth::user()->id)
+                                @if($ticket->t_status == 1 || $ticket->t_status == 2)
+                                    <button class="btn btn-sm btn-primary my-3">Edit</button>
+                                @endif
+                            @endif
+
                             @if(Auth::user()->u_role == 1)
                                 @if($ticket->t_status == 2)
                                     <form action="/acknowledge" method="POST">

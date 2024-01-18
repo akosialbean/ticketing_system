@@ -41,18 +41,18 @@ class TicketController extends Controller
 
         if($save){
             if(Auth::user()->u_role == 1){
-                return redirect('/alltickets')->with('success', 'New ticket created!');
+                return redirect('/tickets')->with('success', 'New ticket created!');
             }else{
-                return redirect('/mytickets')->with('success', 'New ticket created!');
+                return redirect('/tickets/mytickets')->with('success', 'New ticket created!');
             }
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to create!');
+            return redirect('/tickets')->with('error', 'Failed to create!');
         }
     }
 
     public function alltickets(){
         if(Auth::user()->u_role == 2){
-            return redirect()->intended('/mytickets');
+            return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
             ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
@@ -95,7 +95,7 @@ class TicketController extends Controller
         if($update){
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' opened!');
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to open ticket ' . $ticket['t_id'] . '!');
+            return redirect('/tickets')->with('error', 'Failed to open ticket ' . $ticket['t_id'] . '!');
         }
     }
 
@@ -161,7 +161,7 @@ class TicketController extends Controller
         if($update){
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' acknowledged!');
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to acknowledge ' . $ticket['t_id'] . '!');
+            return redirect('/tickets')->with('error', 'Failed to acknowledge ' . $ticket['t_id'] . '!');
         }
     }
 
@@ -194,7 +194,7 @@ class TicketController extends Controller
         if($resolve){
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' resolved!');
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to resolve ' . $ticket['t_id'] . '!');
+            return redirect('/tickets')->with('error', 'Failed to resolve ' . $ticket['t_id'] . '!');
         }
     }
 
@@ -226,7 +226,7 @@ class TicketController extends Controller
         if($resolve){
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' closed!');
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
+            return redirect('/tickets')->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
         }
     }
 
@@ -255,7 +255,7 @@ class TicketController extends Controller
         if($cancel){
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' cancelled!');
         }else{
-            return redirect('/alltickets')->with('error', 'Failed to cancel ' . $ticket['t_id'] . '!');
+            return redirect('/tickets')->with('error', 'Failed to cancel ' . $ticket['t_id'] . '!');
         }
     }
 
@@ -280,7 +280,7 @@ class TicketController extends Controller
 
     public function opentickets(){
         if(Auth::user()->u_role == 2){
-            return redirect()->intended('/mytickets');
+            return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 2)
@@ -303,7 +303,7 @@ class TicketController extends Controller
 
     public function acknowledgedtickets(){
         if(Auth::user()->u_role == 2){
-            return redirect()->intended('/mytickets');
+            return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 3)
@@ -326,7 +326,7 @@ class TicketController extends Controller
 
     public function resolvedtickets(){
         if(Auth::user()->u_role == 2){
-            return redirect()->intended('/mytickets');
+            return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 4)
@@ -349,7 +349,7 @@ class TicketController extends Controller
 
     public function closedtickets(){
         if(Auth::user()->u_role == 2){
-            return redirect()->intended('/mytickets');
+            return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 5)
@@ -372,7 +372,7 @@ class TicketController extends Controller
 
     public function cancelledtickets(){
         if(Auth::user()->u_role == 2){
-            return redirect()->intended('/mytickets');
+            return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 6)

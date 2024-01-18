@@ -25,9 +25,9 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if(Auth::user()->u_role == 1){
-                return redirect()->intended('/alltickets')->with('success', 'Login Successful!');
+                return redirect()->intended('/tickets')->with('success', 'Login Successful!');
             }else{
-                return redirect()->intended('/mytickets')->with('success', 'Login Successful!');
+                return redirect()->intended('/tickets/mytickets')->with('success', 'Login Successful!');
             }
             
         } else {
