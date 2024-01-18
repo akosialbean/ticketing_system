@@ -26,7 +26,7 @@
                         @if(Auth::user())
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/alltickets">Tickets</a>
+                                    <a class="nav-link" href="/tickets">Tickets</a>
                                 </li>
                                 @if(Auth::user()->u_role == 1)
                                     <li class="nav-item">

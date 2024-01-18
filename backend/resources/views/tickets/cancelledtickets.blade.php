@@ -7,7 +7,7 @@
 @section('content')
     <div class="container mt-5 pt-5">
         <div class="card">
-            <div class="card-header">All Tickets</div>
+            <div class="card-header">Cancelled Tickets</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">

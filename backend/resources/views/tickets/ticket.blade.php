@@ -119,7 +119,7 @@
                             </div>
                         @endif
 
-                        <a href="/alltickets" class="btn btn-sm btn-danger">Back</a>
+                        <a href="/tickets" class="btn btn-sm btn-danger">Back</a>
 
                     @endforeach
                 </div>

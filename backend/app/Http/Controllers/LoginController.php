@@ -36,6 +36,9 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request){
+        if(!Auth::user()){
+            return redirect('/')->with('error', 'Please login!');
+        }
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerate();

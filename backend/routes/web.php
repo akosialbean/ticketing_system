@@ -42,14 +42,19 @@ Route::get('/categories', [CategoryController::class, 'categories'])->name('cate
 Route::middleware(['auth'])->group(function() {
     Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
     Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
-    Route::get('/alltickets', [TicketController::class, 'alltickets'])->name('alltickets');
+    Route::get('/tickets', [TicketController::class, 'alltickets'])->name('tickets');
     Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
     Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
     Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');
     Route::patch('/resolve', [TicketController::class, 'resolve'])->name('resolve');
     Route::patch('/close', [TicketController::class, 'close'])->name('close');
     Route::patch('/cancel', [TicketController::class, 'cancel'])->name('cancel');
-    Route::get('/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
+    Route::get('/tickets/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
+    Route::get('/tickets/opentickets', [TicketController::class, 'opentickets'])->name('opentickets');
+    Route::get('/tickets/acknowledgedtickets', [TicketController::class, 'acknowledgedtickets'])->name('acknowledgedtickets');
+    Route::get('/tickets/resolvedtickets', [TicketController::class, 'resolvedtickets'])->name('resolvedtickets');
+    Route::get('/tickets/closedtickets', [TicketController::class, 'closedtickets'])->name('closedtickets');
+    Route::get('/tickets/cancelledtickets', [TicketController::class, 'cancelledtickets'])->name('cancelledtickets');
 });
 
 
