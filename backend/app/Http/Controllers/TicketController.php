@@ -260,7 +260,7 @@ class TicketController extends Controller
     }
 
     public function mytickets(){
-        $mytickets = DB::table('tickets')
+        $tickets = DB::table('tickets')
         ->where('t_createdby', Auth::user()->id)
         ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
@@ -275,7 +275,7 @@ class TicketController extends Controller
         $closedticketcount = Ticket::where('t_status', 5)->count();
         $cancelledticketcount = Ticket::where('t_status', 6)->count();
 
-        return view('tickets.mytickets', compact('mytickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount'));
+        return view('tickets.mytickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount'));
     }
 
     public function opentickets(){
@@ -390,6 +390,45 @@ class TicketController extends Controller
             $cancelledticketcount = Ticket::where('t_status', 6)->count();
 
             return view('tickets.cancelledtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount'));
+        }
+    }
+
+    public function editticket($ticket){
+        $categories = Category::orderby('c_description', 'asc')->get();
+        $departments = Department::orderby('d_description', 'asc')->get();
+
+        $ticket = DB::table('tickets')
+        ->where('tickets.t_id', $ticket)
+        ->join('departments', 'tickets.t_todepartment', 'departments.d_id')
+        ->join('categories', 'tickets.t_category', 'categories.c_id')
+        ->first();
+
+        return view('tickets.editticket', compact('ticket', 'categories', 'departments'));
+    }
+
+    public function edit(Request $request){
+        $ticket = $request->validate([
+            't_id' => ['required'],
+            't_title' => ['required'],
+            't_description' => ['required'],
+            't_category' => ['required'],
+            'updated_at'
+        ]);
+
+        $ticket['updated_at'] = now();
+
+        $update = Ticket::where('t_id', $ticket['t_id'])
+        ->update([
+            't_title' => $ticket['t_title'],
+            't_description' => $ticket['description'],
+            't_category' => $ticket['category'],
+            'updated_at' => now(),
+        ]);
+
+        if($resolve){
+            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' updated!');
+        }else{
+            return redirect('/tickets/' . $ticket['t_id'])->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
         }
     }
 

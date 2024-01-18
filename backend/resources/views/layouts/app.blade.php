@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
-    <header class="fixed-top mb-5">
+    <header class="fixed-top mb-5 shadow">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <div class="container-fluid">
                 <span class="navbar-text small p-0 m-0">Ticketing System</span>
@@ -56,7 +57,7 @@
         </nav>
     </header>
 
-    <main>
+    <main class="mt-3 pt-1">
         @yield('content')
     </main>
 

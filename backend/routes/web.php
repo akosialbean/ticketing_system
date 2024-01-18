@@ -23,23 +23,25 @@ use App\Http\Controllers\UserController;
 Route::get('/', [LoginController::class, 'login'])->name('login');
 Route::post('/log', [LoginController::class, 'log'])->name('log');
 
-Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
-Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
-Route::get('/users', [UserController::class, 'users'])->name('users');
 
-Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
-Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');
-Route::get('/departments', [DepartmentController::class, 'departments'])->name('departments');
-
-Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
-Route::post('/addseverity', [SeverityController::class, 'add'])->name('addseverity');
-Route::get('/severities', [SeverityController::class, 'severities'])->name('severities');
-
-Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
-Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
-Route::get('/categories', [CategoryController::class, 'categories'])->name('categories');
 
 Route::middleware(['auth'])->group(function() {
+    Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
+    Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
+    Route::get('/users', [UserController::class, 'users'])->name('users');
+
+    Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
+    Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');
+    Route::get('/departments', [DepartmentController::class, 'departments'])->name('departments');
+
+    Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
+    Route::post('/addseverity', [SeverityController::class, 'add'])->name('addseverity');
+    Route::get('/severities', [SeverityController::class, 'severities'])->name('severities');
+
+    Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
+    Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
+    Route::get('/categories', [CategoryController::class, 'categories'])->name('categories');
+
     Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
     Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
     Route::get('/tickets', [TicketController::class, 'alltickets'])->name('tickets');
@@ -55,6 +57,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/tickets/resolvedtickets', [TicketController::class, 'resolvedtickets'])->name('resolvedtickets');
     Route::get('/tickets/closedtickets', [TicketController::class, 'closedtickets'])->name('closedtickets');
     Route::get('/tickets/cancelledtickets', [TicketController::class, 'cancelledtickets'])->name('cancelledtickets');
+    Route::get('/ticket/{ticket}/editticket', [TicketController::class, 'editticket'])->name('editticket');
 });
 
 

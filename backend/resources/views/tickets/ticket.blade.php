@@ -48,7 +48,7 @@
                         <div class="mb-3">
                             @if($ticket->t_createdby == Auth::user()->id)
                                 @if($ticket->t_status == 1 || $ticket->t_status == 2)
-                                    <button class="btn btn-sm btn-primary my-3">Edit</button>
+                                    <a href="/ticket/{{$ticket->t_id}}/editticket" class="btn btn-sm btn-primary my-3">Edit</a>
                                 @endif
                             @endif
 
@@ -67,15 +67,6 @@
                                 <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
                             @endif
 
-                            <hr>
-
-                            <p><Strong class="h3">History</Strong></p>
-                            <p><strong>Created by: </strong>{{$createdby->u_fname}} {{$createdby->u_lname}}</p>
-                            <p><strong>Opened by: </strong>{{$openedby->u_fname}} {{$openedby->u_lname}}</p>
-                            <p><strong>Acknowleged by: </strong>{{$acknowledgedby->u_fname}} {{$acknowledgedby->u_lname}}</p>
-                            <p><strong>Resolved by: </strong>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</p>
-                            <p><strong>Closed by: </strong>{{$closedby->u_fname}} {{$closedby->u_lname}}</p>
-                            <p><strong>Cancelled by: </strong>{{$cancelledby->u_fname}} {{$cancelledby->u_lname}}</p>
                         </div>
 
                         <hr>
@@ -129,6 +120,53 @@
 
                     @endforeach
                 </div>
+
+                <hr>
+
+                <table class="table table-sm table-hover table-stripped">
+                    <thead>
+                        <tr>
+                            <th colspan="4" class="text-center h3">History</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th><small>Name</small></th>
+                            <th><small>Dates</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th><small>Created by</small></th>
+                            <td><small>{{$createdby->u_fname}} {{$createdby->u_lname}}</small></td>
+                            <td><small>{{$createdby->created_at}}</small></td>
+                        </tr>
+                        <tr>
+                            <th><small>Opened by</small></th>
+                            <td><small>{{$acknowledgedby->u_fname}} {{$acknowledgedby->u_lname}}</small></td>
+                            <td><small>{{$acknowledgedby->t_acknowledgeddate}}</small></td>
+                        </tr>
+                        <tr>
+                            <th><small>Acknowledged by</small></th>
+                            <td><small>{{$openedby->u_fname}} {{$openedby->u_lname}}</small></td>
+                            <td><small>{{$openedby->t_dateopened}}</small></td>
+                        </tr>
+                        <tr>
+                            <th><small>Resolved by</small></th>
+                            <td><small>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</small></td>
+                            <td><small>{{$resolvedby->t_resolveddate}}</small></td>
+                        </tr>
+                        <tr>
+                            <th><small>Closed by</small></th>
+                            <td><small>{{$closedby->u_fname}} {{$closedby->u_lname}}</small></td>
+                            <td><small>{{$closedby->t_closeddate}}</small></td>
+                        </tr>
+                        <tr>
+                            <th><small>Cancelled by</small></th>
+                            <td><small>{{$cancelledby->u_fname}} {{$cancelledby->u_lname}}</small></td>
+                            <td><small>{{$cancelledby->t_cancelleddate}}</small></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
