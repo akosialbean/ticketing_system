@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
     Route::get('/users', [UserController::class, 'users'])->name('users');
     Route::get('/user/{userid}', [UserController::class, 'user'])->name('user');
+    Route::patch('/user/changepassword', [UserController::class, 'changepassword'])->name('changepassword');
 
     Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
     Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');

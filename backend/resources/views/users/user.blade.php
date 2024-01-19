@@ -9,6 +9,17 @@
         <div class="card">
             <div class="card-header">Users</div>
             <div class="card-body">
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <strong>{{ session()->get('success') }}</strong>
+                    </div>
+                @endif
+
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        <strong>{{ session()->get('error') }}</strong>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="my-1 p-1">

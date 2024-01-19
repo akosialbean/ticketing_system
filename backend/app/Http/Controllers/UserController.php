@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -25,5 +27,35 @@ class UserController extends Controller
         $departments = Department::orderby('d_description', 'asc')->get();
 
         return view('users.user', compact('user', 'departments'));
+    }
+
+    public function changepassword(Request $request){
+        $user = $request->validate([
+            'id' => ['required'],
+            'old_password' => ['required'],
+            'u_password' => ['required'],
+            'u_password2' => ['required'],
+        ]);
+
+
+        $checkoldpassword = Auth::attempt([
+            'id' => $user['id'],
+            'password' => $user['old_password'],
+        ]);
+
+        if($checkoldpassword){
+            // $newpassword = Hash::make($user['u_password']);
+            // $newpassword2 = Hash::make($user['u_password2']);
+
+            // if($newpassword === $newpassword2){
+            //     return redirect('/user/' . Auth::user()->id)->with('success', 'New Password and Password2 matched!');
+            // }else{
+            //     return redirect('/user/' . Auth::user()->id)->with('error', 'New Password and Password2 doesn\'t match!');
+            // }
+
+            return redirect('/user/' . Auth::user()->id)->with('success', 'Password matched!');
+        }else{
+            return redirect('/user/' . Auth::user()->id)->with('error', 'Password doesn\'t match!');
+        }
     }
 }
