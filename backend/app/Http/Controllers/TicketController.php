@@ -420,12 +420,12 @@ class TicketController extends Controller
         $update = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             't_title' => $ticket['t_title'],
-            't_description' => $ticket['description'],
-            't_category' => $ticket['category'],
+            't_description' => $ticket['t_description'],
+            't_category' => $ticket['t_category'],
             'updated_at' => now(),
         ]);
 
-        if($resolve){
+        if($update){
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' updated!');
         }else{
             return redirect('/tickets/' . $ticket['t_id'])->with('error', 'Failed to close ' . $ticket['t_id'] . '!');

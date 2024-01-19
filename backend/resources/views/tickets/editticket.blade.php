@@ -21,9 +21,10 @@
                 </div>
             @endif
 
-            <form action="/edit" method="POST">
+            <form action="/ticket/{{$ticket->t_id}}/editticket/edit" method="POST">
                 @csrf
-                @method('POST')
+                @method('PATCH')
+                <input type="hidden" name="t_id" class="form-control" value={{$ticket->t_id}}>
                 <div class="mb-3">
                     <label for="t_title" class="form-label">Title</label>
                     <input type="text" class="form-control" id="t_title" name="t_title" value="{{$ticket->t_title}}" required>
@@ -47,7 +48,7 @@
                 <div class="mb-3">
                     <label for="t_todepartment" class="form-label">To</i></label>
                     <select class="form-select" name="t_todepartment" id="t_todepartment" required>
-                        <option value="{{$ticket->t_todepartment}}">{{$ticket->d_description}}</option>
+                        <option value="{{$ticket->t_todepartment}}">{{$ticket->d_code}} - {{$ticket->d_description}}</option>
                         @foreach($departments as $department)
                             <option value="{{$department->d_id}}">{{$department->d_code}} - {{$department->d_description}}</option>
                         @endforeach

@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/tickets/closedtickets', [TicketController::class, 'closedtickets'])->name('closedtickets');
     Route::get('/tickets/cancelledtickets', [TicketController::class, 'cancelledtickets'])->name('cancelledtickets');
     Route::get('/ticket/{ticket}/editticket', [TicketController::class, 'editticket'])->name('editticket');
+    Route::patch('/ticket/{ticket}/editticket/edit', [TicketController::class, 'edit'])->name('edit');
 });
 
 
