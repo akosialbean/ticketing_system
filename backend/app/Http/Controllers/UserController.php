@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -18,7 +19,11 @@ class UserController extends Controller
     public function user($userid){
         $user = DB::table('users')
         ->where('id', $userid)
+        ->join('departments', 'users.u_department', 'departments.d_id')
         ->first();
-        return view('users.user', compact('user'));
+
+        $departments = Department::orderby('d_description', 'asc')->get();
+
+        return view('users.user', compact('user', 'departments'));
     }
 }
