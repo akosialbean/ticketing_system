@@ -55,7 +55,6 @@ class TicketController extends Controller
             return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
-            ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -136,7 +135,9 @@ class TicketController extends Controller
             ->where('tickets.t_id', $ticket)
             ->first();
 
-        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby'));
+        $severities = Severity::orderby('s_id', 'asc')->get();
+
+        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities'));
     }
 
     public function acknowledge(Request $request){
@@ -262,7 +263,6 @@ class TicketController extends Controller
     public function mytickets(){
         $tickets = DB::table('tickets')
         ->where('t_createdby', Auth::user()->id)
-        ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
         ->orderby('t_id', 'desc')->paginate(10);
@@ -284,7 +284,6 @@ class TicketController extends Controller
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 2)
-            ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -307,7 +306,6 @@ class TicketController extends Controller
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 3)
-            ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -330,7 +328,6 @@ class TicketController extends Controller
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 4)
-            ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -353,7 +350,6 @@ class TicketController extends Controller
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 5)
-            ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -376,7 +372,6 @@ class TicketController extends Controller
         }else{
             $tickets = DB::table('tickets')
             ->where('tickets.t_status', 6)
-            ->join('severities', 'tickets.t_severity', '=', 'severities.s_id')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -432,4 +427,23 @@ class TicketController extends Controller
         }
     }
 
+    public function setseverity(Request $request){
+        $ticket = $request->validate([
+            't_id' => ['required'],
+            't_severity' => ['required'],
+            'updated_at'
+        ]);
+
+        $update = Ticket::where('t_id', $ticket['t_id'])
+        ->update([
+            't_severity' => $ticket['t_severity'],
+            'updated_at' => now()
+        ]);
+
+        if($update){
+            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' updated!');
+        }else{
+            return redirect('/tickets/' . $ticket['t_id'])->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
+        }
+    }
 }

@@ -5,7 +5,7 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <div class="container">
+    <div class="container my-5 py-5">
         <div class="card">
             <div class="card-header">Users</div>
             <div class="card-body">
@@ -59,7 +59,7 @@
                                 @endif
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-primary">edit</button>
+                                <a href="/user/{{$user->id}}" class="btn btn-sm btn-primary"><i class="bi bi-three-dots-vertical"></i></a>
                             </td>
                         </tr>
                         @endforeach

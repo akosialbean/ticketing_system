@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('t_cancelreason')->nullable();
             $table->string('t_cancelledby')->nullable();
             $table->timestamp('t_cancelleddate')->nullable();
-            $table->integer('t_severity')->default(1);
+            $table->integer('t_severity')->default(0);
             $table->integer('t_status')->default(1);
             $table->timestamps();
         });

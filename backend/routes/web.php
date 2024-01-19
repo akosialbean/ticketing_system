@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
     Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
     Route::get('/users', [UserController::class, 'users'])->name('users');
+    Route::get('/user/{userid}', [UserController::class, 'user'])->name('user');
 
     Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
     Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');
@@ -59,6 +60,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/tickets/cancelledtickets', [TicketController::class, 'cancelledtickets'])->name('cancelledtickets');
     Route::get('/ticket/{ticket}/editticket', [TicketController::class, 'editticket'])->name('editticket');
     Route::patch('/ticket/{ticket}/editticket/edit', [TicketController::class, 'edit'])->name('edit');
+    Route::patch('/ticket/{ticket}/setseverity', [TicketController::class, 'setseverity'])->name('setseverity');
 });
 
 

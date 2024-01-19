@@ -14,4 +14,11 @@ class UserController extends Controller
         ->orderby('users.id', 'desc')->get();
         return view('users.users', ['users' => $get]);
     }
+
+    public function user($userid){
+        $user = DB::table('users')
+        ->where('id', $userid)
+        ->first();
+        return view('users.user', compact('user'));
+    }
 }

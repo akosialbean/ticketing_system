@@ -5,7 +5,7 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 9vh;">
+<div class="container d-flex justify-content-center align-items-center mt-5 pt-5">
     <div class="card">
         <div class="card-header"><strong>New Ticket</strong></div>
         <div class="card-body">

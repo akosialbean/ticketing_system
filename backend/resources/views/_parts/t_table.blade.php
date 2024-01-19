@@ -21,7 +21,7 @@
                 <td><small>{{$ticket->d_code}}</small></td>
                 <td><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
                 <td><small>{{$ticket->created_at}}</small></td>
-                <td><small>{{$ticket->s_title}}</small></td>
+                <td><small>{{$ticket->t_severity}}</small></td>
                 <td><small>
                     @if($ticket->t_status == 1)
                         New

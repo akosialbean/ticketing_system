@@ -46,9 +46,37 @@
                         </div>
 
                         <div class="mb-3">
+                            <p>Severity: {{$ticket->t_severity}}</p>
+                        </div>
+
+                        <div class="mb-3">
                             @if($ticket->t_createdby == Auth::user()->id)
                                 @if($ticket->t_status == 1 || $ticket->t_status == 2)
                                     <a href="/ticket/{{$ticket->t_id}}/editticket" class="btn btn-sm btn-primary my-3">Edit</a>
+                                @endif
+                            @endif
+
+                            @if(Auth::user()->u_role == 1)
+                                @if($ticket->t_status == '1' || $ticket->t_status == '2')
+                                    @if($ticket->t_severity < 1)
+                                        <hr>
+
+                                        <form action="/ticket/{{$ticket->t_id}}/setseverity" method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="t_id" class="form-control" value="{{$ticket->t_id}}">
+                                            <label for="t_severity"><small>Severity</small></label>
+                                            <select name="t_severity" class="form-select" id="t_severity" class="mt-3">
+                                                <option value="">Not set</option>
+                                                @foreach($severities as $severity)
+                                                    <option value="{{$severity->s_id}}">{{$severity->s_description}}</option>
+                                                @endforeach
+                                            </select>
+                                            <button class="btn btn-sm btn-primary my-3">Set</button>
+                                        </form>
+                                        
+                                        <hr>
+                                    @endif
                                 @endif
                             @endif
 
