@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/user/changepassword', [UserController::class, 'changepassword'])->name('changepassword');
     Route::patch('/user/disable', [UserController::class, 'disable'])->name('disable');
     Route::patch('/user/reactivate', [UserController::class, 'reactivate'])->name('reactivate');
+    Route::patch('/user/resetpassword', [UserController::class, 'resetpassword'])->name('resetpassword');
 
     Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
     Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');

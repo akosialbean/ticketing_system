@@ -109,4 +109,25 @@ class UserController extends Controller
             return redirect('/user/' . $user['id'])->with('success', 'Failed to re-activate user!');
         }
     }
+
+    public function resetpassword(Request $request){
+        $user = $request->validate([
+            'id' => ['required'],
+        ]);
+
+        $hashed = Hash::make('abcd_123');
+
+        $disable = User::where('id', $user['id'])
+        ->update([
+            'password' => $hashed,
+            'u_firstlogin' => 1,
+            'updated_at' => now(),
+        ]);
+
+        if($disable){
+            return redirect('/user/' . $user['id'])->with('success', 'Password reset successful!');
+        }else{
+            return redirect('/user/' . $user['id'])->with('success', 'Failed to reset password!');
+        }
+    }
 }
