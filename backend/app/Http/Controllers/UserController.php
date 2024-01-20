@@ -157,6 +157,7 @@ class UserController extends Controller
             'u_fname' => $user['u_fname'],
             'u_lname' => $user['u_lname'],
             'u_mname' => $user['u_mname'],
+            'u_username' => $user['u_username'],
             'u_email' => $user['u_email'],
             'u_role' => $user['u_role'],
             'u_department' => $user['u_department'],
