@@ -73,4 +73,6 @@ class UserController extends Controller
             return redirect('/user/' . Auth::user()->id)->with('error', 'Password doesn\'t match!');
         }
     }
+
+    
 }

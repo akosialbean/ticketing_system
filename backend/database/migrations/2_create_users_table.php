@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('u_username')->unique();
             $table->string('password');
             $table->integer('u_status');
+            $table->integer('u_firstlogin')->default(1);
             $table->string('remember_token')->nullable();
             $table->timestamps();
         });

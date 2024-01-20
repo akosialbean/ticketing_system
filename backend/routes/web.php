@@ -22,6 +22,8 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [LoginController::class, 'login'])->name('login');
 Route::post('/log', [LoginController::class, 'log'])->name('log');
+Route::get('/user/firstlogin', [LoginController::class, 'firstlogin'])->name('firstlogin');
+Route::patch('/user/firstlogin/changepassword', [LoginController::class, 'changepassword'])->name('changepassword');
 
 
 

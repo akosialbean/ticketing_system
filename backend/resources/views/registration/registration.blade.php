@@ -5,7 +5,7 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 9vh;">
+<div class="container d-flex justify-content-center align-items-center my-5 py-5">
     <div class="card">
         <div class="card-header"><strong>New User</strong></div>
         <div class="card-body">
