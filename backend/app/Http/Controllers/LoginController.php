@@ -72,6 +72,8 @@ class LoginController extends Controller
         } else {
             return redirect()->intended('/')->with('error', 'Incorrect username / password!');
         }
+
+        
     }
 
     public function firstlogin(){
