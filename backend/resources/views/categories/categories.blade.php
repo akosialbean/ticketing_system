@@ -5,7 +5,7 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <div class="container my-3">
+    <div class="container my-5 py-5">
         <div class="card">
             <div class="card-header">Categories</div>
             <div class="card-body">

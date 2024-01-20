@@ -57,22 +57,22 @@ class TicketController extends Controller
             $tickets = DB::table('tickets')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
+            ->where('tickets.t_todepartment', Auth::user()->u_department)
             ->orderby('t_id', 'desc')->paginate(10);
 
-            $allticketcount = Ticket::count();
-            $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
-            $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
+            $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
+        $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
+        $openticketcount = Ticket::where('t_status', 2)->count();
+        $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
+        $resolvedticketcount = Ticket::where('t_status', 4)->count();
+        $closedticketcount = Ticket::where('t_status', 5)->count();
+        $cancelledticketcount = Ticket::where('t_status', 6)->count();
 
             return view('tickets.alltickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount'));
         }
     }
 
     public function openticket(Request $request){
-        
         $ticket = $request->validate([
             't_id' => ['required'],
             't_updatedby',
@@ -80,22 +80,29 @@ class TicketController extends Controller
             'updated_at',
         ]);
 
-        $user = Auth::user()->id;
-
-        $update = Ticket::where('t_id', $ticket['t_id'])
-        ->update([
-            'updated_at' => now(),
-            't_updatedby' => $user,
-            't_status' => 2,
-            't_openedby' => $user,
-            't_dateopened' => now(),
-        ]);
-
-        if($update){
-            return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' opened!');
+        if(Auth::user()->u_role == 1){
+            
+    
+            $user = Auth::user()->id;
+    
+            $update = Ticket::where('t_id', $ticket['t_id'])
+            ->update([
+                'updated_at' => now(),
+                't_updatedby' => $user,
+                't_status' => 2,
+                't_openedby' => $user,
+                't_dateopened' => now(),
+            ]);
+    
+            if($update){
+                return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' opened!');
+            }else{
+                return redirect('/tickets')->with('error', 'Failed to open ticket ' . $ticket['t_id'] . '!');
+            }
         }else{
-            return redirect('/tickets')->with('error', 'Failed to open ticket ' . $ticket['t_id'] . '!');
+            return redirect('/ticket/' . $ticket['t_id']);
         }
+        
     }
 
     public function ticket($ticket){
@@ -107,6 +114,11 @@ class TicketController extends Controller
 
         $createdby = DB::table('tickets')
             ->leftJoin('users', 'tickets.t_createdby', '=', 'users.id')
+            ->where('tickets.t_id', $ticket)
+            ->first();
+
+        $assignedto = DB::table('tickets')
+            ->leftJoin('users', 'tickets.t_assignedto', '=', 'users.id')
             ->where('tickets.t_id', $ticket)
             ->first();
 
@@ -137,7 +149,10 @@ class TicketController extends Controller
 
         $severities = Severity::orderby('s_id', 'asc')->get();
 
-        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities'));
+        $resolvers = User::orderby('u_fname', 'asc')
+        ->where('users.u_role', '1')->get();
+
+        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto'));
     }
 
     public function acknowledge(Request $request){
@@ -267,7 +282,7 @@ class TicketController extends Controller
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
         ->orderby('t_id', 'desc')->paginate(10);
 
-        $allticketcount = Ticket::count();
+        $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
         $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
         $openticketcount = Ticket::where('t_status', 2)->count();
         $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
@@ -288,7 +303,7 @@ class TicketController extends Controller
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
 
-            $allticketcount = Ticket::count();
+            $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
             $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
@@ -310,7 +325,7 @@ class TicketController extends Controller
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
 
-            $allticketcount = Ticket::count();
+            $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
             $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
@@ -332,7 +347,7 @@ class TicketController extends Controller
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
 
-            $allticketcount = Ticket::count();
+            $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
             $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
@@ -354,7 +369,7 @@ class TicketController extends Controller
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
 
-            $allticketcount = Ticket::count();
+            $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
             $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
@@ -376,7 +391,7 @@ class TicketController extends Controller
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
 
-            $allticketcount = Ticket::count();
+            $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
             $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
@@ -444,6 +459,27 @@ class TicketController extends Controller
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' updated!');
         }else{
             return redirect('/tickets/' . $ticket['t_id'])->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
+        }
+    }
+
+    public function assignto(Request $request){
+        $user = $request->validate([
+            't_id' => ['required'],
+            't_assignedto' => ['required']
+        ]);
+
+        $assign = Ticket::where('t_id', $user['t_id'])
+                    ->update([
+                        't_assignedto' => $user['t_assignedto'],
+                        't_assignedby' => Auth::user()->id,
+                        't_assigneddate' => now(),
+                        'updated_at' => now(),
+                    ]);
+        
+        if($assign){
+            return redirect('/ticket/' . $user['t_id'])->with('success', 'Ticket ' . $user['t_id'] . ' assigned!');
+        }else{
+            return redirect('/tickets/' . $user['t_id'])->with('error', 'Failed to assign ' . $user['t_id'] . '!');
         }
     }
 }

@@ -50,6 +50,10 @@
                         </div>
 
                         <div class="mb-3">
+                            <p>Assigned to: {{$ticket->t_assignedto}}</p>
+                        </div>
+
+                        <div class="mb-3">
                             @if($ticket->t_createdby == Auth::user()->id)
                                 @if($ticket->t_status == 1 || $ticket->t_status == 2)
                                     <a href="/ticket/{{$ticket->t_id}}/editticket" class="btn btn-sm btn-primary my-3">Edit</a>
@@ -82,14 +86,33 @@
 
                             @if(Auth::user()->u_role == 1)
                                 @if($ticket->t_status == 2)
-                                    <form action="/acknowledge" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                        <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
-                                    </form>
+                                    @if($ticket->t_severity == 0)
+                                        <form action="/acknowledge" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                            <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
+                                        </form>
+                                    @endif
                                 @endif
                             @endif
+                                
+                            @if(!$ticket->t_assignedto)
+                                <form action="/ticket/{{$ticket->t_id}}/assignto" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="t_id" value="{{$ticket->id}}">
+                                    <label for="t_assignedto"><small>Assign to:</small></label>
+                                    <select name="t_assignedto" id="t_assignedto" class="form-select">
+                                        <option value="">--</option>
+                                        @foreach($resolvers as $resolver)
+                                            <option value="{{$resolver->id}}">{{$resolver->u_fname}} {{$resolver->u_lname}}</option>
+                                        @endforeach
+                                    </select>
+                                    <button class="btn btn-sm btn-success my-3">Assign</button>
+                                </form>
+                            @endif
+                            
 
                             @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
                                 <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
@@ -101,18 +124,20 @@
 
                         @if(Auth::user()->u_role == 1)
                             @if($ticket->t_status == 3)
-                                <div class="mb-3">
-                                    <form action="/resolve" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                        <label for="t_resolution" class="form-label">Resolution</label>
-                                        <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
-                                        <div class="mt-3">
-                                            <button type="submit" class="btn btn-sm btn-success">Resolve</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                @if($ticket->t_assignedto != '')
+                                    <div class="mb-3">
+                                        <form action="/resolve" method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                            <label for="t_resolution" class="form-label">Resolution</label>
+                                            <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
+                                            <div class="mt-3">
+                                                <button type="submit" class="btn btn-sm btn-success">Resolve</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                @endif
                             @endif
                         @endif
 
@@ -169,14 +194,19 @@
                             <td><small>{{$createdby->created_at}}</small></td>
                         </tr>
                         <tr>
-                            <th><small>Opened by</small></th>
-                            <td><small>{{$acknowledgedby->u_fname}} {{$acknowledgedby->u_lname}}</small></td>
-                            <td><small>{{$acknowledgedby->t_acknowledgeddate}}</small></td>
+                            <th><small>Viewed by</small></th>
+                            <td><small>{{$openedby->u_fname}} {{$openedby->u_lname}}</small></td>
+                            <td><small>{{$openedby->t_dateopened}}</small></td>
+                        </tr>
+                        <tr>
+                            <th><small>Assigned to</small></th>
+                            <td><small>{{$assignedto->u_fname}} {{$assignedto->u_lname}}</small></td>
+                            <td><small>{{$assignedto->created_at}}</small></td>
                         </tr>
                         <tr>
                             <th><small>Acknowledged by</small></th>
-                            <td><small>{{$openedby->u_fname}} {{$openedby->u_lname}}</small></td>
-                            <td><small>{{$openedby->t_dateopened}}</small></td>
+                            <td><small>{{$acknowledgedby->u_fname}} {{$acknowledgedby->u_lname}}</small></td>
+                            <td><small>{{$acknowledgedby->t_acknowledgeddate}}</small></td>
                         </tr>
                         <tr>
                             <th><small>Resolved by</small></th>

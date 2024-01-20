@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/ticket/{ticket}/editticket', [TicketController::class, 'editticket'])->name('editticket');
     Route::patch('/ticket/{ticket}/editticket/edit', [TicketController::class, 'edit'])->name('edit');
     Route::patch('/ticket/{ticket}/setseverity', [TicketController::class, 'setseverity'])->name('setseverity');
+    Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
 });
 
 
