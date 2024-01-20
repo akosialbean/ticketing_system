@@ -16,7 +16,7 @@ class TicketController extends Controller
 {
     public function newticket(){
         $getDepartments = Department::orderby('d_description', 'asc')->get();
-        $getCategories = Category::orderby('c_description', 'asc')->get();
+        $getCategories = Category::where('c_status', 1)->orderby('c_description', 'asc')->get();
         return view('tickets.newticket', ['departments' => $getDepartments, 'categories' => $getCategories]);
     }
 

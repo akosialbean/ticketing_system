@@ -40,9 +40,15 @@
                             <td>{{$category->c_id}}</td>
                             <td>{{$category->c_code}}</td>
                             <td>{{$category->c_description}}</td>
-                            <td>{{$category->c_status}}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary">edit</button>
+                                @if($category->c_status == 1)
+                                    Active
+                                @else
+                                    Disabled
+                                @endif
+                            </td>
+                            <td>
+                                <a href="/category/{{$category->c_id}}" class="btn btn-sm btn-primary">edit</a>
                             </td>
                         </tr>
                         @endforeach

@@ -65,5 +65,3 @@
 <div class="d-flex justify-content-center">
     {{$tickets->links()}}
 </div>
-
-09533462359

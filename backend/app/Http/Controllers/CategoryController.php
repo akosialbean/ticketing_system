@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -45,5 +47,36 @@ class CategoryController extends Controller
     public function categories(){
         $get = Category::orderby('c_id', 'desc')->get();
         return view('categories.categories', ['categories' => $get]);
+    }
+
+    public function category($c_id){
+        $category = Category::where('c_id', $c_id)->first();
+        return view('categories.category', compact('category'));
+    }
+
+    public function editcategory(Request $request){
+        $category = $request->validate([
+            'c_id' => ['required'],
+            'c_code' => ['required'],
+            'c_description' => ['required'],
+            'c_updatedby' => ['nullable'],
+            'updated_at' => ['nullable'],
+            'c_status' => ['nullable'],
+        ]);
+
+        $update = Category::where('c_id', $category['c_id'])
+            ->update([
+                'c_code' => $category['c_code'],
+                'c_description' => $category['c_description'],
+                'c_updatedby' => Auth::user()->id,
+                'updated_at' => now(),
+                'c_status' => $category['c_status'],
+            ]);
+
+        if($update){
+            return redirect('/category/' . $category['c_id'])->with('success',  $category['c_code'] .  ' ' . 'Category updated!');
+        }else{
+            return redirect('/category/' . $category['c_id'])->with('error', 'Failed to update category ' . $category['c_code'] . '!');
+        }
     }
 }
