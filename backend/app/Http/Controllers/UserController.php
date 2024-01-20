@@ -44,16 +44,31 @@ class UserController extends Controller
         ]);
 
         if($checkoldpassword){
-            // $newpassword = Hash::make($user['u_password']);
-            // $newpassword2 = Hash::make($user['u_password2']);
+            $newpassword = $user['u_password'];
+            $newpassword2 = $user['u_password2'];
 
-            // if($newpassword === $newpassword2){
-            //     return redirect('/user/' . Auth::user()->id)->with('success', 'New Password and Password2 matched!');
-            // }else{
-            //     return redirect('/user/' . Auth::user()->id)->with('error', 'New Password and Password2 doesn\'t match!');
-            // }
+            if($newpassword === $newpassword2){
+                $hashed = Hash::make($newpassword);
+                if($hashed){
+                    $updatepassword = User::where('id', $user['id'])
+                    ->update([
+                        'password' => $hashed,
+                        'updated_at' => now()
+                    ]);
 
-            return redirect('/user/' . Auth::user()->id)->with('success', 'Password matched!');
+                    if($updatepassword){
+                        return redirect('/user/' . Auth::user()->id)->with('success', 'Password updated!');
+                    }else{
+                        return redirect('/user/' . Auth::user()->id)->with('error', 'Failed to change password!');
+                    }
+                }else{
+                    return redirect('/user/' . Auth::user()->id)->with('error', 'Failed to hash new password ' . $newpassword . '!');
+                }
+            }else{
+                return redirect('/user/' . Auth::user()->id)->with('error', 'New Password and Password2 doesn\'t match!');
+            }
+
+            // return redirect('/user/' . Auth::user()->id)->with('success', 'Password matched!');
         }else{
             return redirect('/user/' . Auth::user()->id)->with('error', 'Password doesn\'t match!');
         }
