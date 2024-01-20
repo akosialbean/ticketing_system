@@ -11,6 +11,9 @@
 
     @if(Auth::user()->u_role == 1)
         <li class="nav-item">
+            <a class="nav-link" href="/tickets/assignedtickets"><small>Assigned Tickets ({{$assignedticketcount}})</small></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="/tickets/opentickets"><small>Open Tickets ({{$openticketcount}})</small></a>
         </li>
         <li class="nav-item">

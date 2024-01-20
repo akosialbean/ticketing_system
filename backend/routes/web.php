@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/users', [UserController::class, 'users'])->name('users');
     Route::get('/user/{userid}', [UserController::class, 'user'])->name('user');
     Route::patch('/user/changepassword', [UserController::class, 'changepassword'])->name('changepassword');
+    Route::patch('/user/disable', [UserController::class, 'disable'])->name('disable');
+    Route::patch('/user/reactivate', [UserController::class, 'reactivate'])->name('reactivate');
 
     Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
     Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');
@@ -65,6 +67,7 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/ticket/{ticket}/editticket/edit', [TicketController::class, 'edit'])->name('edit');
     Route::patch('/ticket/{ticket}/setseverity', [TicketController::class, 'setseverity'])->name('setseverity');
     Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
+    Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
 });
 
 

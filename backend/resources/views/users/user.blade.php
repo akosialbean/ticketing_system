@@ -71,6 +71,10 @@
                                 </select>
                             </div>
 
+                            <div class="my-3">
+                                <label>Status: @if($user->u_status == 1) Active @else Disabled @endif</label>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -112,15 +116,25 @@
                             </div>
                         @endif
 
-                        @if(Auth::user()->u_status == 1)
+                        @if($user->u_status == 1)
                             <div class="my-1 p-1">
-                                <button class="btn btn-sm btn-danger">Disable Account</button>
+                                <form action="/user/disable" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="id" value="{{$user->id}}">
+                                    <button type="submit" class="btn btn-sm btn-danger">Disable Account</button>
+                                </form>
                             </div>
                         @endif
 
-                        @if(Auth::user()->u_status == 2)
+                        @if($user->u_status == 2)
                             <div class="my-1 p-1">
-                                <button class="btn btn-sm btn-success">Reactivate Account</button>
+                                <form action="/user/reactivate" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="id" value="{{$user->id}}">
+                                    <button type="submit" class="btn btn-sm btn-success">Re-activate Account</button>
+                                </form>
                             </div>
                         @endif
 

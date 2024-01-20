@@ -30,6 +30,7 @@
                             <th>Last Name</th>
                             <th>First Name</th>
                             <th>Middle Name</th>
+                            <th>Username</th>
                             <th>Department</th>
                             <th>Role</th>
                             <th>Status</th>
@@ -43,6 +44,7 @@
                             <td>{{$user->u_lname}}</td>
                             <td>{{$user->u_fname}}</td>
                             <td>{{$user->u_mname}}</td>
+                            <td>{{$user->u_username}}</td>
                             <td>{{$user->d_description}}</td>
                             <td>
                                 @if($user->u_role == 1)

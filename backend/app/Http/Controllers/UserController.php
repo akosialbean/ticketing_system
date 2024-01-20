@@ -74,5 +74,39 @@ class UserController extends Controller
         }
     }
 
-    
+    public function disable(Request $request){
+        $user = $request->validate([
+            'id' => ['required'],
+        ]);
+
+        $disable = User::where('id', $user['id'])
+        ->update([
+            'u_status' => 2,
+            'updated_at' => now(),
+        ]);
+
+        if($disable){
+            return redirect('/user/' . $user['id'])->with('success', 'User disabled!');
+        }else{
+            return redirect('/user/' . $user['id'])->with('success', 'Failed to disable user!');
+        }
+    }
+
+    public function reactivate(Request $request){
+        $user = $request->validate([
+            'id' => ['required'],
+        ]);
+
+        $disable = User::where('id', $user['id'])
+        ->update([
+            'u_status' => 1,
+            'updated_at' => now(),
+        ]);
+
+        if($disable){
+            return redirect('/user/' . $user['id'])->with('success', 'User re-activated!');
+        }else{
+            return redirect('/user/' . $user['id'])->with('success', 'Failed to re-activate user!');
+        }
+    }
 }

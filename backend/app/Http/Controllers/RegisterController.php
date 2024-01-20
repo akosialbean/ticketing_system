@@ -53,9 +53,9 @@ class RegisterController extends Controller
         $adduser = User::insert($newuser);
 
         if($adduser){
-            return redirect('/register')->with('success', 'New user created!');
+            return redirect('/users')->with('success', 'New user created!');
         }else{
-            return redirect('/register')->with('error', 'Failed to create!');
+            return redirect('/users')->with('error', 'Failed to create!');
         }
     }
 }

@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <p>Assigned to: {{$ticket->t_assignedto}}</p>
+                            <p>Assigned to: @if($assignedto){{$assignedto->u_fname}} {{$assignedto->u_fname}}@endif</p>
                         </div>
 
                         <div class="mb-3">
@@ -97,20 +97,22 @@
                                 @endif
                             @endif
                                 
-                            @if(!$ticket->t_assignedto)
-                                <form action="/ticket/{{$ticket->t_id}}/assignto" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="t_id" value="{{$ticket->id}}">
-                                    <label for="t_assignedto"><small>Assign to:</small></label>
-                                    <select name="t_assignedto" id="t_assignedto" class="form-select">
-                                        <option value="">--</option>
-                                        @foreach($resolvers as $resolver)
-                                            <option value="{{$resolver->id}}">{{$resolver->u_fname}} {{$resolver->u_lname}}</option>
-                                        @endforeach
-                                    </select>
-                                    <button class="btn btn-sm btn-success my-3">Assign</button>
-                                </form>
+                            @if(Auth::user()->u_role == 1)
+                                @if(!$ticket->t_assignedto)
+                                    <form action="/ticket/{{$ticket->t_id}}/assignto" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                        <label for="t_assignedto"><small>Assign to:</small></label>
+                                        <select name="t_assignedto" id="t_assignedto" class="form-select">
+                                            <option value="">--</option>
+                                            @foreach($resolvers as $resolver)
+                                                <option value="{{$resolver->id}}">{{$resolver->u_fname}} {{$resolver->u_lname}}</option>
+                                            @endforeach
+                                        </select>
+                                        <button class="btn btn-sm btn-success my-3">Assign</button>
+                                    </form>
+                                @endif
                             @endif
                             
 
@@ -200,8 +202,10 @@
                         </tr>
                         <tr>
                             <th><small>Assigned to</small></th>
-                            <td><small>{{$assignedto->u_fname}} {{$assignedto->u_lname}}</small></td>
-                            <td><small>{{$assignedto->created_at}}</small></td>
+                            @if($assignedto)
+                                <td><small>{{$assignedto->u_fname}} {{$assignedto->u_lname}}</small></td>
+                                <td><small>{{$assignedto->created_at}}</small></td>
+                            @endif
                         </tr>
                         <tr>
                             <th><small>Acknowledged by</small></th>
