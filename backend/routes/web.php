@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
     Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');
     Route::get('/departments', [DepartmentController::class, 'departments'])->name('departments');
+    Route::get('/department/{d_id}', [DepartmentController::class, 'department'])->name('department');
+    Route::patch('/department/{d_id}/edit', [DepartmentController::class, 'editdepartment'])->name('editdepartment');
 
     Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
     Route::post('/addseverity', [SeverityController::class, 'add'])->name('addseverity');

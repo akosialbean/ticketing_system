@@ -40,9 +40,15 @@
                             <td>{{$department->d_id}}</td>
                             <td>{{$department->d_code}}</td>
                             <td>{{$department->d_description}}</td>
-                            <td>{{$department->d_status}}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary">edit</button>
+                                @if($department->d_status == 1)
+                                    Active
+                                @else
+                                    Disabled
+                                @endif
+                            </td>
+                            <td>
+                                <a href="/department/{{$department->d_id}}" class="btn btn-sm btn-primary">edit</a>
                             </td>
                         </tr>
                         @endforeach
