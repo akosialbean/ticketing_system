@@ -28,13 +28,15 @@ class LoginController extends Controller
             ];
             $createadmin = User::insert($admin);
 
-            $department = [
-                'd_code' => 'ICT',
-                'd_description' => 'Information and Communications Technology',
-                'created_at' => now(),
-            ];
-            $createdepartment = Department::insert($department);
-            
+            $checkdepartment = Department::count();
+            if($checkdepartment < 1){
+                $department = [
+                    'd_code' => 'ICT',
+                    'd_description' => 'Information and Communications Technology',
+                    'created_at' => now(),
+                ];
+                $createdepartment = Department::insert($department);
+            }
             return view('welcome');
         }else{
             return view('welcome');
