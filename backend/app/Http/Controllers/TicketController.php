@@ -54,10 +54,10 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = DB::table('tickets')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            ->where('tickets.t_todepartment', Auth::user()->u_department)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
-            ->where('tickets.t_todepartment', Auth::user()->u_department)
             ->orderby('t_id', 'desc')->paginate(10);
 
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
@@ -77,7 +77,7 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = DB::table('tickets')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->where('tickets.t_todepartment', Auth::user()->u_department)
@@ -131,7 +131,7 @@ class TicketController extends Controller
     }
 
     public function ticket($ticket){
-        $getTicket = DB::table('tickets')
+        $tickets = DB::table('tickets')
             ->rightJoin('categories', 'categories.c_id', 'tickets.t_category')
             ->rightJoin('users', 'users.id', 'tickets.t_createdby')
             ->where('tickets.t_id', $ticket)
@@ -182,7 +182,7 @@ class TicketController extends Controller
             ->where('tickets.t_id', $ticket)
             ->first();
 
-        return view('tickets.ticket', compact('getTicket', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto'));
+        return view('tickets.ticket', compact('tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto'));
     }
 
     public function acknowledge(Request $request){
@@ -223,15 +223,11 @@ class TicketController extends Controller
 
         $user = Auth::user()->id;
 
-        $ticket['t_updatedby'] = $user;
-        $ticket['updated_at'] = now();
-        $ticket['t_status'] = 5;
-
         $resolve = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             'updated_at' => now(),
             't_updatedby' => $user,
-            't_status' => 4,
+            't_status' => 5,
             't_resolvedby' => $user,
             't_resolution' => $ticket['t_resolution'],
             't_resolveddate' => now(),
@@ -255,16 +251,11 @@ class TicketController extends Controller
 
         $user = Auth::user()->id;
 
-        $ticket['t_updatedby'] = $user;
-        $ticket['t_closedby'] = $user;
-        $ticket['updated_at'] = now();
-        $ticket['t_status'] = 6;
-
         $resolve = Ticket::where('t_id', $ticket['t_id'])
         ->update([
             'updated_at' => now(),
             't_updatedby' => $user,
-            't_status' => 5,
+            't_status' => 6,
             't_closedby' => $user,
             't_closeddate' => now(),
         ]);
@@ -306,7 +297,7 @@ class TicketController extends Controller
     }
 
     public function mytickets(){
-        $tickets = DB::table('tickets')
+        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
         ->where('t_createdby', Auth::user()->id)
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
@@ -328,7 +319,7 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = DB::table('tickets')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
             ->where('tickets.t_status', 2)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
@@ -351,8 +342,8 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = DB::table('tickets')
-            ->where('tickets.t_status', 3)
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            ->where('tickets.t_status', 4)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -374,8 +365,8 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = DB::table('tickets')
-            ->where('tickets.t_status', 4)
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            ->where('tickets.t_status', 5)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -398,7 +389,7 @@ class TicketController extends Controller
             return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
-            ->where('tickets.t_status', 5)
+            ->where('tickets.t_status', 6)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
@@ -421,7 +412,7 @@ class TicketController extends Controller
             return redirect()->intended('/tickets/mytickets');
         }else{
             $tickets = DB::table('tickets')
-            ->where('tickets.t_status', 6)
+            ->where('tickets.t_status', 7)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);

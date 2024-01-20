@@ -22,7 +22,7 @@
                         </div>
                     @endif
 
-                    @foreach($getTicket as $ticket)
+                    @foreach($tickets as $ticket)
                         <div class="mb-3">
                             <label for="t_title" class="form-label h1">
                                 #{{$ticket->t_id}}
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <p>Assigned to: @if($assignedto){{$assignedto->u_fname}} {{$assignedto->u_fname}}@endif</p>
+                            <p>Assigned to: @if($assignedto){{$assignedto->u_fname}} {{$assignedto->u_lname}}@endif</p>
                         </div>
 
                         <div class="mb-3">
@@ -86,14 +86,12 @@
 
                             @if(Auth::user()->u_role == 1)
                                 @if($ticket->t_status == 3)
-                                    @if($ticket->t_severity == 0)
-                                        <form action="/acknowledge" method="POST">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                            <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
-                                        </form>
-                                    @endif
+                                    <form action="/acknowledge" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                        <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
+                                    </form>
                                 @endif
                             @endif
                                 
@@ -124,23 +122,19 @@
 
                         <hr>
 
-                        @if(Auth::user()->u_role == 1)
-                            @if($ticket->t_status == 4)
-                                @if($ticket->t_assignedto != '')
-                                    <div class="mb-3">
-                                        <form action="/resolve" method="post">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                            <label for="t_resolution" class="form-label">Resolution</label>
-                                            <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
-                                            <div class="mt-3">
-                                                <button type="submit" class="btn btn-sm btn-success">Resolve</button>
-                                            </div>
-                                        </form>
+                        @if(Auth::user()->u_role == 1 && $ticket->t_status == 4)
+                            <div class="mb-3">
+                                <form action="/resolve" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                    <label for="t_resolution" class="form-label">Resolution</label>
+                                    <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
+                                    <div class="mt-3">
+                                        <button type="submit" class="btn btn-sm btn-success">Resolve</button>
                                     </div>
-                                @endif
-                            @endif
+                                </form>
+                            </div>
                         @endif
 
                         @if(($ticket->t_status == 5 || $ticket->t_status == 6))
@@ -157,7 +151,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                <div class="mt-3">
+                                <div class="my-3">
                                     <button class="btn btn-sm btn-warning">Close Ticket</button>
                                 </div>
                             </form>
@@ -235,7 +229,7 @@
 
 
     <!-- The Modal -->
-    @foreach($getTicket as $ticket)
+    @foreach($tickets as $ticket)
         <div class="modal" id="cancellationReason">
             <div class="modal-sm modal-dialog modal-dialog-centered">
                 <div class="modal-content">
