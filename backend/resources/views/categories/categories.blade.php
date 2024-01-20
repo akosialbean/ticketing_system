@@ -29,7 +29,6 @@
                             <th>#</th>
                             <th>Code</th>
                             <th>Category</th>
-                            <th>Severity</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -41,7 +40,6 @@
                             <td>{{$category->c_id}}</td>
                             <td>{{$category->c_code}}</td>
                             <td>{{$category->c_description}}</td>
-                            <td>{{$category->c_severity}}</td>
                             <td>{{$category->c_status}}</td>
                             <td>
                                 <button class="btn btn-sm btn-primary">edit</button>

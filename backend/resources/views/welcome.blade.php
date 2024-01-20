@@ -41,7 +41,7 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <div class="container mt-3 p-5 w-100">
+    <div class="container my-5 py-5">
         <div class="card">
             <div class="card-header">Login</div>
             <div class="card-body px-5">

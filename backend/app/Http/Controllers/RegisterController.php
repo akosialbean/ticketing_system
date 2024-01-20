@@ -37,7 +37,7 @@ class RegisterController extends Controller
         $newuser['created_at'] = now();
 
         $fname = strtolower($newuser['u_fname']);
-        $lname = strtolower($newuser['u_lname']);
+        $lname = str_replace(' ', '', strtolower($newuser['u_lname']));
         $newuser['u_username'] = strtolower(lcfirst($fname[0]) . $lname);
 
         // $checkemail = User::where('u_email', $newuser['u_email'])->first();

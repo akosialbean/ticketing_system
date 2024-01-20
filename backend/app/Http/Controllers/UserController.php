@@ -130,4 +130,43 @@ class UserController extends Controller
             return redirect('/user/' . $user['id'])->with('success', 'Failed to reset password!');
         }
     }
+
+    public function updateuserprofile(Request $request){
+        $user = $request->validate([
+            'id' => ['required'],
+            'u_fname' => ['required'],
+            'u_lname' => ['required'],
+            'u_mname' => ['nullable'],
+            'u_email' => ['nullable'],
+            'u_role' => ['required'],
+            'u_department' => ['required'],
+            'u_username',
+        ]);
+
+        $fname = strtolower($user['u_fname']);
+        $lname = strtolower($user['u_lname']);
+        $user['u_username'] = strtolower(lcfirst($fname[0]) . $lname);
+
+        $checkusername = User::where('u_username', 'LIKE', '%' . $user['u_username'] . '%')->count();
+        if($checkusername > 0){
+            $user['u_username'] = ($user['u_username'] . $checkusername);
+        }
+
+        $updateuserprofile = User::where('id', $user['id'])
+        ->update([
+            'u_fname' => $user['u_fname'],
+            'u_lname' => $user['u_lname'],
+            'u_mname' => $user['u_mname'],
+            'u_email' => $user['u_email'],
+            'u_role' => $user['u_role'],
+            'u_department' => $user['u_department'],
+            'updated_at' => now(),
+        ]);
+
+        if($updateuserprofile){
+            return redirect('/user/' . $user['id'])->with('success', 'User profile update successful!');
+        }else{
+            return redirect('/user/' . $user['id'])->with('success', 'Failed to update user profile!');
+        }
+    }
 }
