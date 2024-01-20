@@ -49,22 +49,28 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            if(Auth::user()->u_role == 1){
-                if(Auth::user()->u_firstlogin == 2)
-                    return redirect()->intended('/tickets')->with('success', 'Login Successful!');
-                else{
-                    return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password! ' . Auth::user()->u_firstlogin);
+            if(Auth::user()->u_status == 1){
+                $request->session()->regenerate();
+                if(Auth::user()->u_role == 1){
+                    if(Auth::user()->u_firstlogin == 2)
+                        return redirect()->intended('/tickets')->with('success', 'Login Successful!');
+                    else{
+                        return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password! ' . Auth::user()->u_firstlogin);
+                    }
+                }else{
+                    if(Auth::user()->u_firstlogin == 2)
+                        return redirect()->intended('/tickets/mytickets')->with('success', 'Login Successful!');
+                    else{
+                        return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password! ' . Auth::user()->u_firstlogin);
+                    }
                 }
             }else{
-                if(Auth::user()->u_firstlogin == 2)
-                    return redirect()->intended('/tickets/mytickets')->with('success', 'Login Successful!');
-                else{
-                    return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password! ' . Auth::user()->u_firstlogin);
-                }
+                $request->session()->invalidate();
+                $request->session()->regenerate();
+                return redirect()->intended('/')->with('error', 'User account is disabled!');
             }
         } else {
-            return redirect()->intended('/')->with('error', 'Failed to login!');
+            return redirect()->intended('/')->with('error', 'Incorrect username / password!');
         }
     }
 
