@@ -172,7 +172,7 @@ class TicketController extends Controller
             ->where('tickets.t_id', $ticket)
             ->first();
 
-        $severities = Severity::orderby('s_id', 'asc')->get();
+        $severities = Severity::where('s_status', 1)->orderby('s_id', 'asc')->get();
 
         $resolvers = User::orderby('u_fname', 'asc')
         ->where('users.u_role', '1')->get();

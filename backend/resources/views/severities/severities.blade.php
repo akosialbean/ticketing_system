@@ -40,9 +40,15 @@
                                 <td>{{$severity->s_id}}</td>
                                 <td>{{$severity->s_title}}</td>
                                 <td>{{$severity->s_description}}</td>
-                                <td>{{$severity->s_status}}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary">edit</button>
+                                    @if($severity->s_status == 1)
+                                        Active
+                                    @else
+                                        Disabled
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="/severity/{{$severity->s_id}}" class="btn btn-sm btn-primary">edit</a>
                                 </td>
                             </tr>
                         @endforeach

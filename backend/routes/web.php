@@ -47,6 +47,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
     Route::post('/addseverity', [SeverityController::class, 'add'])->name('addseverity');
     Route::get('/severities', [SeverityController::class, 'severities'])->name('severities');
+    Route::get('/severity/{s_id}', [SeverityController::class, 'severity'])->name('severity');
+    Route::patch('/severity/{s_id}/edit', [SeverityController::class, 'editseverity'])->name('editseverity');
 
     Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
     Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
