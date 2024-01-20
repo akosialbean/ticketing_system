@@ -61,7 +61,7 @@
                             @endif
 
                             @if(Auth::user()->u_role == 1)
-                                @if($ticket->t_status == '1' || $ticket->t_status == '2')
+                                @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
                                     @if($ticket->t_severity < 1)
                                         <hr>
 
@@ -85,7 +85,7 @@
                             @endif
 
                             @if(Auth::user()->u_role == 1)
-                                @if($ticket->t_status == 2)
+                                @if($ticket->t_status == 3)
                                     @if($ticket->t_severity == 0)
                                         <form action="/acknowledge" method="POST">
                                             @csrf
@@ -98,7 +98,7 @@
                             @endif
                                 
                             @if(Auth::user()->u_role == 1)
-                                @if(!$ticket->t_assignedto)
+                                @if($ticket->t_status == 1 || $ticket->t_status == 2)
                                     <form action="/ticket/{{$ticket->t_id}}/assignto" method="post">
                                         @csrf
                                         @method('PATCH')
@@ -116,7 +116,7 @@
                             @endif
                             
 
-                            @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
+                            @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3 || $ticket->t_status == 4)
                                 <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
                             @endif
 
@@ -125,7 +125,7 @@
                         <hr>
 
                         @if(Auth::user()->u_role == 1)
-                            @if($ticket->t_status == 3)
+                            @if($ticket->t_status == 4)
                                 @if($ticket->t_assignedto != '')
                                     <div class="mb-3">
                                         <form action="/resolve" method="post">
@@ -143,7 +143,7 @@
                             @endif
                         @endif
 
-                        @if(($ticket->t_status == 4 || $ticket->t_status == 5))
+                        @if(($ticket->t_status == 5 || $ticket->t_status == 6))
                             <div class="mb-3">
                                 <label for="t_title" class="form-label h2">Resolution</label>
                                 <p>{{$ticket->t_resolution}}</p>
@@ -152,7 +152,7 @@
                             </div>
                         @endif
 
-                        @if(($ticket->t_status == 4))
+                        @if(($ticket->t_status == 5))
                             <form action="/close" method="post">
                                 @csrf
                                 @method('PATCH')
@@ -163,7 +163,7 @@
                             </form>
                         @endif
 
-                        @if(($ticket->t_status == 6))
+                        @if(($ticket->t_status == 7))
                             <div class="mb-3">
                                 <label for="t_cancellationreason" class="form-label h6"><strong>Cancellation Reason</strong></label>
                                 <p>{{$ticket->t_cancelreason}}</p>

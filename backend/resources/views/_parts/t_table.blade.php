@@ -29,12 +29,14 @@
                         @elseif($ticket->t_status == 2)
                             Opened
                         @elseif($ticket->t_status == 3)
-                            Acknowledged
+                            Assigned
                         @elseif($ticket->t_status == 4)
-                            Resolved
+                            Acknowledged
                         @elseif($ticket->t_status == 5)
+                            Resolved
+                        @elseif($ticket->t_status == 6)
                             Closed
-                        @else
+                        @elseif($ticket->t_status == 7)
                             Cancelled
                         @endif
                     </small></td>

@@ -63,11 +63,11 @@ class TicketController extends Controller
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
-            $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+            $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+            $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+            $resolvedticketcount = Ticket::where('t_status', 5)->count();
+            $closedticketcount = Ticket::where('t_status', 6)->count();
+            $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
             return view('tickets.alltickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
@@ -87,11 +87,11 @@ class TicketController extends Controller
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
-            $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+            $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+            $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+            $resolvedticketcount = Ticket::where('t_status', 5)->count();
+            $closedticketcount = Ticket::where('t_status', 6)->count();
+            $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
             return view('tickets.assignedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
@@ -199,7 +199,7 @@ class TicketController extends Controller
         ->update([
             'updated_at' => now(),
             't_updatedby' => $user,
-            't_status' => 3,
+            't_status' => 4,
             't_acknowledgedby' => $user,
             't_acknowledgeddate' => now(),
         ]);
@@ -225,7 +225,7 @@ class TicketController extends Controller
 
         $ticket['t_updatedby'] = $user;
         $ticket['updated_at'] = now();
-        $ticket['t_status'] = 4;
+        $ticket['t_status'] = 5;
 
         $resolve = Ticket::where('t_id', $ticket['t_id'])
         ->update([
@@ -258,7 +258,7 @@ class TicketController extends Controller
         $ticket['t_updatedby'] = $user;
         $ticket['t_closedby'] = $user;
         $ticket['updated_at'] = now();
-        $ticket['t_status'] = 5;
+        $ticket['t_status'] = 6;
 
         $resolve = Ticket::where('t_id', $ticket['t_id'])
         ->update([
@@ -292,7 +292,7 @@ class TicketController extends Controller
         ->update([
             't_cancelreason' => $ticket['t_cancelreason'],
             't_updatedby' => $user,
-            't_status' => 6,
+            't_status' => 7,
             't_cancelledby' => $user,
             'updated_at' => now(),
             't_cancelleddate' => now(),
@@ -315,11 +315,11 @@ class TicketController extends Controller
         $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
         $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
         $openticketcount = Ticket::where('t_status', 2)->count();
-        $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-        $resolvedticketcount = Ticket::where('t_status', 4)->count();
-        $closedticketcount = Ticket::where('t_status', 5)->count();
-        $cancelledticketcount = Ticket::where('t_status', 6)->count();
-        $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+        $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+        $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+        $resolvedticketcount = Ticket::where('t_status', 5)->count();
+        $closedticketcount = Ticket::where('t_status', 6)->count();
+        $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
         return view('tickets.mytickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
     }
@@ -337,11 +337,11 @@ class TicketController extends Controller
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
-            $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+            $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+            $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+            $resolvedticketcount = Ticket::where('t_status', 5)->count();
+            $closedticketcount = Ticket::where('t_status', 6)->count();
+            $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
             return view('tickets.opentickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
@@ -360,11 +360,11 @@ class TicketController extends Controller
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
-            $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+            $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+            $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+            $resolvedticketcount = Ticket::where('t_status', 5)->count();
+            $closedticketcount = Ticket::where('t_status', 6)->count();
+            $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
             return view('tickets.acknowledgedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
@@ -383,11 +383,11 @@ class TicketController extends Controller
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
-            $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+            $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+            $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+            $resolvedticketcount = Ticket::where('t_status', 5)->count();
+            $closedticketcount = Ticket::where('t_status', 6)->count();
+            $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
             return view('tickets.resolvedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
@@ -406,11 +406,11 @@ class TicketController extends Controller
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
-            $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+            $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+            $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+            $resolvedticketcount = Ticket::where('t_status', 5)->count();
+            $closedticketcount = Ticket::where('t_status', 6)->count();
+            $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
             return view('tickets.closedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
@@ -429,11 +429,11 @@ class TicketController extends Controller
             $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
             $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
             $openticketcount = Ticket::where('t_status', 2)->count();
-            $acknowledgedticketcount = Ticket::where('t_status', 3)->count();
-            $resolvedticketcount = Ticket::where('t_status', 4)->count();
-            $closedticketcount = Ticket::where('t_status', 5)->count();
-            $cancelledticketcount = Ticket::where('t_status', 6)->count();
-            $assignedticketcount = Ticket::where('t_assignedto', Auth::user()->id)->count();
+            $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+            $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+            $resolvedticketcount = Ticket::where('t_status', 5)->count();
+            $closedticketcount = Ticket::where('t_status', 6)->count();
+            $cancelledticketcount = Ticket::where('t_status', 7)->count();
 
             return view('tickets.cancelledtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
@@ -501,7 +501,8 @@ class TicketController extends Controller
     public function assignto(Request $request){
         $user = $request->validate([
             't_id' => ['required'],
-            't_assignedto' => ['required']
+            't_assignedto' => ['required'],
+            't_status' => ['nullable'],
         ]);
 
         $assign = Ticket::where('t_id', $user['t_id'])
@@ -510,6 +511,7 @@ class TicketController extends Controller
                         't_assignedby' => Auth::user()->id,
                         't_assigneddate' => now(),
                         'updated_at' => now(),
+                        't_status' => 3
                     ]);
         
         if($assign){
