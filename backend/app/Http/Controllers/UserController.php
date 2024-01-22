@@ -12,10 +12,9 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function users(){
-        $get = DB::table('users')
-        ->join('departments', 'users.u_department', '=', 'departments.d_id')
+        $users = User::join('departments', 'users.u_department', '=', 'departments.d_id')
         ->orderby('users.id', 'desc')->get();
-        return view('users.users', ['users' => $get]);
+        return view('users.users', compact('users'));
     }
 
     public function user($userid){
@@ -169,5 +168,19 @@ class UserController extends Controller
         }else{
             return redirect('/user/' . $user['id'])->with('success', 'Failed to update user profile!');
         }
+    }
+
+    public function searchuser(Request $request){
+        $searchitem = $request->validate(['searchitem' => ['required']]);
+
+        $users = User::where('users.id', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('users.u_fname', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('users.u_lname', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('users.u_mname', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('users.u_username', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->join('departments', 'users.u_department', '=', 'departments.d_id')
+        ->orderby('users.id', 'desc')->get();
+
+        return view('users.searchuser', compact('users'));
     }
 }
