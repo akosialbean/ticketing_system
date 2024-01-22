@@ -45,8 +45,8 @@ class CategoryController extends Controller
     }
 
     public function categories(){
-        $get = Category::orderby('c_id', 'desc')->get();
-        return view('categories.categories', ['categories' => $get]);
+        $categories = Category::orderby('c_id', 'desc')->paginate(10);
+        return view('categories.categories', compact('categories'));
     }
 
     public function category($c_id){
