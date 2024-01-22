@@ -45,8 +45,8 @@ class DepartmentController extends Controller
     }
 
     public function departments(){
-        $get = Department::orderby('d_id', 'desc')->get();
-        return view('departments.departments', ['departments' => $get]);
+        $departments = Department::orderby('d_id', 'desc')->paginate(10);
+        return view('departments.departments', compact('departments'));
     }
 
     public function department($d_id){
