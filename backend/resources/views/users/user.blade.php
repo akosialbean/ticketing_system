@@ -126,31 +126,35 @@
                             </div>
                         @endif
 
-                        @if($user->u_status == 1)
-                            <div class="my-1 p-1">
-                                <form action="/user/disable" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="id" value="{{$user->id}}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Disable Account</button>
-                                </form>
-                            </div>
+                        @if($user->u_role == 1)
+                            @if($user->u_status == 1)
+                                <div class="my-1 p-1">
+                                    <form action="/user/disable" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="id" value="{{$user->id}}">
+                                        <button type="submit" class="btn btn-sm btn-danger">Disable Account</button>
+                                    </form>
+                                </div>
+                            @endif
+
+                            @if($user->u_status == 2)
+                                <div class="my-1 p-1">
+                                    <form action="/user/reactivate" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="id" value="{{$user->id}}">
+                                        <button type="submit" class="btn btn-sm btn-success">Re-activate Account</button>
+                                    </form>
+                                </div>
+                            @endif
                         @endif
 
-                        @if($user->u_status == 2)
+                        @if($user->u_role == 1)
                             <div class="my-1 p-1">
-                                <form action="/user/reactivate" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="id" value="{{$user->id}}">
-                                    <button type="submit" class="btn btn-sm btn-success">Re-activate Account</button>
-                                </form>
+                                <a href="/users" class="btn btn-sm btn-primary my-3">Back</a>
                             </div>
                         @endif
-
-                        <div class="my-1 p-1">
-                            <a href="/users" class="btn btn-sm btn-primary my-3">Back</a>
-                        </div>
                     </div>
                 </div>
             </div>

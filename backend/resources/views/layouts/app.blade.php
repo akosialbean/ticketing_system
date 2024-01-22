@@ -49,7 +49,7 @@
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{Auth::user()->u_fname}} {{Auth::user()->u_lname}}</a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="#" class="dropdown-item">Account</a>
+                                            <a href="/user/{{Auth::user()->id}}" class="dropdown-item">Account</a>
                                         </li>
                                         <li>
                                             <form action="/logout" method="post">

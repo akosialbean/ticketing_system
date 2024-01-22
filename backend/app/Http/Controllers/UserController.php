@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function users(){
         $users = User::join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->orderby('users.id', 'desc')->get();
+        ->orderby('users.id', 'desc')->paginate(10);
         return view('users.users', compact('users'));
     }
 
