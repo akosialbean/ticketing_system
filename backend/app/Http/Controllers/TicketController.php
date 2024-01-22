@@ -511,4 +511,25 @@ class TicketController extends Controller
             return redirect('/tickets/' . $user['t_id'])->with('error', 'Failed to assign ' . $user['t_id'] . '!');
         }
     }
+
+    public function searchticket(Request $request){
+        $searchitem = $request->validate(['searchitem' => ['required']]);
+
+        $tickets = Ticket::where('t_id', 'like', '%' . $searchitem['searchitem'] . '%')
+                        ->orwhere('t_title', 'like', '%' . $searchitem['searchitem'] . '%')
+                        ->orwhere('t_description', 'like', '%' . $searchitem['searchitem'] . '%')
+                        ->orwhere('t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
+                        ->paginate(10);
+
+        $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
+        $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
+        $openticketcount = Ticket::where('t_status', 2)->count();
+        $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
+        $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
+        $resolvedticketcount = Ticket::where('t_status', 5)->count();
+        $closedticketcount = Ticket::where('t_status', 6)->count();
+        $cancelledticketcount = Ticket::where('t_status', 7)->count();
+
+        return view('tickets.searchticket', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+    }
 }

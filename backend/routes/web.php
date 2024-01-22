@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/ticket/{ticket}/setseverity', [TicketController::class, 'setseverity'])->name('setseverity');
     Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
     Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
+    Route::post('/tickets/search', [TicketController::class, 'searchticket'])->name('searchticket');
 });
 
 

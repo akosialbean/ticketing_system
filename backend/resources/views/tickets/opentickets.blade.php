@@ -24,6 +24,8 @@
                         @endif
 
                         <a href="/newticket" class="btn btn-sm btn-primary my-3">Create ticket</a>
+
+                        @include('_parts.t_search')
                     </div>
                 </div>
                 
