@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body>
     <header class="fixed-top mb-5 shadow">
@@ -43,11 +44,20 @@
                                         <a class="nav-link" href="/users">Users</a>
                                     </li>
                                 @endif
-                                <li class="nav-item">
-                                    <form action="/logout" method="post">
-                                        @csrf
-                                        <button type="submit" class="btn btn-sm btn-secondary">{{Auth::user()->u_fname}}</button>
-                                    </form>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{Auth::user()->u_fname}} {{Auth::user()->u_lname}}</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#" class="dropdown-item">Account</a>
+                                        </li>
+                                        <li>
+                                            <form action="/logout" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-secondary dropdown-item">Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         @endif
