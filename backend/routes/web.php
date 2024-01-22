@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/categories', [CategoryController::class, 'categories'])->name('categories');
     Route::get('/category/{c_id}', [CategoryController::class, 'category'])->name('category');
     Route::patch('/category/{c_id}/edit', [CategoryController::class, 'editcategory'])->name('editcategory');
+    Route::post('/categories/search', [CategoryController::class, 'searchcategory'])->name('searchcategory');
 
     Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
     Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');

@@ -79,4 +79,15 @@ class CategoryController extends Controller
             return redirect('/category/' . $category['c_id'])->with('error', 'Failed to update category ' . $category['c_code'] . '!');
         }
     }
+
+    public function searchcategory(Request $request){
+        $searchitem = $request->validate(['searchitem' => ['required']]);
+
+        $categories = Category::where('categories.c_id', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('categories.c_code', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('categories.c_description', 'LIKE', '%' . $searchitem['searchitem'] . '%')
+        ->orderby('c_id', 'desc')->paginate(10);
+
+        return view('categories.searchcategory', compact('categories'));
+    }
 }
