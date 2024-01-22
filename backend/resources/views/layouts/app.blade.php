@@ -24,7 +24,6 @@
                 </button>
                 <div class="collapse navbar-collapse float-end" id="collapsibleNavbar">
                     {{-- @if(Auth::user()) --}}
-                        {{now()}}
                         @if(Auth::user())
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
