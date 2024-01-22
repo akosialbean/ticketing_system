@@ -7,7 +7,7 @@
 @section('content')
     <div class="container my-5 py-5">
         <div class="card">
-            <div class="card-header">User Account</div>
+            <div class="card-header">User Account - {{strtoupper($user->u_username)}}</div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -67,7 +67,7 @@
                             <div class="col-sm-6">
                                 <div class="my-3">
                                     <label for="u_department">Department</label>
-                                    <select name="u_department" id="" class="form-select">
+                                    <select name="u_department" id="u_department" class="form-select">
                                         <option value="{{$user->d_id}}">{{$user->d_code}} - {{$user->d_description}}</option>
                                         @foreach($departments as $department)
                                             <option value="{{$department->d_id}}">{{$department->d_description}}</option>

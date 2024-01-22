@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\Validator;
 class LoginController extends Controller
 {
     public function login(){
-        $checkadmin = User::where('u_username', 'superadmin')->count();
+        $checkadmin = User::where('u_username', 'wmcadmin')->count();
         if($checkadmin < 1){
             //creates an admin account
             $admin = [
                 'u_fname' => 'WMC',
-                'u_lname' => 'Super Admin',
-                'u_username' => 'superadmin',
+                'u_lname' => 'Admin',
+                'u_username' => 'wmcadmin',
                 'u_department' => 1,
                 'u_role' => 1,
                 'u_email' => 'ithelpdesk@wetlakemed.com.ph',

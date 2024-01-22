@@ -139,24 +139,24 @@ class UserController extends Controller
             'u_email' => ['nullable'],
             'u_role' => ['required'],
             'u_department' => ['required'],
-            'u_username',
+            // 'u_username',
         ]);
 
-        $fname = strtolower($user['u_fname']);
-        $lname = strtolower($user['u_lname']);
-        $user['u_username'] = strtolower(lcfirst($fname[0]) . $lname);
+        // $fname = strtolower($user['u_fname']);
+        // $lname = strtolower($user['u_lname']);
+        // $user['u_username'] = strtolower(lcfirst($fname[0]) . $lname);
 
-        $checkusername = User::where('u_username', 'LIKE', '%' . $user['u_username'] . '%')->count();
-        if($checkusername > 0){
-            $user['u_username'] = ($user['u_username'] . $checkusername);
-        }
+        // $checkusername = User::where('u_username', 'LIKE', $user['u_username'] . '%')->count();
+        // if($checkusername > 0){
+        //     $user['u_username'] = ($user['u_username'] . $checkusername);
+        // }
 
         $updateuserprofile = User::where('id', $user['id'])
         ->update([
             'u_fname' => $user['u_fname'],
             'u_lname' => $user['u_lname'],
             'u_mname' => $user['u_mname'],
-            'u_username' => $user['u_username'],
+            // 'u_username' => $user['u_username'],
             'u_email' => $user['u_email'],
             'u_role' => $user['u_role'],
             'u_department' => $user['u_department'],
