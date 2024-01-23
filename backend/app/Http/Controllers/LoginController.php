@@ -57,13 +57,13 @@ class LoginController extends Controller
                     if(Auth::user()->u_firstlogin == 2)
                         return redirect()->intended('/tickets')->with('success', 'Login Successful!');
                     else{
-                        return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password! ' . Auth::user()->u_firstlogin);
+                        return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password!');
                     }
                 }else{
                     if(Auth::user()->u_firstlogin == 2)
                         return redirect()->intended('/tickets/mytickets')->with('success', 'Login Successful!');
                     else{
-                        return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password! ' . Auth::user()->u_firstlogin);
+                        return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password!');
                     }
                 }
             }else{
