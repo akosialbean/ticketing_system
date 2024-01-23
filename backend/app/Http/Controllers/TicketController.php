@@ -54,7 +54,7 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
             ->where('tickets.t_todepartment', Auth::user()->u_department)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
@@ -77,7 +77,7 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->where('tickets.t_todepartment', Auth::user()->u_department)
@@ -297,7 +297,7 @@ class TicketController extends Controller
     }
 
     public function mytickets(){
-        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
         ->where('t_createdby', Auth::user()->id)
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
@@ -319,7 +319,7 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
             ->where('tickets.t_status', 2)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
@@ -342,7 +342,7 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
             ->where('tickets.t_status', 4)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
@@ -365,7 +365,7 @@ class TicketController extends Controller
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
-            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_description', 'users.id', 'users.u_fname', 'users.u_lname')
+            $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
             ->where('tickets.t_status', 5)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')

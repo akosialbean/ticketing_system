@@ -19,7 +19,7 @@
                 <tr>
                     <td><small>{{$ticket->t_id}}</small></td>
                     <td><small>{{$ticket->t_title}}</small></td>
-                    <td><small>{{$ticket->d_description}}</small></td>
+                    <td><small>{{$ticket->d_code}}</small></td>
                     <td><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
                     <td><small>{{$ticket->created_at}}</small></td>
                     <td><small>{{$ticket->t_severity}}</small></td>
