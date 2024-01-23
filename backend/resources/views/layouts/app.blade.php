@@ -30,7 +30,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/tickets">Tickets</a>
                                 </li>
-                                @if(Auth::user()->u_role == 1)
+                                @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
                                     <li class="nav-item">
                                         <a class="nav-link" href="/categories">Categories</a>
                                     </li>
