@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/user/resetpassword', [UserController::class, 'resetpassword'])->name('resetpassword');
     Route::patch('/user/updateuserprofile', [UserController::class, 'updateuserprofile'])->name('updateuserprofile');
     Route::post('/users/search', [UserController::class, 'searchuser'])->name('searchuser');
+    Route::patch('/user/{id}/changeusername', [UserController::class, 'changeusername'])->name('changeusername');
 
     Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
     Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');

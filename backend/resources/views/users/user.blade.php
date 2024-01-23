@@ -81,9 +81,23 @@
 
                             </div>
                         </div>
-                        <button class="btn btn-sm btn-primary">Update</button>
+                        <button class="btn btn-sm btn-primary my-3">Update</button>
                     </form>
                 </div>
+
+                @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="u_username">Username</label>
+                        <div class="input-group my-3 w-50">
+                            <input type="text" class="form-control form-control-sm" placeholder="username" name="u_username" id="u_username" value="{{$user->u_username}}" disabled>
+                            <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal" data-bs-target="#changeusername">Change</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6"></div>
+                </div>
+                @endif
 
                 <hr>
 
@@ -161,3 +175,28 @@
         </div>
     </div>
 @endsection
+
+
+<div class="modal" id="changeusername">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Change Username</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form action="/user/{{$user->id}}/changeusername" method="POST">
+                @csrf
+                @method('PATCH')
+                <input type="text" name="u_username" id="u_username" class="form-control form-control-sm mb-3" value="{{$user->u_username}}">
+                <button type="submit" class="btn btn-sm btn-primary float-end">Save</button>
+            </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>

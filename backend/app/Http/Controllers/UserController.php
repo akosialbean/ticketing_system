@@ -183,4 +183,20 @@ class UserController extends Controller
 
         return view('users.searchuser', compact('users'));
     }
+
+    public function changeusername(Request $request, $id){
+        $user = $request->validate(['u_username' => ['required']]);
+
+        $update = User::where('id', $id)
+        ->update([
+            'u_username' => $user['u_username'],
+            'updated_at' => now()
+        ]);
+
+        if($update){
+            return redirect('/user/' . $id)->with('success', 'Username change successful!');
+        }else{
+            return redirect('/user/' . $id)->with('success', 'Failed to change username!');
+        }
+    }
 }
