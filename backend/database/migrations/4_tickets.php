@@ -40,13 +40,6 @@ return new class extends Migration
         });
     }
 
-    //CLosed and resolved
-    //avg tat from creation to resolution
-    //tat within 3days
-    //email upon creation of ticket
-    //include avg handling time
-
-
     /**
      * Reverse the migrations.
      */

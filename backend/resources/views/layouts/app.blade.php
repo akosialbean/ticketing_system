@@ -25,7 +25,7 @@
                 </button>
                 <div class="collapse navbar-collapse float-end" id="collapsibleNavbar">
                     {{-- @if(Auth::user()) --}}
-                        @if(Auth::user())
+                        @if(Auth::user() && Auth::user()->u_firstlogin == 2)
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/tickets">Tickets</a>

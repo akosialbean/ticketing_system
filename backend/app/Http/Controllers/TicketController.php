@@ -321,6 +321,7 @@ class TicketController extends Controller
         }else{
             $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
             ->where('tickets.t_status', 2)
+            ->where('tickets.t_todepartment', Auth::user()->u_department)
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->orderby('t_id', 'desc')->paginate(10);
