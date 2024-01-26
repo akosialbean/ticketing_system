@@ -11,10 +11,10 @@ class TestController extends Controller
     public function sendEmail(){
         $data = [
             'name' => 'IT Helpdesk',
-            'message' => 'This is a test email.'
+            'message' => 'This is a test email 2.'
         ];
 
-        Mail::to('alvincastor30@gmail.com')->send(new SampleMail($data));
+        Mail::to('ithelpdesk@westlakemed.com.ph')->send(new SampleMail($data));
 
         return 'Email sent successfully!';
     }
