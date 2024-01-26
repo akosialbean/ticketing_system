@@ -8,6 +8,7 @@ use App\Http\Controllers\SeverityController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::get('/', [LoginController::class, 'login'])->name('login');
 Route::post('/log', [LoginController::class, 'log'])->name('log');
 Route::get('/user/firstlogin', [LoginController::class, 'firstlogin'])->name('firstlogin');
 Route::patch('/user/firstlogin/changepassword', [LoginController::class, 'changepassword'])->name('changepassword');
+
+Route::get('/test/mail', [TestController::class, 'sendEmail'])->name('testmail');
 
 
 
