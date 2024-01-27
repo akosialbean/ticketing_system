@@ -9,6 +9,8 @@ use App\Models\Severity;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketCreated;
 
 use Illuminate\Http\Request;
 
@@ -40,7 +42,14 @@ class TicketController extends Controller
         $save = Ticket::insert($newticket);
 
         if($save){
+            $user = User::where('id', Auth::user()->id)->get();
+            view('mail.ticketcreated', compact('user'));
+            $data = [
+                'subject' => 'IT Helpdesk Ticket'
+            ];
+            Mail::to('ithelpdesk@westlakemed.com.ph')->send(new TicketCreated($data));
             if(Auth::user()->u_role == 1){
+
                 return redirect('/tickets')->with('success', 'New ticket created!');
             }else{
                 return redirect('/tickets/mytickets')->with('success', 'New ticket created!');
