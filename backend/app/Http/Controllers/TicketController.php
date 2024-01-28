@@ -42,10 +42,14 @@ class TicketController extends Controller
         $save = Ticket::insert($newticket);
 
         if($save){
-            $user = User::where('id', Auth::user()->id)->get();
-            view('mail.ticketcreated', compact('user'));
+            $ticket = Ticket::select('t_title', 't_description')
+            ->where('t_createdby', Auth::user()->id)
+            ->orderby('t_id', 'desc')
+            ->first();
+            // view('mail.ticketcreated', compact('ticket'));
             $data = [
-                'subject' => 'IT Helpdesk Ticket'
+                'subject' => 'IT Helpdesk Ticket',
+                'content' => 'This is to inform you that your ticket number is ' . $ticket->t_title . '.',
             ];
             Mail::to('ithelpdesk@westlakemed.com.ph')->send(new TicketCreated($data));
             if(Auth::user()->u_role == 1){

@@ -9,8 +9,9 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Ticket;
+use App\Http\Controllers\TicketController;
 use App\Models\Users;
+use App\Models\Ticket;
 
 class TicketCreated extends Mailable
 {
@@ -19,16 +20,16 @@ class TicketCreated extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
+
+    // public $ticket;
+    public function __construct(){
         //
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
-    {
+    public function envelope(): Envelope{
         $subject = Ticket::select('t_id', 't_title')
         ->where('t_createdby', Auth::user()->id)
         ->orderby('t_id', 'desc')
@@ -43,8 +44,14 @@ class TicketCreated extends Mailable
      */
     public function content(): Content
     {
+        $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
+        ->join('departments', 't_todepartment', 'd_id')
+        ->where('t_createdby', Auth::user()->id)
+        ->orderby('t_id', 'desc')
+        ->first();
         return new Content(
             view: 'mail.ticketcreated',
+            with: ['ticket' => $ticket],
         );
     }
 

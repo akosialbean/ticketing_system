@@ -74,5 +74,14 @@
     <footer>
         @yield('footer')
     </footer>
+
+    <script>
+        function disablebtn(){
+            const btn = document.querySelector('.btn');
+            btn.addEventListener('click' () => {
+                button.disabled = true;
+            });
+        }
+    </script>
 </body>
 </html>
