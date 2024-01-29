@@ -29,6 +29,7 @@
                             <th>#</th>
                             <th>Code</th>
                             <th>Department</th>
+                            <th>Email</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -40,6 +41,7 @@
                             <td>{{$department->d_id}}</td>
                             <td>{{$department->d_code}}</td>
                             <td>{{$department->d_description}}</td>
+                            <td>{{$department->d_email}}</td>
                             <td>
                                 @if($department->d_status == 1)
                                     Active

@@ -36,6 +36,11 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="d_email" class="form-label">Department Email</label>
+                        <input type="email" class="form-control" id="d_email" name="d_email" value="{{$department->d_email}}" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="d_status" class="form-label">Status</label>
                         <select name="d_status" id="d_status" class="form-select">
                             <option value="{{$department->d_status}}">

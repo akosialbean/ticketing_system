@@ -13,27 +13,26 @@ use App\Http\Controllers\TicketController;
 use App\Models\Users;
 use App\Models\Ticket;
 
-class TicketCreated extends Mailable
+class HelpdeskNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-
-    // public $ticket;
-    public $todepartment;
-
-    public function __construct($todepartment){
-        $this->todepartment = $todepartment;
+    public $fromdepartment;
+    public function __construct($fromdepartment)
+    {
+        $this->fromdepartment = $fromdepartment;
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope{
+    public function envelope(): Envelope
+    {
         return new Envelope(
-            subject: '#' . $this->todepartment->t_id . '#' . ' - ' . $this->todepartment->t_title,
+            subject: 'Ticket Notification',
         );
     }
 
@@ -43,8 +42,8 @@ class TicketCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.ticketcreated',
-            with: ['ticket' => $this->todepartment],
+            view: 'mail.helpdesknotification',
+            with: ['ticket' => $this->fromdepartment]
         );
     }
 

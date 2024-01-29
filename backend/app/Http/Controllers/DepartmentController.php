@@ -18,6 +18,7 @@ class DepartmentController extends Controller
         $department = $request->validate([
             'd_code' => ['required'],
             'd_description' => ['required'],
+            'd_email' => ['required'],
             'created_at'
         ]);
 
@@ -59,6 +60,7 @@ class DepartmentController extends Controller
             'd_id' => ['required'],
             'd_code' => ['required'],
             'd_description' => ['required'],
+            'd_email' => ['required'],
             'updated_at' => ['nullable'],
             'd_updatedby' => ['nullable'],
             'd_status' => ['nullable'],
@@ -68,6 +70,7 @@ class DepartmentController extends Controller
             ->update([
                 'd_code' => $department['d_code'],
                 'd_description' => $department['d_description'],
+                'd_email' => $department['d_email'],
                 'updated_at' => now(),
                 'd_updatedby' => Auth::user()->id,
                 'd_status' => $department['d_status'],

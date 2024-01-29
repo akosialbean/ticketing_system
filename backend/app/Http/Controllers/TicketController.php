@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketCreated;
+use App\Mail\HelpdeskNotification;
 
 use Illuminate\Http\Request;
 
@@ -23,7 +24,6 @@ class TicketController extends Controller
     }
 
     public function add(Request $request){
-        // dd($request);
         $newticket = $request->validate([
             't_title' => ['required'],
             't_description' => ['required'],
@@ -42,18 +42,33 @@ class TicketController extends Controller
         $save = Ticket::insert($newticket);
 
         if($save){
-            $ticket = Ticket::select('t_title', 't_description')
-            ->where('t_createdby', Auth::user()->id)
+            //SENDING EMAIL TO TICKET CREATOR
+            $department1 = Department::select('d_email')
+            ->join('users', 'departments.d_id', 'users.u_department')
+            ->where('users.u_department', Auth::user()->u_department)
+            ->first();
+            $todepartment = $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
+            ->join('departments', 't_todepartment', 'd_id')
+            ->join('users', 'tickets.t_createdby', 'users.id')
+            ->where('tickets.t_createdby', Auth::user()->id)
+            ->orderby('tickets.t_id', 'desc')
+            ->first();
+            Mail::to($department1->d_email)->send(new TicketCreated($todepartment));
+
+            //SENDING EMAIL TO TICKET RESOLVER
+            $department2 = Department::select('d_email')
+            ->where('d_id', $newticket['t_todepartment'])
+            ->first();
+            $fromdepartment = User::select('users.u_fname', 'users.u_lname', 'departments.d_description', 'tickets.t_id', 'tickets.t_title', 'tickets.t_description')
+            ->join('tickets', 'users.id', 'tickets.t_createdby')
+            ->join('departments', 'users.u_department', 'departments.d_id')
+            ->where('tickets.t_createdby', Auth::user()->id)
+            ->where('users.u_department', Auth::user()->u_department)
             ->orderby('t_id', 'desc')
             ->first();
-            // view('mail.ticketcreated', compact('ticket'));
-            $data = [
-                'subject' => 'IT Helpdesk Ticket',
-                'content' => 'This is to inform you that your ticket number is ' . $ticket->t_title . '.',
-            ];
-            Mail::to('ithelpdesk@westlakemed.com.ph')->send(new TicketCreated($data));
-            if(Auth::user()->u_role == 1){
+            Mail::to($department2->d_email)->send(new HelpdeskNotification($fromdepartment));
 
+            if(Auth::user()->u_role == 1){
                 return redirect('/tickets')->with('success', 'New ticket created!');
             }else{
                 return redirect('/tickets/mytickets')->with('success', 'New ticket created!');

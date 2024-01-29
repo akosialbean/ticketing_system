@@ -35,6 +35,11 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="d_email" class="form-label">Department Email</label>
+                        <input type="email" class="form-control" id="d_email" name="d_email" required>
+                    </div>
+
+                    <div class="mb-3">
                         <a href="/departments" class="btn btn-sm btn-danger my-3">Back</a>
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </div>
