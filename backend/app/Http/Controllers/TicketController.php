@@ -135,7 +135,6 @@ class TicketController extends Controller
 
         if(Auth::user()->u_role == 1){
             
-    
             $user = Auth::user()->id;
     
             $update = Ticket::where('t_id', $ticket['t_id'])
@@ -148,6 +147,19 @@ class TicketController extends Controller
             ]);
     
             if($update){
+                //SENDING EMAIL TO TICKET CREATOR
+                $department1 = Department::select('d_email')
+                ->join('users', 'departments.d_id', 'users.u_department')
+                ->where('users.u_department', Auth::user()->u_department)
+                ->first();
+                $todepartment = $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
+                ->join('departments', 't_todepartment', 'd_id')
+                ->join('users', 'tickets.t_createdby', 'users.id')
+                ->where('tickets.t_createdby', Auth::user()->id)
+                ->orderby('tickets.t_id', 'desc')
+                ->first();
+                Mail::to($department1->d_email)->send(new TicketCreated($todepartment));
+                
                 return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' opened!');
             }else{
                 return redirect('/tickets')->with('error', 'Failed to open ticket ' . $ticket['t_id'] . '!');
