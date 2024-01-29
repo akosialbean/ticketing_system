@@ -43,17 +43,17 @@ class TicketController extends Controller
 
         if($save){
             //SENDING EMAIL TO TICKET CREATOR
-            $department1 = Department::select('d_email')
-            ->join('users', 'departments.d_id', 'users.u_department')
-            ->where('users.u_department', Auth::user()->u_department)
-            ->first();
+            // $department1 = User::select('d_email')
+            // ->join('users', 'departments.d_id', 'users.u_department')
+            // ->where('users.u_department', Auth::user()->u_department)
+            // ->first();
             $todepartment = $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
             ->join('departments', 't_todepartment', 'd_id')
             ->join('users', 'tickets.t_createdby', 'users.id')
             ->where('tickets.t_createdby', Auth::user()->id)
             ->orderby('tickets.t_id', 'desc')
             ->first();
-            Mail::to($department1->d_email)->send(new TicketCreated($todepartment));
+            Mail::to(Auth::user()->u_email)->send(new TicketCreated($todepartment));
 
             //SENDING EMAIL TO TICKET RESOLVER
             $department2 = Department::select('d_email')
@@ -573,3 +573,4 @@ class TicketController extends Controller
         return view('tickets.searchticket', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
     }
 }
+
