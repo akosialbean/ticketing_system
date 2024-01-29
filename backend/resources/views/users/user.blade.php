@@ -65,15 +65,17 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <div class="my-3">
-                                    <label for="u_department">Department</label>
-                                    <select name="u_department" id="u_department" class="form-select">
-                                        <option value="{{$user->d_id}}">{{$user->d_code}} - {{$user->d_description}}</option>
-                                        @foreach($departments as $department)
-                                            <option value="{{$department->d_id}}">{{$department->d_description}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                @if(Auth::user()->u_department == 1)
+                                    <div class="my-3">
+                                        <label for="u_department">Department</label>
+                                        <select name="u_department" id="u_department" class="form-select">
+                                            <option value="{{$user->d_id}}">{{$user->d_code}} - {{$user->d_description}}</option>
+                                            @foreach($departments as $department)
+                                                <option value="{{$department->d_id}}">{{$department->d_description}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
 
                                 <div class="my-3">
                                     <label>Status: @if($user->u_status == 1) Active @else Disabled @endif</label>
