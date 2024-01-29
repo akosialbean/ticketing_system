@@ -224,6 +224,75 @@
                     </tbody>
                 </table>
             </div>
+            <div class="card-footer">
+                @foreach($tickets as $ticket)
+                    <div class="progress">
+                        <div
+                            @switch($ticket->t_status)
+                                @case('1')
+                                    class="progress-bar bg-dark progress-bar-striped progress-bar-animated" 
+                                    style="width: 10%"
+                                    @break
+                                @case('2')
+                                    class="progress-bar bg-primary progress-bar-striped progress-bar-animated" 
+                                    style="width: 20%"
+                                    @break
+                                @case('3')
+                                    class="progress-bar bg-info progress-bar-striped progress-bar-animated" 
+                                    style="width: 40%"
+                                    @break
+                                @case('4')
+                                    class="progress-bar bg-warning progress-bar-striped progress-bar-animated" 
+                                    style="width: 60%"
+                                    @break
+                                @case('5')
+                                    class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
+                                    style="width: 80%"
+                                    @break
+                                @case('6')
+                                    class="progress-bar bg-dark progress-bar progress-bar" 
+                                    style="width: 100%"
+                                    @break
+                                @case('7')
+                                    class="progress-bar bg-danger progress-bar progress-bar"
+                                    style="width: 100%"
+                                    @break
+                                @default
+                                    class="progress-bar bg-secondary progress-bar progress-bar"
+                                    style="width: 0%"
+                            @endswitch
+                        >
+                            <strong>
+                                @switch($ticket->t_status)
+                                    @case('1')
+                                        New
+                                        @break
+                                    @case('2')
+                                        Viewed
+                                        @break
+                                    @case('3')
+                                        Assigned
+                                        @break
+                                    @case('4')
+                                        Acknowledged
+                                        @break
+                                    @case('5')
+                                        Resolved
+                                        @break
+                                    @case('6')
+                                        Closed-Resolved
+                                        @break
+                                    @case('7')
+                                        Cancelled
+                                        @break
+                                    @default
+                                        Unknown
+                                @endswitch
+                            </strong>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
