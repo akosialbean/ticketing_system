@@ -55,10 +55,15 @@
                 </div>
 
                 <a href="/tickets" class="btn btn-sm btn-danger">Cancel</a>
-                <button type="submit" class="btn btn-primary btn-sm" onclick="disablebtn()">Save</button>
+                <button type="submit" id="submit-btn" class="btn btn-primary btn-sm">Save</button>
             </form>
         </div>
     </div>
 </div>
-  
+
+<script>
+    function disableSubmitButton() {
+        document.getElementById('submit-btn').disabled = true;
+    }
+</script>
 @endsection

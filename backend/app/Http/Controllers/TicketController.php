@@ -49,10 +49,10 @@ class TicketController extends Controller
 
         if($save){
             //SENDING EMAIL TO TICKET CREATOR
-            $department1 = User::select('d_email')
-            ->join('users', 'departments.d_id', 'users.u_department')
-            ->where('users.u_department', Auth::user()->u_department)
-            ->first();
+            // $department1 = User::select('d_email')
+            // ->join('users', 'departments.d_id', 'users.u_department')
+            // ->where('users.u_department', Auth::user()->u_department)
+            // ->first();
             $todepartment = $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
             ->join('departments', 't_todepartment', 'd_id')
             ->join('users', 'tickets.t_createdby', 'users.id')
