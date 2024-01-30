@@ -2,14 +2,14 @@
     <table class="table table-sm table-hover table-striped table-bordered">
         <thead>
             <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Department</th>
-                <th>Created by</th>
-                <th>Date Created</th>
-                <th>Severity</th>
-                <th>Status</th>
-                <th></th>
+                <th class="small">#</th>
+                <th class="small">Title</th>
+                <th class="small">Department</th>
+                <th class="small">Created by</th>
+                <th class="small">Date Created</th>
+                <th class="small">Severity</th>
+                <th class="small">Status</th>
+                <th class="small"></th>
             </tr>
         </thead>
 
@@ -17,28 +17,38 @@
             @if($tickets)
                 @foreach($tickets as $ticket)
                 <tr>
-                    <td><small>{{$ticket->t_id}}</small></td>
-                    <td><small>{{$ticket->t_title}}</small></td>
-                    <td><small>{{$ticket->d_code}}</small></td>
-                    <td><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
-                    <td><small>{{$ticket->created_at}}</small></td>
-                    <td><small>{{$ticket->t_severity}}</small></td>
-                    <td><small>
-                        @if($ticket->t_status == 1)
-                            New
-                        @elseif($ticket->t_status == 2)
-                            Opened
-                        @elseif($ticket->t_status == 3)
-                            Assigned
-                        @elseif($ticket->t_status == 4)
-                            Acknowledged
-                        @elseif($ticket->t_status == 5)
-                            Resolved
-                        @elseif($ticket->t_status == 6)
-                            Closed
-                        @elseif($ticket->t_status == 7)
-                            Cancelled
-                        @endif
+                    <td class="small"><small>{{$ticket->t_id}}</small></td>
+                    <td class="small"><small>{{$ticket->t_title}}</small></td>
+                    <td class="small"><small>{{$ticket->d_code}}</small></td>
+                    <td class="small"><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
+                    <td class="small"><small>{{$ticket->created_at}}</small></td>
+                    <td class="small"><small>{{$ticket->t_severity}}</small></td>
+                    <td class="small"><small>
+                        @switch($ticket->t_status)
+                            @case('1')
+                                New
+                                @break
+                            @case('2')
+                                Viewed
+                                @break
+                            @case('3')
+                                Assigned
+                                @break
+                            @case('4')
+                                Acknowledged
+                                @break
+                            @case('5')
+                                Resolved
+                                @break
+                            @case('6')
+                                Closed-Resolved
+                                @break
+                            @case('7')
+                                Cancelled
+                                @break
+                            @default
+                                Unknown
+                        @endswitch
                     </small></td>
                     <td>
                         @if($ticket->t_status == 1)
