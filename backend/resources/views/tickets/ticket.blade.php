@@ -83,33 +83,35 @@
                                     @endif
                                 @endif
                             @endif
-
-                            @if(Auth::user()->u_role == 1)
-                                @if($ticket->t_status == 3)
-                                    <form action="/acknowledge" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                        <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
-                                    </form>
+                            
+                            @if($ticket->t_severity != NULL)
+                                @if(Auth::user()->u_role == 1)
+                                    @if($ticket->t_status == 3)
+                                        <form action="/acknowledge" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                            <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
+                                        </form>
+                                    @endif
                                 @endif
-                            @endif
-                                
-                            @if(Auth::user()->u_role == 1)
-                                @if($ticket->t_status == 1 || $ticket->t_status == 2)
-                                    <form action="/ticket/{{$ticket->t_id}}/assignto" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                        <label for="t_assignedto"><small>Assign to:</small></label>
-                                        <select name="t_assignedto" id="t_assignedto" class="form-select">
-                                            <option value="">--</option>
-                                            @foreach($resolvers as $resolver)
-                                                <option value="{{$resolver->id}}">{{$resolver->u_fname}} {{$resolver->u_lname}}</option>
-                                            @endforeach
-                                        </select>
-                                        <button class="btn btn-sm btn-success my-3">Assign</button>
-                                    </form>
+                                    
+                                @if(Auth::user()->u_role == 1)
+                                    @if($ticket->t_status == 1 || $ticket->t_status == 2)
+                                        <form action="/ticket/{{$ticket->t_id}}/assignto" method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                            <label for="t_assignedto"><small>Assign to:</small></label>
+                                            <select name="t_assignedto" id="t_assignedto" class="form-select">
+                                                <option value="">--</option>
+                                                @foreach($resolvers as $resolver)
+                                                    <option value="{{$resolver->id}}">{{$resolver->u_fname}} {{$resolver->u_lname}}</option>
+                                                @endforeach
+                                            </select>
+                                            <button class="btn btn-sm btn-success my-3">Assign</button>
+                                        </form>
+                                    @endif
                                 @endif
                             @endif
                             
