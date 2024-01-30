@@ -14,6 +14,8 @@ use App\Mail\TicketCreated;
 use App\Mail\HelpdeskNotification;
 use App\Mail\ViewedTicket;
 use App\Mail\TicketAssigned;
+use App\Mail\TicketAcknowledged;
+use App\Mail\TicketResolved;
 
 use Illuminate\Http\Request;
 
@@ -250,6 +252,23 @@ class TicketController extends Controller
         ]);
 
         if($update){
+            //SENDING EMAIL TO TICKET CREATOR
+            $ticketcreator = User::select('id')
+            ->join('tickets', 'users.id', 'tickets.t_createdby')
+            ->where('tickets.t_id', $ticket['t_id'])
+            ->first();
+            $user2 = Ticket::select('users.id', 'users.u_email')
+            ->join('users', 'tickets.t_createdby', 'users.id')
+            ->where('tickets.t_createdby', $ticketcreator->id)
+            ->first();
+            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            ->join('departments', 'users.u_department', 'departments.d_id')
+            ->join('tickets', 'users.id', 'tickets.t_acknowledgedby')
+            ->where('tickets.t_id', $ticket['t_id'])
+            ->orderby('tickets.t_id', 'desc')
+            ->first();
+            Mail::to($user2->u_email)->send(new TicketAcknowledged($todepartment));
+
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' acknowledged!');
         }else{
             return redirect('/tickets')->with('error', 'Failed to acknowledge ' . $ticket['t_id'] . '!');
@@ -279,6 +298,23 @@ class TicketController extends Controller
         ]);
 
         if($resolve){
+            //SENDING EMAIL TO TICKET CREATOR
+            $ticketcreator = User::select('id')
+            ->join('tickets', 'users.id', 'tickets.t_createdby')
+            ->where('tickets.t_id', $ticket['t_id'])
+            ->first();
+            $user2 = Ticket::select('users.id', 'users.u_email')
+            ->join('users', 'tickets.t_createdby', 'users.id')
+            ->where('tickets.t_createdby', $ticketcreator->id)
+            ->first();
+            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_resolution', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            ->join('departments', 'users.u_department', 'departments.d_id')
+            ->join('tickets', 'users.id', 'tickets.t_acknowledgedby')
+            ->where('tickets.t_id', $ticket['t_id'])
+            ->orderby('tickets.t_id', 'desc')
+            ->first();
+            Mail::to($user2->u_email)->send(new TicketResolved($todepartment));
+
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' resolved!');
         }else{
             return redirect('/tickets')->with('error', 'Failed to resolve ' . $ticket['t_id'] . '!');
@@ -596,4 +632,3 @@ class TicketController extends Controller
         return view('tickets.searchticket', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
     }
 }
-
