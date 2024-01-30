@@ -16,6 +16,7 @@ use App\Mail\ViewedTicket;
 use App\Mail\TicketAssigned;
 use App\Mail\TicketAcknowledged;
 use App\Mail\TicketResolved;
+use App\Mail\TicketClosed;
 
 use Illuminate\Http\Request;
 
@@ -342,6 +343,22 @@ class TicketController extends Controller
         ]);
 
         if($resolve){
+            $ticketcreator = User::select('id')
+            ->join('tickets', 'users.id', 'tickets.t_createdby')
+            ->where('tickets.t_id', $ticket['t_id'])
+            ->first();
+            $user2 = Ticket::select('users.id', 'users.u_email')
+            ->join('users', 'tickets.t_createdby', 'users.id')
+            ->where('tickets.t_createdby', $ticketcreator->id)
+            ->first();
+            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_resolution', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            ->join('departments', 'users.u_department', 'departments.d_id')
+            ->join('tickets', 'users.id', 'tickets.t_resolvedby')
+            ->where('tickets.t_id', $ticket['t_id'])
+            ->orderby('tickets.t_id', 'desc')
+            ->first();
+            Mail::to($user2->u_email)->send(new TicketClosed($todepartment));
+
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' closed!');
         }else{
             return redirect('/tickets')->with('error', 'Failed to close ' . $ticket['t_id'] . '!');
