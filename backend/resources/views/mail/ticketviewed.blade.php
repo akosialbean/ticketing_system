@@ -9,7 +9,7 @@
 <body>
     Good day IT Helpdesk!
     <br><br>
-    This is to inform you that <strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</strong> from {{$ticket->d_description}} was viewed by <strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</strong>.
+    This is to inform you that your ticket was viewed by <strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</strong> from {{$ticket->d_description}}.
     <br><br>
     <strong>Ticket #: #{{$ticket->t_id}}#</strong><br>
     <i>{{$ticket->t_description}}</i>

@@ -16,9 +16,10 @@ class ViewedTicket extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $todepartment;
+    public function __construct($todepartment)
     {
-        //
+        $this->todepartment = $todepartment;
     }
 
     /**
@@ -37,7 +38,8 @@ class ViewedTicket extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.ticketviewed',
+            with: ['ticket' => $this->todepartment]
         );
     }
 

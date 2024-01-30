@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketCreated;
 use App\Mail\HelpdeskNotification;
+use App\Mail\ViewedTicket;
 
 use Illuminate\Http\Request;
 
@@ -43,10 +44,10 @@ class TicketController extends Controller
 
         if($save){
             //SENDING EMAIL TO TICKET CREATOR
-            // $department1 = User::select('d_email')
-            // ->join('users', 'departments.d_id', 'users.u_department')
-            // ->where('users.u_department', Auth::user()->u_department)
-            // ->first();
+            $department1 = User::select('d_email')
+            ->join('users', 'departments.d_id', 'users.u_department')
+            ->where('users.u_department', Auth::user()->u_department)
+            ->first();
             $todepartment = $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
             ->join('departments', 't_todepartment', 'd_id')
             ->join('users', 'tickets.t_createdby', 'users.id')
@@ -148,17 +149,21 @@ class TicketController extends Controller
     
             if($update){
                 //SENDING EMAIL TO TICKET CREATOR
-                // $department = Department::select('d_email')
-                // ->join('users', 'departments.d_id', 'users.u_department')
-                // ->where('users.u_department', Auth::user()->u_department)
-                // ->first();
-                // $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname')
-                // ->join('departments', 'users.u_department', 'departments.d_id')
-                // ->join('tickets', 'users.id', 'tickets.t_createdby')
-                // ->where('tickets.t_id', $ticket['t_id'])
-                // ->orderby('tickets.t_id', 'desc')
-                // ->first();
-                // Mail::to($department1->d_email)->send(new TicketCreated($todepartment));
+                $ticketcreator = User::select('id')
+                ->join('tickets', 'users.id', 'tickets.t_createdby')
+                ->where('tickets.t_id', $ticket['t_id'])
+                ->first();
+                $user = Ticket::select('users.u_email')
+                ->join('users', 'tickets.t_createdby', 'users.id')
+                ->where('tickets.t_createdby', $ticketcreator->id)
+                ->first();
+                $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+                ->join('departments', 'users.u_department', 'departments.d_id')
+                ->join('tickets', 'users.id', 'tickets.t_createdby')
+                ->where('tickets.t_id', $ticket['t_id'])
+                ->orderby('tickets.t_id', 'desc')
+                ->first();
+                Mail::to($user->u_email)->send(new ViewedTicket($todepartment));
 
                 return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' opened!');
             }else{
