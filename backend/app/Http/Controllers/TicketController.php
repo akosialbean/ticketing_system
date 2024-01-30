@@ -657,11 +657,13 @@ class TicketController extends Controller
     public function searchticket(Request $request){
         $searchitem = $request->validate(['searchitem' => ['required']]);
 
-        $tickets = Ticket::where('t_id', 'like', '%' . $searchitem['searchitem'] . '%')
-                        ->orwhere('t_title', 'like', '%' . $searchitem['searchitem'] . '%')
-                        ->orwhere('t_description', 'like', '%' . $searchitem['searchitem'] . '%')
-                        ->orwhere('t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
-                        ->paginate(10);
+        $tickets = Ticket::join('users', 'tickets.t_createdby', '=', 'users.id')
+        ->join('departments', 'users.u_department', '=', 'departments.d_id')
+        ->where('t_id', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('t_title', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('t_description', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->paginate(10);
 
         $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
         $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
