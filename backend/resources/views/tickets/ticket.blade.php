@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header"><strong>Ticket</strong></div>
             <div class="card-body">
-                <div class="container">
+                <div class="container p-5">
                     @if (session()->has('success'))
                         <div class="alert alert-success">
                             <strong>{{ session()->get('success') }}</strong>
@@ -174,7 +174,7 @@
 
                 <hr>
 
-                <table class="table table-sm table-hover table-stripped">
+                <table class="table table-sm table-hover table-stripped" style="display: none">
                     <thead>
                         <tr>
                             <th colspan="4" class="text-center h3">History</th>
@@ -228,7 +228,7 @@
             </div>
             <div class="card-footer">
                 @foreach($tickets as $ticket)
-                    <div class="progress">
+                    <div class="progress" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Testing">
                         <div
                             @switch($ticket->t_status)
                                 @case('1')
@@ -327,4 +327,11 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+          return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
 @endsection
