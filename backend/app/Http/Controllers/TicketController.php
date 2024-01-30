@@ -84,7 +84,7 @@ class TicketController extends Controller
         }
     }
 
-    public function alltickets(){
+    public function tickets(){
         if(Auth::user()->u_role == 2){
             return redirect()->intended('/tickets/mytickets');
         }else{
@@ -102,8 +102,9 @@ class TicketController extends Controller
             $resolvedticketcount = Ticket::where('t_status', 5)->count();
             $closedticketcount = Ticket::where('t_status', 6)->count();
             $cancelledticketcount = Ticket::where('t_status', 7)->count();
+            $title = ["title" => "All Tickets"];
 
-            return view('tickets.alltickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+            return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
     }
 
@@ -126,8 +127,9 @@ class TicketController extends Controller
             $resolvedticketcount = Ticket::where('t_status', 5)->count();
             $closedticketcount = Ticket::where('t_status', 6)->count();
             $cancelledticketcount = Ticket::where('t_status', 7)->count();
+            $title = ["title" => "Assigned Tickets"];
 
-            return view('tickets.assignedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+            return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
     }
 
@@ -427,8 +429,9 @@ class TicketController extends Controller
         $resolvedticketcount = Ticket::where('t_status', 5)->count();
         $closedticketcount = Ticket::where('t_status', 6)->count();
         $cancelledticketcount = Ticket::where('t_status', 7)->count();
+        $title = ["title" => "My Tickets"];
 
-        return view('tickets.mytickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+        return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
     }
 
     public function opentickets(){
@@ -450,8 +453,9 @@ class TicketController extends Controller
             $resolvedticketcount = Ticket::where('t_status', 5)->count();
             $closedticketcount = Ticket::where('t_status', 6)->count();
             $cancelledticketcount = Ticket::where('t_status', 7)->count();
+            $title = ["title" => "Open Tickets"];
 
-            return view('tickets.opentickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+            return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
     }
 
@@ -473,8 +477,9 @@ class TicketController extends Controller
             $resolvedticketcount = Ticket::where('t_status', 5)->count();
             $closedticketcount = Ticket::where('t_status', 6)->count();
             $cancelledticketcount = Ticket::where('t_status', 7)->count();
+            $title = ["title" => "Acknowledged Tickets"];
 
-            return view('tickets.acknowledgedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+            return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
     }
 
@@ -496,8 +501,9 @@ class TicketController extends Controller
             $resolvedticketcount = Ticket::where('t_status', 5)->count();
             $closedticketcount = Ticket::where('t_status', 6)->count();
             $cancelledticketcount = Ticket::where('t_status', 7)->count();
+            $title = ["title" => "Resolved Tickets"];
 
-            return view('tickets.resolvedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+            return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
     }
 
@@ -519,8 +525,9 @@ class TicketController extends Controller
             $resolvedticketcount = Ticket::where('t_status', 5)->count();
             $closedticketcount = Ticket::where('t_status', 6)->count();
             $cancelledticketcount = Ticket::where('t_status', 7)->count();
+            $title = ["title" => "Closed Tickets"];
 
-            return view('tickets.closedtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+            return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
     }
 
@@ -542,8 +549,9 @@ class TicketController extends Controller
             $resolvedticketcount = Ticket::where('t_status', 5)->count();
             $closedticketcount = Ticket::where('t_status', 6)->count();
             $cancelledticketcount = Ticket::where('t_status', 7)->count();
+            $title = ["title" => "Cancelled Tickets"];
 
-            return view('tickets.cancelledtickets', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+            return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
         }
     }
 
@@ -663,7 +671,8 @@ class TicketController extends Controller
         $resolvedticketcount = Ticket::where('t_status', 5)->count();
         $closedticketcount = Ticket::where('t_status', 6)->count();
         $cancelledticketcount = Ticket::where('t_status', 7)->count();
+        $title = ["title" => "Search Tickets"];
 
-        return view('tickets.searchticket', compact('tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+        return view('tickets.tickets', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
     }
 }
