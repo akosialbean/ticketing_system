@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketCreated;
 use App\Mail\HelpdeskNotification;
 use App\Mail\ViewedTicket;
+use App\Mail\TicketAssigned;
 
 use Illuminate\Http\Request;
 
@@ -542,15 +543,32 @@ class TicketController extends Controller
         ]);
 
         $assign = Ticket::where('t_id', $user['t_id'])
-                    ->update([
-                        't_assignedto' => $user['t_assignedto'],
-                        't_assignedby' => Auth::user()->id,
-                        't_assigneddate' => now(),
-                        'updated_at' => now(),
-                        't_status' => 3
-                    ]);
+        ->update([
+            't_assignedto' => $user['t_assignedto'],
+            't_assignedby' => Auth::user()->id,
+            't_assigneddate' => now(),
+            'updated_at' => now(),
+            't_status' => 3
+        ]);
         
         if($assign){
+            //SENDING EMAIL TO TICKET CREATOR
+            $ticketcreator = User::select('id')
+            ->join('tickets', 'users.id', 'tickets.t_createdby')
+            ->where('tickets.t_id', $user['t_id'])
+            ->first();
+            $user2 = Ticket::select('users.id', 'users.u_email')
+            ->join('users', 'tickets.t_createdby', 'users.id')
+            ->where('tickets.t_createdby', $ticketcreator->id)
+            ->first();
+            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            ->join('departments', 'users.u_department', 'departments.d_id')
+            ->join('tickets', 'users.id', 'tickets.t_assignedto')
+            ->where('tickets.t_id', $user['t_id'])
+            ->orderby('tickets.t_id', 'desc')
+            ->first();
+            Mail::to($user2->u_email)->send(new TicketAssigned($todepartment));
+
             return redirect('/ticket/' . $user['t_id'])->with('success', 'Ticket ' . $user['t_id'] . ' assigned!');
         }else{
             return redirect('/tickets/' . $user['t_id'])->with('error', 'Failed to assign ' . $user['t_id'] . '!');
