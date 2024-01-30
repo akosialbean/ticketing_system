@@ -69,7 +69,7 @@
         </nav>
     </header>
 
-    <main class="mt-3 pt-1">
+    <main class="mt-3 px-0 pt-1">
         @yield('content')
     </main>
 
