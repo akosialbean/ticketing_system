@@ -54,6 +54,10 @@
                         </div>
 
                         <div class="mb-3">
+                            <p>Resolution Time: {{$days}}:{{$hours}}:{{$minutes}}:{{$seconds}}</p>
+                        </div>
+
+                        <div class="mb-3">
                             @if($ticket->t_createdby == Auth::user()->id)
                                 @if($ticket->t_status == 1 || $ticket->t_status == 2)
                                     <a href="/ticket/{{$ticket->t_id}}/editticket" class="btn btn-sm btn-primary my-3">Edit</a>

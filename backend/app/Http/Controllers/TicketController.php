@@ -18,6 +18,7 @@ use App\Mail\TicketAcknowledged;
 use App\Mail\TicketResolved;
 use App\Mail\TicketClosed;
 use App\Mail\TicketCancelled;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -233,7 +234,24 @@ class TicketController extends Controller
             ->where('tickets.t_id', $ticket)
             ->first();
 
-        return view('tickets.ticket', compact('tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto'));
+        $getCreatedDate = Ticket::select('created_at')
+        ->where('tickets.t_id', $ticket)
+        ->first();
+
+        $getResolvedDate = Ticket::select('tickets.t_resolveddate')
+        ->where('tickets.t_id', $ticket)
+        ->first();
+
+        $date1 = Carbon::parse($getCreatedDate->created_at);
+        $date2 = Carbon::parse($getResolvedDate->t_resolveddate);
+
+        $total = $date1->diff($date2);
+        $days = $total->format('%a');
+        $hours = $total->format('%h');
+        $minutes = $total->format('%i');
+        $seconds = $total->format('%s');
+
+        return view('tickets.ticket', compact('tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto', 'days', 'hours', 'minutes', 'seconds'));
     }
 
     public function acknowledge(Request $request){

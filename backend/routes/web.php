@@ -26,7 +26,7 @@ Route::post('/log', [LoginController::class, 'log'])->name('log');
 Route::get('/user/firstlogin', [LoginController::class, 'firstlogin'])->name('firstlogin');
 Route::patch('/user/firstlogin/changepassword', [LoginController::class, 'changepassword'])->name('changepassword');
 
-Route::get('/test/mail', [TestController::class, 'sendEmail'])->name('testmail');
+Route::get('/test/date', [TestController::class, 'dateTimeDiff'])->name('dateTimeDiff');
 
 
 
