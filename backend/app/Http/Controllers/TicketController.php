@@ -156,7 +156,7 @@ class TicketController extends Controller
     
             if($update){
                 //SENDING EMAIL TO TICKET CREATOR
-                $ticketcreator = User::select('id')
+                $ticketcreator = User::select('users.id')
                 ->join('tickets', 'users.id', 'tickets.t_createdby')
                 ->where('tickets.t_id', $ticket['t_id'])
                 ->first();
@@ -659,10 +659,15 @@ class TicketController extends Controller
 
         $tickets = Ticket::join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->where('t_id', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('t_title', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('t_description', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->where('tickets.t_id', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('tickets.t_title', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('tickets.t_description', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('tickets.t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('users.u_fname', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('users.u_lname', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('tickets.t_status', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('departments.d_code', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orwhere('departments.d_description', 'like', '%' . $searchitem['searchitem'] . '%')
         ->paginate(10);
 
         $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();

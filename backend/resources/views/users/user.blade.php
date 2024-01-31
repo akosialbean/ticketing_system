@@ -142,7 +142,7 @@
                             </div>
                         @endif
 
-                        @if($user->u_role == 1)
+                        @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
                             @if($user->u_status == 1)
                                 <div class="my-1 p-1">
                                     <form action="/user/disable" method="post">

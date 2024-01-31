@@ -7,6 +7,7 @@
                 <th class="small">Department</th>
                 <th class="small">Created by</th>
                 <th class="small">Date Created</th>
+                <th class="small">Assigned To</th>
                 <th class="small">Severity</th>
                 <th class="small">Status</th>
                 <th class="small"></th>
@@ -22,6 +23,7 @@
                     <td class="small"><small>{{$ticket->d_code}}</small></td>
                     <td class="small"><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
                     <td class="small"><small>{{$ticket->created_at}}</small></td>
+                    <td class="small"><small>{{$ticket->t_assignedto}}</small></td>
                     <td class="small"><small>{{$ticket->t_severity}}</small></td>
                     <td class="small"><small>
                         @switch($ticket->t_status)
