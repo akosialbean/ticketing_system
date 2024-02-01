@@ -30,7 +30,7 @@
                         @if(Auth::user() && Auth::user()->u_firstlogin == 2)
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{Auth::user()->u_department}}/tickets/alltickets/t_id/desc">Tickets</a>
+                                    <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/alltickets/t_id/desc">Tickets</a>
                                 </li>
                                 @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
                                     <li class="nav-item">
