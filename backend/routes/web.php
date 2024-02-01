@@ -64,7 +64,6 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
     Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
-    Route::get('/tickets', [TicketController::class, 'tickets'])->name('tickets');
     Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
     Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
     Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');
@@ -84,7 +83,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
     Route::post('/tickets/search', [TicketController::class, 'searchticket'])->name('searchticket');
     // SORTING
-    Route::get('{department}/tickets/sort/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
+    Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
 });
 
 
