@@ -2,14 +2,14 @@
     <table class="table table-sm table-hover table-striped table-bordered">
         <thead>
             <tr>
-                <th class="small">#</th>
-                <th class="small">Title</th>
-                <th class="small">Department</th>
-                <th class="small">Created by</th>
-                <th class="small">Date Created</th>
-                <th class="small">Assigned To</th>
-                <th class="small">Severity</th>
-                <th class="small">Status</th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-alpha-up"></i></strong></button></th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong>Title <i class="bi bi-sort-alpha-up"></i></strong></button></th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-up"></i></strong></button></th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-up"></i></strong></button></th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-alpha-up"></i></strong></button></th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-alpha-up"></i></strong></button></th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong>Severity <i class="bi bi-sort-alpha-up"></i></strong></button></th>
+                <th class="small"><button class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-up"></i></strong></button></th>
                 <th class="small"></th>
             </tr>
         </thead>
