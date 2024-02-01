@@ -83,6 +83,20 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
     Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
     Route::post('/tickets/search', [TicketController::class, 'searchticket'])->name('searchticket');
+    // SORTING
+    Route::get('/tickets/id/asc', [TicketController::class, 'allticketsidesc'])->name('ticketsidasc');
+    Route::get('/tickets/title/asc', [TicketController::class, 'allticketstitleasc'])->name('ticketstitleasc');
+    Route::get('/tickets/title/desc', [TicketController::class, 'allticketstitledesc'])->name('ticketstitledesc');
+    Route::get('/tickets/dept/asc', [TicketController::class, 'allticketsdeptasc'])->name('ticketsdeptasc');
+    Route::get('/tickets/dept/desc', [TicketController::class, 'allticketsdeptdesc'])->name('ticketsdeptdesc');
+    Route::get('/tickets/createdby/asc', [TicketController::class, 'allticketscreatedbyasc'])->name('ticketscreatedbyasc');
+    Route::get('/tickets/createdby/desc', [TicketController::class, 'allticketscreatedbydesc'])->name('ticketscreatedbydesc');
+    Route::get('/tickets/date/asc', [TicketController::class, 'allticketsdateasc'])->name('ticketsdatesc');
+    Route::get('/tickets/date/desc', [TicketController::class, 'allticketsdatedesc'])->name('ticketsdatedesc');
+    Route::get('/tickets/sev/asc', [TicketController::class, 'allticketssevasc'])->name('ticketssevasc');
+    Route::get('/tickets/sev/desc', [TicketController::class, 'allticketssevdesc'])->name('ticketssevdesc');
+    Route::get('/tickets/status/asc', [TicketController::class, 'allticketsstatusasc'])->name('ticketsstatusasc');
+    Route::get('/tickets/status/desc', [TicketController::class, 'allticketsstatusdesc'])->name('ticketsstatudesc');
 });
 
 
