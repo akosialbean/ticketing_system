@@ -5,65 +5,67 @@
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_id/desc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-down"></i></strong></a>  
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_id/desc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-down"></i></strong></a>  
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_id/asc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-up"></i></strong></a>                        
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_id/asc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-up"></i></strong></a>                        
                     @endswitch
                 </th>
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_title/desc" class="btn btn-sm small w-100"><strong>Title <i class="bi bi-sort-alpha-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_title/desc" class="btn btn-sm small w-100"><strong>Title <i class="bi bi-sort-alpha-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_title/asc" class="btn btn-sm small w-100"><strong>Title <i class="bi bi-sort-alpha-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_title/asc" class="btn btn-sm small w-100"><strong>Title <i class="bi bi-sort-alpha-up"></i></strong></a>
                     @endswitch
                 </th>
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/d_code/desc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/desc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/d_code/asc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/asc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-up"></i></strong></a>
                     @endswitch
                 </th>
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_createdby/desc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_createdby/desc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_createdby/asc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_createdby/asc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-up"></i></strong></a>
                     @endswitch
                 </th>
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/created_at/desc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/created_at/desc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/created_at/asc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/created_at/asc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-up"></i></strong></a>
                     @endswitch
                 </th>
-                <th class="small"><button class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-alpha-up"></i></strong></button></th>
                 <th class="small">
-                    @switch($order)
-                        @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_severity/desc" class="btn btn-sm small w-100"><strong>Severity <i class="bi bi-sort-numeric-down"></i></strong></a>
-                        @break
-                        @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_severity/asc" class="btn btn-sm small w-100"><strong>Severity <i class="bi bi-sort-numeric-up"></i></strong></a>
-                    @endswitch
+                    <a class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-alpha-up"></i></strong></a>
                 </th>
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_status/desc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_severity/desc" class="btn btn-sm small w-100"><strong>Severity <i class="bi bi-sort-numeric-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/sort/t_status/asc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_severity/asc" class="btn btn-sm small w-100"><strong>Severity <i class="bi bi-sort-numeric-up"></i></strong></a>
+                    @endswitch
+                </th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_status/desc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_status/asc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-up"></i></strong></a>
                     @endswitch
                 </th>
                 <th class="small"></th>

@@ -171,7 +171,13 @@
                             </div>
                         @endif
 
-                        <a href="/tickets" class="btn btn-sm btn-danger">Back</a>
+                        @switch(Auth::user()->u_role)
+                            @case(1)
+                                <a href="/{{Auth::user()->u_department}}/tickets/alltickets/t_id/desc" class="btn btn-sm btn-danger">Back</a>
+                            @break
+                            @default
+                                <a href="/{{Auth::user()->u_department}}/tickets/mytickets/t_id/desc" class="btn btn-sm btn-danger">Back</a>
+                        @endswitch
 
                     @endforeach
                 </div>

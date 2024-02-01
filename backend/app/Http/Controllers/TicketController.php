@@ -76,9 +76,9 @@ class TicketController extends Controller
             Mail::to($department2->d_email)->send(new HelpdeskNotification($fromdepartment));
 
             if(Auth::user()->u_role == 1){
-                return redirect('/tickets')->with('success', 'New ticket created!');
+                return redirect(Auth::user()->u_department . '/tickets/alltickets/t_id/desc')->with('success', 'New ticket created!');
             }else{
-                return redirect('/tickets/mytickets')->with('success', 'New ticket created!');
+                return redirect(Auth::user()->u_department . '/tickets/mytickets/t_id/desc')->with('success', 'New ticket created!');
             }
         }else{
             return redirect('/tickets')->with('error', 'Failed to create!');
@@ -516,36 +516,40 @@ class TicketController extends Controller
 
     // SORTING
     public function sort($department, $myticket, $column, $order){
-        // 
-
         $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
-        ->where('tickets.t_todepartment', $department)
+        // ->where('tickets.t_todepartment', $department)
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
         ->when($myticket == 'alltickets', function($tickets){
             $tickets->where('tickets.t_todepartment', Auth::user()->u_department);
         })
         ->when($myticket == 'mytickets', function($tickets){
-            $tickets->where('t_createdby', Auth::user()->id);
+            $tickets->where('tickets.t_createdby', Auth::user()->id);
         })
         ->when($myticket == 'opentickets', function($tickets){
-            $tickets->where('t_status', 2);
+            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
+            ->where('tickets.t_status', 2);
         })
         ->when($myticket == 'assignedtickets', function($tickets){
             $tickets->where('tickets.t_assignedto', Auth::user()->id)
+            ->where('tickets.t_todepartment', Auth::user()->u_department)
             ->where('tickets.t_status', 3);
         })
         ->when($myticket == 'acknowledgedtickets', function($tickets){
-            $tickets->where('t_status', 4);
+            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
+            ->where('tickets.t_status', 4);
         })
         ->when($myticket == 'resolvedtickets', function($tickets){
-            $tickets->where('t_status', 5);
+            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
+            ->where('tickets.t_status', 5);
         })
         ->when($myticket == 'closedtickets', function($tickets){
-            $tickets->where('t_status', 6);
+            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
+            ->where('tickets.t_status', 6);
         })
         ->when($myticket == 'cancelledtickets', function($tickets){
-            $tickets->where('t_status', 7);
+            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
+            ->where('tickets.t_status', 7);
         })
         ->orderby($column, $order)->paginate(10);
 
@@ -559,7 +563,7 @@ class TicketController extends Controller
         $cancelledticketcount = Ticket::where('t_status', 7)->count();
         $title = ["title" => "All Tickets"];
 
-        return view('tickets.tickets', compact('order', 'title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+        return view('tickets.tickets', compact('myticket', 'order', 'title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
     }
 
 }
