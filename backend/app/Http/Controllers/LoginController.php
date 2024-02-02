@@ -55,20 +55,19 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 if(Auth::user()->u_role == 1){
                     if(Auth::user()->u_firstlogin == 2)
-                        return redirect()->intended('/tickets')->with('success', 'Login Successful!');
+                        return redirect()->intended(Auth::user()->u_department . '/tickets/alltickets/t_id/desc')->with('success', 'Login Successful!');
                     else{
                         return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password!');
                     }
                 }else{
                     if(Auth::user()->u_firstlogin == 2)
-                        return redirect()->intended('/tickets/mytickets')->with('success', 'Login Successful!');
+                        return redirect()->intended(Auth::user()->u_department . '/tickets/mytickets/t_id/desc')->with('success', 'Login Successful!');
                     else{
                         return redirect()->intended('/user/firstlogin')->with('success', 'Please change your password!');
                     }
                 }
             }else{
                 $request->session()->invalidate();
-                $request->session()->regenerate();
                 return redirect()->intended('/')->with('error', 'User account is disabled!');
             }
         } else {

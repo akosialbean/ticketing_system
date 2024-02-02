@@ -2,14 +2,72 @@
     <table class="table table-sm table-hover table-striped table-bordered">
         <thead>
             <tr>
-                <th class="small">#</th>
-                <th class="small">Title</th>
-                <th class="small">Department</th>
-                <th class="small">Created by</th>
-                <th class="small">Date Created</th>
-                <th class="small">Assigned To</th>
-                <th class="small">Severity</th>
-                <th class="small">Status</th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_id/desc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-down"></i></strong></a>  
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_id/asc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-up"></i></strong></a>                        
+                    @endswitch
+                </th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_title/desc" class="btn btn-sm small w-100"><strong>Title <i class="bi bi-sort-alpha-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_title/asc" class="btn btn-sm small w-100"><strong>Title <i class="bi bi-sort-alpha-up"></i></strong></a>
+                    @endswitch
+                </th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/desc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/asc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-up"></i></strong></a>
+                    @endswitch
+                </th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_createdby/desc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_createdby/asc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-up"></i></strong></a>
+                    @endswitch
+                </th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/created_at/desc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/created_at/asc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-up"></i></strong></a>
+                    @endswitch
+                </th>
+                <th class="small">
+                    <a class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-alpha-up"></i></strong></a>
+                </th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_severity/desc" class="btn btn-sm small w-100"><strong>Severity <i class="bi bi-sort-numeric-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_severity/asc" class="btn btn-sm small w-100"><strong>Severity <i class="bi bi-sort-numeric-up"></i></strong></a>
+                    @endswitch
+                </th>
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_status/desc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_status/asc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-up"></i></strong></a>
+                    @endswitch
+                </th>
                 <th class="small"></th>
             </tr>
         </thead>
@@ -21,9 +79,9 @@
                     <td class="small"><small>{{$ticket->t_id}}</small></td>
                     <td class="small"><small>{{$ticket->t_title}}</small></td>
                     <td class="small"><small>{{$ticket->d_code}}</small></td>
-                    <td class="small"><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
+                    <td class="small"><small>{{$ticket->createdby}}</small></td>
                     <td class="small"><small>{{$ticket->created_at}}</small></td>
-                    <td class="small"><small>{{$ticket->t_assignedto}}</small></td>
+                    <td class="small"><small>{{$ticket->assignedto}}</small></td>
                     <td class="small"><small>{{$ticket->t_severity}}</small></td>
                     <td class="small"><small>
                         @switch($ticket->t_status)

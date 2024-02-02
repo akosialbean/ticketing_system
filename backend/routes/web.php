@@ -8,6 +8,7 @@ use App\Http\Controllers\SeverityController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TestController;
 
 /*
@@ -26,11 +27,13 @@ Route::post('/log', [LoginController::class, 'log'])->name('log');
 Route::get('/user/firstlogin', [LoginController::class, 'firstlogin'])->name('firstlogin');
 Route::patch('/user/firstlogin/changepassword', [LoginController::class, 'changepassword'])->name('changepassword');
 
-Route::get('/test/mail', [TestController::class, 'sendEmail'])->name('testmail');
+Route::get('/test/date', [TestController::class, 'dateTimeDiff'])->name('dateTimeDiff');
 
 
 
 Route::middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
     Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
     Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
     Route::get('/users', [UserController::class, 'users'])->name('users');
@@ -64,7 +67,6 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
     Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
-    Route::get('/tickets', [TicketController::class, 'tickets'])->name('tickets');
     Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
     Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
     Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');
@@ -83,6 +85,8 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
     Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
     Route::post('/tickets/search', [TicketController::class, 'searchticket'])->name('searchticket');
+    // SORTING
+    Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
 });
 
 
