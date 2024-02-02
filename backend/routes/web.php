@@ -8,6 +8,7 @@ use App\Http\Controllers\SeverityController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TestController;
 
 /*
@@ -31,6 +32,8 @@ Route::get('/test/date', [TestController::class, 'dateTimeDiff'])->name('dateTim
 
 
 Route::middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
     Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
     Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
     Route::get('/users', [UserController::class, 'users'])->name('users');

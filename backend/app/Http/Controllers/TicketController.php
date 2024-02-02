@@ -516,7 +516,11 @@ class TicketController extends Controller
 
     // SORTING
     public function sort($department, $myticket, $column, $order){
-        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
+        $assignedto = User::select('users.u_fname', 'users.u_lname')
+        ->join('tickets', 'users.id', 'tickets.t_assignedto')
+        ->where('tickets.t_createdby', Auth::user()->id)->get();
+        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', DB::raw("CONCAT(users.u_fname, ' ', users.u_lname) AS createdby"))
+        // ->mergeBindings($assignedto);
         // ->where('tickets.t_todepartment', $department)
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')

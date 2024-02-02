@@ -29,6 +29,9 @@
                     {{-- @if(Auth::user()) --}}
                         @if(Auth::user() && Auth::user()->u_firstlogin == 2)
                             <ul class="navbar-nav ms-auto">
+                                <li href="/dashboard" class="nav-item">
+                                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                                </li>
                                 <li class="nav-item">
                                     @switch(Auth::user()->u_role)
                                         @case(1)

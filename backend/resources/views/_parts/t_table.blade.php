@@ -79,9 +79,9 @@
                     <td class="small"><small>{{$ticket->t_id}}</small></td>
                     <td class="small"><small>{{$ticket->t_title}}</small></td>
                     <td class="small"><small>{{$ticket->d_code}}</small></td>
-                    <td class="small"><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
+                    <td class="small"><small>{{$ticket->createdby}}</small></td>
                     <td class="small"><small>{{$ticket->created_at}}</small></td>
-                    <td class="small"><small>{{$ticket->t_assignedto}}</small></td>
+                    <td class="small"><small>{{$ticket->assignedto}}</small></td>
                     <td class="small"><small>{{$ticket->t_severity}}</small></td>
                     <td class="small"><small>
                         @switch($ticket->t_status)
