@@ -18,7 +18,7 @@ class ResolvedChart
     {
         $resolved = Ticket::where('t_status', 5)->count();
         $closedresolved = Ticket::where('t_status', 6)->count();
-        $unresolved = Ticket::where('t_status', '!=', 6)->where('t_status', '!=', 7)->count();
+        $unresolved = Ticket::where('t_status', '!=', 5)->where('t_status', '!=', 6)->where('t_status', '!=', 7)->count();
         return $this->resolved->pieChart()
             ->setTitle('Closed vs Unresolved Tickets')
             ->addData([$resolved, $closedresolved, $unresolved])
