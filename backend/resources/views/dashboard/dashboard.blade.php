@@ -26,6 +26,17 @@
                                 </div>
                             </div>
                         </div>
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 my-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    {!! $tickets->container() !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
