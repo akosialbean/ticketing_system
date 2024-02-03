@@ -171,13 +171,13 @@
                             </div>
                         @endif
 
-                        @switch(Auth::user()->u_role)
+                        {{-- @switch(Auth::user()->u_role)
                             @case(1)
                                 <a href="/{{Auth::user()->u_department}}/tickets/alltickets/t_id/desc" class="btn btn-sm btn-danger">Back</a>
                             @break
                             @default
                                 <a href="/{{Auth::user()->u_department}}/tickets/mytickets/t_id/desc" class="btn btn-sm btn-danger">Back</a>
-                        @endswitch
+                        @endswitch --}}
 
                     @endforeach
                 </div>
@@ -235,6 +235,8 @@
                         </tr>
                     </tbody>
                 </table>
+
+                @include('_parts.t_comments')
             </div>
             <div class="card-footer">
                 @foreach($tickets as $ticket)

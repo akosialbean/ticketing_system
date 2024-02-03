@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Severity;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -202,7 +203,11 @@ class TicketController extends Controller
         $minutes = $total->format('%i');
         $seconds = $total->format('%s');
 
-        return view('tickets.ticket', compact('tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto', 'days', 'hours', 'minutes', 'seconds'));
+        $comments = Comment::where('comments.comment_ticketid', $ticket)
+        ->join('users', 'comments.comment_sender', 'users.id')
+        ->get();
+
+        return view('tickets.ticket', compact('comments', 'tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto', 'days', 'hours', 'minutes', 'seconds'));
     }
 
     public function acknowledge(Request $request){

@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TestController;
 
 /*
@@ -85,6 +86,7 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
     Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
     Route::post('/tickets/search', [TicketController::class, 'searchticket'])->name('searchticket');
+    Route::post('/tickets/addcomment', [CommentController::class, 'addcomment'])->name('addcomment');
     // SORTING
     Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
 });
