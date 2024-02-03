@@ -30,10 +30,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6 my-3">
+                        <div class="col-sm-12 my-3">
                             <div class="card">
                                 <div class="card-body">
-                                    {!! $tickets->container() !!}
+                                    {!! $createdticket->container() !!}
                                 </div>
                             </div>
                         </div>
@@ -45,7 +45,9 @@
 
     <script src="{{ $tickets->cdn() }}"></script>
     <script src="{{ $resolved->cdn() }}"></script>
+    <script src="{{ $createdticket->cdn() }}"></script>
 
     {{ $tickets->script() }}
     {{ $resolved->script() }}
+    {{ $createdticket->script() }}
 @endsection
