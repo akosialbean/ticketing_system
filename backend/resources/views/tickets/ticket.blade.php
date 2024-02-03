@@ -288,7 +288,7 @@
                                         Assigned
                                         @break
                                     @case('4')
-                                        Acknowledged
+                                        Resolving
                                         @break
                                     @case('5')
                                         Resolved
