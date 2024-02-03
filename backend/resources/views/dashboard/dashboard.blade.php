@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6 my-3">
+                        <div class="col-sm-4 my-3">
                             <div class="card">
                                 <div class="card-body">
                                     {!! $tickets->container() !!}
@@ -19,10 +19,18 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 my-3">
+                        <div class="col-sm-4 my-3">
                             <div class="card">
                                 <div class="card-body">
                                     {!! $resolved->container() !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 my-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    {!! $cancelled->container() !!}
                                 </div>
                             </div>
                         </div>
@@ -46,8 +54,10 @@
     <script src="{{ $tickets->cdn() }}"></script>
     <script src="{{ $resolved->cdn() }}"></script>
     <script src="{{ $createdticket->cdn() }}"></script>
+    <script src="{{ $cancelled->cdn() }}"></script>
 
     {{ $tickets->script() }}
     {{ $resolved->script() }}
     {{ $createdticket->script() }}
+    {{ $cancelled->script() }}
 @endsection

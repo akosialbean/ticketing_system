@@ -20,13 +20,10 @@ class TicketChart
         $viewedTicket = Ticket::where('tickets.t_status', 2)->count();
         $assignedTicket = Ticket::where('tickets.t_status', 3)->count();
         $acknowledgedTicket = Ticket::where('tickets.t_status', 4)->count();
-        $resolvedTicket = Ticket::where('tickets.t_status', 5)->count();
-        $closedTicket = Ticket::where('tickets.t_status', 6)->count();
-        $cancelledTicket = Ticket::where('tickets.t_status', 7)->count();
 
         return $this->tickets->pieChart()
             ->setTitle('WMC Tickets')
-            ->addData([$newTicket, $viewedTicket, $assignedTicket, $acknowledgedTicket, $resolvedTicket, $closedTicket, $cancelledTicket])
-            ->setLabels(['New', 'Viewed', 'Assigned', 'Acknowledged', 'Resolved', 'Closed', 'Cancelled']);
+            ->addData([$newTicket, $viewedTicket, $assignedTicket, $acknowledgedTicket])
+            ->setLabels(['New', 'Viewed', 'Assigned', 'Acknowledged']);
     }
 }
