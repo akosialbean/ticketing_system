@@ -47,9 +47,9 @@
                             <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/created_at/asc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-up"></i></strong></a>
                     @endswitch
                 </th>
-                <th class="small">
+                {{-- <th class="small">
                     <a class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-alpha-up"></i></strong></a>
-                </th>
+                </th> --}}
                 <th class="small">
                     @switch($order)
                         @case("asc")
@@ -79,9 +79,9 @@
                     <td class="small"><small>{{$ticket->t_id}}</small></td>
                     <td class="small"><small>{{$ticket->t_title}}</small></td>
                     <td class="small"><small>{{$ticket->d_code}}</small></td>
-                    <td class="small"><small>{{$ticket->createdby}}</small></td>
+                    <td class="small"><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
                     <td class="small"><small>{{$ticket->created_at}}</small></td>
-                    <td class="small"><small>{{$ticket->assignedto}}</small></td>
+                    {{-- <td class="small"><small>{{$ticket->t_assignedto}}</small></td> --}}
                     <td class="small"><small>{{$ticket->t_severity}}</small></td>
                     <td class="small"><small>
                         @switch($ticket->t_status)

@@ -521,12 +521,8 @@ class TicketController extends Controller
 
     // SORTING
     public function sort($department, $myticket, $column, $order){
-        $assignedto = User::select('users.u_fname', 'users.u_lname')
-        ->join('tickets', 'users.id', 'tickets.t_assignedto')
-        ->where('tickets.t_createdby', Auth::user()->id)->get();
-        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', DB::raw("CONCAT(users.u_fname, ' ', users.u_lname) AS createdby"))
-        // ->mergeBindings($assignedto);
-        // ->where('tickets.t_todepartment', $department)
+
+        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
         ->when($myticket == 'alltickets', function($tickets){
@@ -561,6 +557,11 @@ class TicketController extends Controller
             ->where('tickets.t_status', 7);
         })
         ->orderby($column, $order)->paginate(10);
+
+        // $assignedto = User::select('users.u_fname', 'users.u_lname')
+        // ->join('tickets', 'users.id', 'tickets.t_assignedto')
+        // ->where('tickets.t_assignedto', $tickets->t_assignedto)
+        // ->get();
 
         $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
         $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
