@@ -10,6 +10,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TestController;
 
 /*
@@ -89,6 +90,9 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/tickets/addcomment', [CommentController::class, 'addcomment'])->name('addcomment');
     // SORTING
     Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
+
+    Route::get('/report', [ReportController::class, 'report'])->name('report');
+    Route::post('/report/generate', [ReportController::class, 'generate'])->name('generate');
 });
 
 
