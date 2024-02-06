@@ -190,12 +190,16 @@ class TicketController extends Controller
         ->where('tickets.t_id', $ticket)
         ->first();
 
-        $getResolvedDate = Ticket::select('tickets.t_resolveddate')
+        $getResolvedDate = Ticket::select('tickets.t_resolveddate', 'tickets.t_cancelleddate')
         ->where('tickets.t_id', $ticket)
         ->first();
 
         $date1 = Carbon::parse($getCreatedDate->created_at);
-        $date2 = Carbon::parse($getResolvedDate->t_resolveddate);
+        if($getResolvedDate->t_resolveddate == NULL){
+            $date2 = Carbon::parse($getResolvedDate->t_cancelleddate);
+        }else{
+            $date2 = Carbon::parse($getResolvedDate->t_resolveddate);
+        }
 
         $total = $date1->diff($date2);
         $days = $total->format('%a');
