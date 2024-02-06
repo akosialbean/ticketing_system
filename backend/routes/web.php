@@ -91,8 +91,8 @@ Route::middleware(['auth'])->group(function() {
     // SORTING
     Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
 
-    Route::get('/report', [ReportController::class, 'report'])->name('report');
-    Route::post('/report/generate', [ReportController::class, 'generate'])->name('generate');
+    // Route::get('/report', [ReportController::class, 'report'])->name('report');
+    // Route::post('/report/generate', [ReportController::class, 'generate'])->name('generate');
 });
 
 
