@@ -502,6 +502,7 @@ class TicketController extends Controller
         ->orwhere('tickets.t_status', 'like', '%' . $searchitem['searchitem'] . '%')
         ->orwhere('departments.d_code', 'like', '%' . $searchitem['searchitem'] . '%')
         ->orwhere('departments.d_description', 'like', '%' . $searchitem['searchitem'] . '%')
+        ->orderby('tickets.t_id', 'desc')
         ->paginate(10);
 
         $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
@@ -515,7 +516,7 @@ class TicketController extends Controller
         $title = ["title" => "Search Tickets"];
         $order = "desc";
 
-        return view('tickets.tickets', compact('order', 'title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+        return view('tickets.searchticket', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
     }
 
 

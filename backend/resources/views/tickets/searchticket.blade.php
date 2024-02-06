@@ -32,7 +32,7 @@
         
                                 @include('_parts.t_search')
         
-                                @include('_parts.t_table')
+                                @include('_parts.t_tablesearch')
         
                             </div>
                         </div>                        
