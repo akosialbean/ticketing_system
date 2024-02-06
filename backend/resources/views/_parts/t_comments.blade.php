@@ -5,13 +5,11 @@
             @method('POST')
             <input type="hidden" name="comment_ticketid" class="form-control" value="{{$ticket->t_id}}">
             <textarea name="comment_message" id="" cols="30" rows="10" class="form-control my-3 w-100"></textarea>
-            <button type="submit" class="btn btn-sm btn-primary w-100"
-                @if($ticket->t_status  < 5)
-                    disabled
-                @endif
-            >
+            @if($ticket->t_status <= 5)
+            <button type="submit" class="btn btn-sm btn-primary w-100">
                 Add Comment
             </button>
+            @endif
         </form>
     </div>
     <div class="col-sm-9">

@@ -15,29 +15,31 @@ use Illuminate\Support\Facades\Mail;
 class CommentController extends Controller
 {
     public function addcomment(Request $request){
-        $comment = $request->validate([
+        $data = $request->validate([
             'comment_ticketid' => ['required'],
             'comment_message' => ['required'],
             'created_at',
             'comment_sender'
         ]);
 
-        $comment['created_at'] = now();
-        $comment['comment_sender'] = Auth::user()->id;
+        $data['created_at'] = now();
+        $data['comment_sender'] = Auth::user()->id;
 
-        $save = Comment::insert($comment);
+        $save = Comment::insert($data);
 
         if($save){
             //SENDING EMAIL TO TICKET RESOLVER
             $tosender = Comment::select('users.u_email')
             ->join('users', 'comments.comment_sender', 'users.id')
             ->join('tickets', 'comments.comment_ticketid', 'tickets.t_id')
-            ->where('tickets.t_id', $comment['comment_ticketid'])
+            ->where('tickets.t_id', $data['comment_ticketid'])
             ->first();
 
             $comment = Comment::select('comments.comment_ticketid', 'comments.comment_message', 'users.u_fname', 'users.u_lname', 'tickets.t_id', 'tickets.t_description')
             ->join('tickets', 'comments.comment_ticketid', 'tickets.t_id')
             ->join('users', 'comments.comment_sender', 'users.id')
+            ->where('tickets.t_id', $data['comment_ticketid'])
+            ->orderby('comment_id', 'desc')
             ->first();
 
             Mail::to($tosender->u_email)->send(new CommentNotification($comment));
