@@ -522,6 +522,7 @@ class TicketController extends Controller
     // SORTING
     public function sort($department, $myticket, $column, $order){
 
+
         $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
         ->join('users', 'tickets.t_createdby', '=', 'users.id')
         ->join('departments', 'users.u_department', '=', 'departments.d_id')
@@ -555,6 +556,17 @@ class TicketController extends Controller
         ->when($myticket == 'cancelledtickets', function($tickets){
             $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
             ->where('tickets.t_status', 7);
+        })
+        ->when($myticket == 'searchtickets', function($tickets){
+            $tickets->where('tickets.t_id', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('tickets.t_title', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('tickets.t_description', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('tickets.t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('users.u_fname', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('users.u_lname', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('tickets.t_status', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('departments.d_code', 'like', '%' . $searchitem['searchitem'] . '%')
+            ->orwhere('departments.d_description', 'like', '%' . $searchitem['searchitem'] . '%');
         })
         ->orderby($column, $order)->paginate(10);
 

@@ -30,7 +30,7 @@
         
                                 <a href="/newticket" class="btn btn-sm btn-primary my-1">Create ticket</a>
         
-                                @include('_parts.t_search')
+                                {{-- @include('_parts.t_search') --}}
         
                                 @include('_parts.t_table')
         
