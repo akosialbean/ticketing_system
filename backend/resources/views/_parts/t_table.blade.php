@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-sm table-hover table-striped table-bordered">
+    <table class="table table-sm table-hover table-striped table-bordered my-0">
         <thead>
             <tr>
                 <th class="small">
@@ -134,6 +134,6 @@
     </table>
 </div>
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center py-0">
     {{$tickets->links()}}
 </div>
