@@ -556,7 +556,31 @@ $userid = Auth::user()->id;
             ->orderby($column, $order)
             ->paginate(10);
 
-        $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);
+        // $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);
+
+        $overallTickets = DB::table('tickets')->count();
+            $perDept = DB::table('tickets')->where('t_todepartment', 1)->count();
+            $myTickets = DB::table('tickets')->where('t_createdby', 3)->count();
+            $newTickets = DB::table('tickets')->where('t_status', 1)->where('t_todepartment', 1)->count();
+            $openTickets = DB::table('tickets')->where('t_status', 2)->where('t_todepartment', 1)->count();
+            $assignedTickets = DB::table('tickets')->where('t_status', 3)->where('t_todepartment', 1)->count();
+            $acknowledgedTickets = DB::table('tickets')->where('t_status', 4)->where('t_todepartment', 1)->count();
+            $resolvedTickets = DB::table('tickets')->where('t_status', 5)->where('t_todepartment', 1)->count();
+            $closedTickets = DB::table('tickets')->where('t_status', 6)->where('t_todepartment', 1)->count();
+            $cancelledTickets = DB::table('tickets')->where('t_status', 7)->where('t_todepartment', 1)->count();
+            $ticketcount = [
+            'overallTickets' => $overallTickets,
+            'perDept' => $perDept,
+            'myTickets' => $myTickets,
+            'newTickets' => $newTickets,
+            'openTickets' => $openTickets,
+            'assignedTickets' => $assignedTickets,
+            'acknowledgedTickets' => $acknowledgedTickets,
+            'resolvedTickets' => $resolvedTickets,
+            'closedTickets' => $closedTickets,
+            'cancelledTickets' => $cancelledTickets,
+            ];
+
 
         return view('tickets.tickets', compact('myticket', 'order', 'tickets', 'ticketcount'));
     }
@@ -616,8 +640,32 @@ $userid = Auth::user()->id;
             ->orderby($column, $order)
             ->paginate(10);
 
+            $overallTickets = DB::table('tickets')->count();
+            $perDept = DB::table('tickets')->where('t_todepartment', 1)->count();
+            $myTickets = DB::table('tickets')->where('t_createdby', 3)->count();
+            $newTickets = DB::table('tickets')->where('t_status', 1)->where('t_todepartment', 1)->count();
+            $openTickets = DB::table('tickets')->where('t_status', 2)->where('t_todepartment', 1)->count();
+            $assignedTickets = DB::table('tickets')->where('t_status', 3)->where('t_todepartment', 1)->count();
+            $acknowledgedTickets = DB::table('tickets')->where('t_status', 4)->where('t_todepartment', 1)->count();
+            $resolvedTickets = DB::table('tickets')->where('t_status', 5)->where('t_todepartment', 1)->count();
+            $closedTickets = DB::table('tickets')->where('t_status', 6)->where('t_todepartment', 1)->count();
+            $cancelledTickets = DB::table('tickets')->where('t_status', 7)->where('t_todepartment', 1)->count();
+            $ticketcount = [
+            'overallTickets' => $overallTickets,
+            'perDept' => $perDept,
+            'myTickets' => $myTickets,
+            'newTickets' => $newTickets,
+            'openTickets' => $openTickets,
+            'assignedTickets' => $assignedTickets,
+            'acknowledgedTickets' => $acknowledgedTickets,
+            'resolvedTickets' => $resolvedTickets,
+            'closedTickets' => $closedTickets,
+            'cancelledTickets' => $cancelledTickets,
+            ];
 
-        $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);
+
+
+        // $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);        
 
         return view('tickets.tickets', compact('myticket', 'order', 'tickets', 'ticketcount'));
     }

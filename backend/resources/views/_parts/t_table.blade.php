@@ -115,5 +115,5 @@
 </div>
 
 <div class="d-flex justify-content-center py-0 mt-3">
-    {{$tickets->links()}}
+    {{$tickets->onEachSide(1)->links()}}
 </div>
