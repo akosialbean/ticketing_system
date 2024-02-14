@@ -497,7 +497,6 @@ $userdept = Auth::user()->u_department;
 $searchitem = $request->validate(['searchitem' => ['required']]);
 $userid = Auth::user()->id;
         $userdept = Auth::user()->u_department;
-        $mytickets = 'alltickets'; // replace with the actual value
 
         $tickets = DB::table('tickets')
         ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code',
@@ -514,8 +513,8 @@ $userid = Auth::user()->id;
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
             ->where('tickets.t_todepartment', 1)
-            ->where(function ($query) use ($mytickets, $userdept, $userid) {
-                switch ($mytickets) {
+            ->where(function ($query) use ($myticket, $userdept, $userid) {
+                switch ($myticket) {
                     case 'alltickets':
                         $query->where('tickets.t_todepartment', $userdept);
                         break;
@@ -552,6 +551,7 @@ $userid = Auth::user()->id;
                     ->orWhere('tickets.t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
                     ->orWhere('users.u_fname', 'like', '%' . $searchitem['searchitem'] . '%')
                     ->orWhere('users.u_lname', 'like', '%' . $searchitem['searchitem'] . '%')
+                    // ->orWhere('assignedto', 'like', '%' . $searchitem['searchitem'] . '%')
                     ->orWhere('tickets.t_status', 'like', '%' . $searchitem['searchitem'] . '%')
                     ->orWhere('departments.d_code', 'like', '%' . $searchitem['searchitem'] . '%')
                     ->orWhere('departments.d_description', 'like', '%' . $searchitem['searchitem'] . '%');
