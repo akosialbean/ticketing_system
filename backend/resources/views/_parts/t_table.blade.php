@@ -5,10 +5,10 @@
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_id/desc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-down"></i></strong></a>  
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/ticketid/desc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-down"></i></strong></a>  
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_id/asc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-up"></i></strong></a>                        
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/ticketid/asc" class="btn btn-sm small w-100"><strong># <i class="bi bi-sort-numeric-up"></i></strong></a>                        
                     @endswitch
                 </th>
                 <th class="small">
@@ -23,19 +23,19 @@
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/desc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/desc" class="btn btn-sm small w-100"><strong>From <i class="bi bi-sort-alpha-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/asc" class="btn btn-sm small w-100"><strong>Department <i class="bi bi-sort-alpha-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/d_code/asc" class="btn btn-sm small w-100"><strong>From <i class="bi bi-sort-alpha-up"></i></strong></a>
                     @endswitch
                 </th>
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_createdby/desc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/creator/desc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_createdby/asc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/creator/asc" class="btn btn-sm small w-100"><strong>Created By <i class="bi bi-sort-alpha-up"></i></strong></a>
                     @endswitch
                 </th>
                 <th class="small">
@@ -47,9 +47,15 @@
                             <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/created_at/asc" class="btn btn-sm small w-100"><strong>Date <i class="bi bi-sort-numeric-up"></i></strong></a>
                     @endswitch
                 </th>
-                {{-- <th class="small">
-                    <a class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-alpha-up"></i></strong></a>
-                </th> --}}
+                <th class="small">
+                    @switch($order)
+                        @case("asc")
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/assignedto/desc" class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-numeric-down"></i></strong></a>
+                        @break
+                        @default
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/assignedto/asc" class="btn btn-sm small w-100"><strong>Assigned To <i class="bi bi-sort-numeric-up"></i></strong></a>
+                    @endswitch
+                </th>
                 <th class="small">
                     @switch($order)
                         @case("asc")
@@ -62,10 +68,10 @@
                 <th class="small">
                     @switch($order)
                         @case("asc")
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_status/desc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-down"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/ticketStatus/desc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-down"></i></strong></a>
                         @break
                         @default
-                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/t_status/asc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-up"></i></strong></a>
+                            <a href="/{{Auth::user()->u_department}}/tickets/{{$myticket}}/ticketStatus/asc" class="btn btn-sm small w-100"><strong>Status <i class="bi bi-sort-alpha-up"></i></strong></a>
                     @endswitch
                 </th>
                 <th class="small"></th>
@@ -76,42 +82,16 @@
             @if($tickets)
                 @foreach($tickets as $ticket)
                 <tr>
-                    <td class="small"><small>{{$ticket->t_id}}</small></td>
+                    <td class="small"><small>{{$ticket->ticketid}}</small></td>
                     <td class="small"><small>{{$ticket->t_title}}</small></td>
                     <td class="small"><small>{{$ticket->d_code}}</small></td>
-                    <td class="small"><small>{{$ticket->u_fname}} {{$ticket->u_lname}}</small></td>
+                    <td class="small"><small>{{$ticket->creator}}</small></td>
                     <td class="small"><small>{{$ticket->created_at}}</small></td>
-                    {{-- <td class="small"><small>{{$ticket->t_assignedto}}</small></td> --}}
+                    <td class="small"><small>{{$ticket->assignedto}}</small></td>
                     <td class="small"><small>{{$ticket->t_severity}}</small></td>
-                    <td class="small"><small>
-                        @switch($ticket->t_status)
-                            @case('1')
-                                New
-                                @break
-                            @case('2')
-                                Viewed
-                                @break
-                            @case('3')
-                                Assigned
-                                @break
-                            @case('4')
-                                Acknowledged
-                                @break
-                            @case('5')
-                                Resolved
-                                @break
-                            @case('6')
-                                Closed-Resolved
-                                @break
-                            @case('7')
-                                Cancelled
-                                @break
-                            @default
-                                Unknown
-                        @endswitch
-                    </small></td>
+                    <td class="small"><small>{{$ticket->ticketStatus}}</small></td>
                     <td>
-                        @if($ticket->t_status == 1)
+                        @if($ticket->ticketStatus == 1)
                             <form action="/openticket" method="POST">
                                 @csrf
                                 @method('PATCH')
@@ -119,7 +99,7 @@
                                 <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-three-dots-vertical"></i></button>
                             </form>
                         @else
-                            <a href="/ticket/{{$ticket->t_id}}" class="btn btn-sm btn-primary"><i class="bi bi-three-dots-vertical"></i>
+                            <a href="/ticket/{{$ticket->ticketid}}" class="btn btn-sm btn-primary"><i class="bi bi-three-dots-vertical"></i>
                             </a>
                         @endif
                     </td>
@@ -134,6 +114,6 @@
     </table>
 </div>
 
-<div class="d-flex justify-content-center py-0">
+<div class="d-flex justify-content-center py-0 mt-3">
     {{$tickets->links()}}
 </div>

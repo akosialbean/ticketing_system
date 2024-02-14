@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/close', [TicketController::class, 'close'])->name('close');
     Route::patch('/cancel', [TicketController::class, 'cancel'])->name('cancel');
     Route::get('/tickets/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
+    Route::get('/tickets/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
     Route::get('/tickets/opentickets', [TicketController::class, 'opentickets'])->name('opentickets');
     Route::get('/tickets/acknowledgedtickets', [TicketController::class, 'acknowledgedtickets'])->name('acknowledgedtickets');
     Route::get('/tickets/resolvedtickets', [TicketController::class, 'resolvedtickets'])->name('resolvedtickets');
@@ -86,7 +87,7 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/ticket/{ticket}/setseverity', [TicketController::class, 'setseverity'])->name('setseverity');
     Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
     Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
-    Route::post('/tickets/search', [TicketController::class, 'searchticket'])->name('searchticket');
+    Route::post('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'searchticket'])->name('searchticket');
     Route::post('/tickets/addcomment', [CommentController::class, 'addcomment'])->name('addcomment');
     // SORTING
     Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');

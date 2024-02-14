@@ -26,9 +26,9 @@ use Illuminate\Http\Request;
 class TicketController extends Controller
 {
     public function newticket(){
-        $getDepartments = Department::where('d_status', 1)->orderby('d_description', 'asc')->get();
-        $getCategories = Category::where('c_status', 1)->orderby('c_description', 'asc')->get();
-        return view('tickets.newticket', ['departments' => $getDepartments, 'categories' => $getCategories]);
+        $departments = DB::select("CALL getDepartments()");
+        $categories = DB::select("CALL getCategories()");
+        return view('tickets.newticket', compact('departments', 'categories'));
     }
 
     public function add(Request $request){
@@ -50,11 +50,6 @@ class TicketController extends Controller
         $save = Ticket::insert($newticket);
 
         if($save){
-            //SENDING EMAIL TO TICKET CREATOR
-            // $department1 = User::select('d_email')
-            // ->join('users', 'departments.d_id', 'users.u_department')
-            // ->where('users.u_department', Auth::user()->u_department)
-            // ->first();
             $todepartment = $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
             ->join('departments', 't_todepartment', 'd_id')
             ->join('users', 'tickets.t_createdby', 'users.id')
@@ -492,105 +487,142 @@ class TicketController extends Controller
         }
     }
 
-    public function searchticket(Request $request){
-        $searchitem = $request->validate(['searchitem' => ['required']]);
-        $tickets = Ticket::join('users', 'tickets.t_createdby', '=', 'users.id')
-        ->join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->where('tickets.t_todepartment', Auth::user()->u_department)
-        ->where('tickets.t_id', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('tickets.t_title', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('tickets.t_description', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('tickets.t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('users.u_fname', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('users.u_lname', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('tickets.t_status', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('departments.d_code', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('departments.d_description', 'like', '%' . $searchitem['searchitem'] . '%')
-        ->orderby('tickets.t_id', 'desc')
-        ->paginate(10);
+    public function searchticket(Request $request, $department, $myticket, $column, $order){
+        $userid = Auth::user()->id;
+$userdept = Auth::user()->u_department;
 
-        $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
-        $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
-        $openticketcount = Ticket::where('t_status', 2)->count();
-        $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
-        $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
-        $resolvedticketcount = Ticket::where('t_status', 5)->count();
-        $closedticketcount = Ticket::where('t_status', 6)->count();
-        $cancelledticketcount = Ticket::where('t_status', 7)->count();
-        $title = ["title" => "Search Tickets"];
-        $order = "desc";
+$searchitem = $request->validate(['searchitem' => ['required']]);
+$userid = Auth::user()->id;
+        $userdept = Auth::user()->u_department;
+        $mytickets = 'alltickets'; // replace with the actual value
 
-        return view('tickets.searchticket', compact('title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+        $tickets = DB::table('tickets')
+        ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code',
+            DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_createdby) as creator"),
+                'tickets.created_at', 'tickets.t_severity',
+            DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_assignedto) as assignedto"),
+            DB::raw("CASE WHEN tickets.t_status = 1 THEN 'New'
+                    WHEN tickets.t_status = 2 THEN 'Viewed'
+                    WHEN tickets.t_status = 3 THEN 'Assigned'
+                    WHEN tickets.t_status = 4 THEN 'Acknowledged'
+                    WHEN tickets.t_status = 5 THEN 'Resolved'
+                    WHEN tickets.t_status = 6 THEN 'Closed-Resolved'
+                    WHEN tickets.t_status = 7 THEN 'Cancelled' END as ticketStatus"))
+            ->join('users', 'tickets.t_createdby', '=', 'users.id')
+            ->join('departments', 'users.u_department', '=', 'departments.d_id')
+            ->where('tickets.t_todepartment', 1)
+            ->where(function ($query) use ($mytickets, $userdept, $userid) {
+                switch ($mytickets) {
+                    case 'alltickets':
+                        $query->where('tickets.t_todepartment', $userdept);
+                        break;
+                    case 'mytickets':
+                        $query->where('tickets.t_createdby', $userid);
+                        break;
+                    case 'newtickets':
+                        $query->where('tickets.t_status', 1);
+                        break;
+                    case 'opentickets':
+                        $query->where('tickets.t_status', 2);
+                        break;
+                    case 'assignedtickets':
+                        $query->where('tickets.t_status', 3);
+                        break;
+                    case 'acknowledgedtickets':
+                        $query->where('tickets.t_status', 4);
+                        break;
+                    case 'resolvedtickets':
+                        $query->where('tickets.t_status', 5);
+                        break;
+                    case 'closedtickets':
+                        $query->where('tickets.t_status', 6);
+                        break;
+                    case 'cancelledtickets':
+                        $query->where('tickets.t_status', 7);
+                        break;
+                }
+            })
+            ->where(function ($query) use ($searchitem) {
+                $query->where('tickets.t_id', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('tickets.t_title', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('tickets.t_description', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('tickets.t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('users.u_fname', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('users.u_lname', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('tickets.t_status', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('departments.d_code', 'like', '%' . $searchitem['searchitem'] . '%')
+                    ->orWhere('departments.d_description', 'like', '%' . $searchitem['searchitem'] . '%');
+            })
+            ->orderby($column, $order)
+            ->paginate(10);
+
+        $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);
+
+        return view('tickets.tickets', compact('myticket', 'order', 'tickets', 'ticketcount'));
     }
 
 
     // SORTING
     public function sort($department, $myticket, $column, $order){
+        $userid = Auth::user()->id;
+        $userdept = Auth::user()->u_department;
+        $mytickets = 'alltickets'; // replace with the actual value
+
+        $tickets = DB::table('tickets')
+        ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code',
+            DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_createdby) as creator"),
+                'tickets.created_at', 'tickets.t_severity',
+            DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_assignedto) as assignedto"),
+            DB::raw("CASE WHEN tickets.t_status = 1 THEN 'New'
+                    WHEN tickets.t_status = 2 THEN 'Viewed'
+                    WHEN tickets.t_status = 3 THEN 'Assigned'
+                    WHEN tickets.t_status = 4 THEN 'Acknowledged'
+                    WHEN tickets.t_status = 5 THEN 'Resolved'
+                    WHEN tickets.t_status = 6 THEN 'Closed-Resolved'
+                    WHEN tickets.t_status = 7 THEN 'Cancelled' END as ticketStatus"))
+            ->join('users', 'tickets.t_createdby', '=', 'users.id')
+            ->join('departments', 'users.u_department', '=', 'departments.d_id')
+            ->where('tickets.t_todepartment', 1)
+            ->where(function ($query) use ($mytickets, $userdept, $userid) {
+                switch ($mytickets) {
+                    case 'alltickets':
+                        $query->where('tickets.t_todepartment', $userdept);
+                        break;
+                    case 'mytickets':
+                        $query->where('tickets.t_createdby', $userid);
+                        break;
+                    case 'newtickets':
+                        $query->where('tickets.t_status', 1);
+                        break;
+                    case 'opentickets':
+                        $query->where('tickets.t_status', 2);
+                        break;
+                    case 'assignedtickets':
+                        $query->where('tickets.t_status', 3);
+                        break;
+                    case 'acknowledgedtickets':
+                        $query->where('tickets.t_status', 4);
+                        break;
+                    case 'resolvedtickets':
+                        $query->where('tickets.t_status', 5);
+                        break;
+                    case 'closedtickets':
+                        $query->where('tickets.t_status', 6);
+                        break;
+                    case 'cancelledtickets':
+                        $query->where('tickets.t_status', 7);
+                        break;
+                }
+            })
+            ->orderby($column, $order)
+            ->paginate(10);
 
 
-        $tickets = Ticket::select('tickets.*', 'tickets.t_createdby', 'departments.d_id', 'departments.d_code', 'users.id', 'users.u_fname', 'users.u_lname')
-        ->join('users', 'tickets.t_createdby', '=', 'users.id')
-        ->join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->when($myticket == 'alltickets', function($tickets){
-            $tickets->where('tickets.t_todepartment', Auth::user()->u_department);
-        })
-        ->when($myticket == 'mytickets', function($tickets){
-            $tickets->where('tickets.t_createdby', Auth::user()->id);
-        })
-        ->when($myticket == 'opentickets', function($tickets){
-            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
-            ->where('tickets.t_status', 2);
-        })
-        ->when($myticket == 'assignedtickets', function($tickets){
-            $tickets->where('tickets.t_assignedto', Auth::user()->id)
-            ->where('tickets.t_todepartment', Auth::user()->u_department)
-            ->where('tickets.t_status', 3);
-        })
-        ->when($myticket == 'acknowledgedtickets', function($tickets){
-            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
-            ->where('tickets.t_status', 4);
-        })
-        ->when($myticket == 'resolvedtickets', function($tickets){
-            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
-            ->where('tickets.t_status', 5);
-        })
-        ->when($myticket == 'closedtickets', function($tickets){
-            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
-            ->where('tickets.t_status', 6);
-        })
-        ->when($myticket == 'cancelledtickets', function($tickets){
-            $tickets->where('tickets.t_todepartment', Auth::user()->u_department)
-            ->where('tickets.t_status', 7);
-        })
-        ->when($myticket == 'searchtickets', function($tickets){
-            $tickets->where('tickets.t_id', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('tickets.t_title', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('tickets.t_description', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('tickets.t_severity', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('users.u_fname', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('users.u_lname', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('tickets.t_status', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('departments.d_code', 'like', '%' . $searchitem['searchitem'] . '%')
-            ->orwhere('departments.d_description', 'like', '%' . $searchitem['searchitem'] . '%');
-        })
-        ->orderby($column, $order)->paginate(10);
+        $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);
 
-        // $assignedto = User::select('users.u_fname', 'users.u_lname')
-        // ->join('tickets', 'users.id', 'tickets.t_assignedto')
-        // ->where('tickets.t_assignedto', $tickets->t_assignedto)
-        // ->get();
-
-        $allticketcount = Ticket::where('t_todepartment', Auth::user()->u_department)->count();
-        $myticketcount = Ticket::where('t_createdby', Auth::user()->id)->count();
-        $openticketcount = Ticket::where('t_status', 2)->count();
-        $assignedticketcount = Ticket::where('t_status', 3)->where('t_assignedto', Auth::user()->id)->count();
-        $acknowledgedticketcount = Ticket::where('t_status', 4)->count();
-        $resolvedticketcount = Ticket::where('t_status', 5)->count();
-        $closedticketcount = Ticket::where('t_status', 6)->count();
-        $cancelledticketcount = Ticket::where('t_status', 7)->count();
-        $title = ["title" => "All Tickets"];
-
-        return view('tickets.tickets', compact('myticket', 'order', 'title', 'tickets', 'allticketcount', 'openticketcount', 'myticketcount', 'acknowledgedticketcount', 'resolvedticketcount', 'closedticketcount', 'cancelledticketcount', 'assignedticketcount'));
+        return view('tickets.tickets', compact('myticket', 'order', 'tickets', 'ticketcount'));
     }
 
 }
+
+

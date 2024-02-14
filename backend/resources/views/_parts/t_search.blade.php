@@ -1,4 +1,4 @@
-<form action="/tickets/search" method="post">
+<form action="/{{Auth::user()->u_department}}/tickets/search/ticketid/desc" method="post">
     @csrf
     @method('POST')
     <div class="input-group mb-3">
