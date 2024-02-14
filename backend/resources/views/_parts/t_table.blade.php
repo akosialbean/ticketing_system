@@ -91,11 +91,11 @@
                     <td class="small"><small>{{$ticket->t_severity}}</small></td>
                     <td class="small"><small>{{$ticket->ticketStatus}}</small></td>
                     <td>
-                        @if($ticket->ticketStatus == 1)
+                        @if($ticket->ticketStatus == 'New' && Auth::user()->u_role == 1)
                             <form action="/openticket" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                <input type="hidden" name="t_id" value="{{$ticket->ticketid}}">
                                 <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-three-dots-vertical"></i></button>
                             </form>
                         @else

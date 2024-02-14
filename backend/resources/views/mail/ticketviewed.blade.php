@@ -9,7 +9,7 @@
 <body>
     Good day!
     <br><br>
-    This is to inform you that your ticket was viewed by <strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</strong> from {{$ticket->d_description}}.
+    This is to inform you that your ticket was viewed by <strong>{{Auth::user()->u_fname}} {{Auth::user()->u_lname}}</strong> from {{$ticket->d_description}}.
     <br><br>
     <strong>Ticket #: #{{$ticket->t_id}}#</strong><br>
     <i>{{$ticket->t_description}}</i>
