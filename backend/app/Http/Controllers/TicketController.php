@@ -104,24 +104,24 @@ class TicketController extends Controller
     
             if($update){
                 //SENDING EMAIL TO TICKET CREATOR
-                $ticketcreator = User::select('users.id')
-                ->join('tickets', 'users.id', 'tickets.t_createdby')
-                ->where('tickets.t_id', $ticket['t_id'])
-                ->first();
+                // $ticketcreator = User::select('users.id')
+                // ->join('tickets', 'users.id', 'tickets.t_createdby')
+                // ->where('tickets.t_id', $ticket['t_id'])
+                // ->first();
 
-                $creator = Ticket::select('users.u_email')
-                ->join('users', 'tickets.t_createdby', 'users.id')
-                ->where('tickets.t_createdby', $ticketcreator->id)
-                ->first();
+                // $creator = Ticket::select('users.u_email')
+                // ->join('users', 'tickets.t_createdby', 'users.id')
+                // ->where('tickets.t_createdby', $ticketcreator->id)
+                // ->first();
 
-                $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
-                ->join('departments', 'users.u_department', 'departments.d_id')
-                ->join('tickets', 'users.id', 'tickets.t_createdby')
-                ->where('tickets.t_id', $ticket['t_id'])
-                ->orderby('tickets.t_id', 'desc')
-                ->first();
+                // $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+                // ->join('departments', 'users.u_department', 'departments.d_id')
+                // ->join('tickets', 'users.id', 'tickets.t_createdby')
+                // ->where('tickets.t_id', $ticket['t_id'])
+                // ->orderby('tickets.t_id', 'desc')
+                // ->first();
 
-                Mail::to($creator->u_email)->send(new ViewedTicket($todepartment));
+                // Mail::to($creator->u_email)->send(new ViewedTicket($todepartment));
 
                 return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' opened!');
             }else{
@@ -205,8 +205,10 @@ class TicketController extends Controller
         $minutes = $total->format('%i');
         $seconds = $total->format('%s');
 
-        $comments = Comment::where('comments.comment_ticketid', $ticket)
+        $comments = Comment::select('users.u_fname', 'users.u_lname', 'comments.comment_id', 'comments.comment_sender', 'comments.comment_message', 'comments.created_at')
+        ->where('comments.comment_ticketid', $ticket)
         ->join('users', 'comments.comment_sender', 'users.id')
+        ->orderby('comments.comment_id', 'desc')
         ->get();
 
         return view('tickets.ticket', compact('comments', 'tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto', 'days', 'hours', 'minutes', 'seconds'));
@@ -233,21 +235,21 @@ class TicketController extends Controller
 
         if($update){
             //SENDING EMAIL TO TICKET CREATOR
-            $ticketcreator = User::select('id')
-            ->join('tickets', 'users.id', 'tickets.t_createdby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->first();
-            $user2 = Ticket::select('users.id', 'users.u_email')
-            ->join('users', 'tickets.t_createdby', 'users.id')
-            ->where('tickets.t_createdby', $ticketcreator->id)
-            ->first();
-            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
-            ->join('departments', 'users.u_department', 'departments.d_id')
-            ->join('tickets', 'users.id', 'tickets.t_acknowledgedby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->orderby('tickets.t_id', 'desc')
-            ->first();
-            Mail::to($user2->u_email)->send(new TicketAcknowledged($todepartment));
+            // $ticketcreator = User::select('id')
+            // ->join('tickets', 'users.id', 'tickets.t_createdby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->first();
+            // $user2 = Ticket::select('users.id', 'users.u_email')
+            // ->join('users', 'tickets.t_createdby', 'users.id')
+            // ->where('tickets.t_createdby', $ticketcreator->id)
+            // ->first();
+            // $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            // ->join('departments', 'users.u_department', 'departments.d_id')
+            // ->join('tickets', 'users.id', 'tickets.t_acknowledgedby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->orderby('tickets.t_id', 'desc')
+            // ->first();
+            // Mail::to($user2->u_email)->send(new TicketAcknowledged($todepartment));
 
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' acknowledged!');
         }else{
@@ -279,21 +281,21 @@ class TicketController extends Controller
 
         if($resolve){
             //SENDING EMAIL TO TICKET CREATOR
-            $ticketcreator = User::select('id')
-            ->join('tickets', 'users.id', 'tickets.t_createdby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->first();
-            $user2 = Ticket::select('users.id', 'users.u_email')
-            ->join('users', 'tickets.t_createdby', 'users.id')
-            ->where('tickets.t_createdby', $ticketcreator->id)
-            ->first();
-            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_resolution', 'users.u_fname', 'users.u_lname', 'departments.d_description')
-            ->join('departments', 'users.u_department', 'departments.d_id')
-            ->join('tickets', 'users.id', 'tickets.t_acknowledgedby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->orderby('tickets.t_id', 'desc')
-            ->first();
-            Mail::to($user2->u_email)->send(new TicketResolved($todepartment));
+            // $ticketcreator = User::select('id')
+            // ->join('tickets', 'users.id', 'tickets.t_createdby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->first();
+            // $user2 = Ticket::select('users.id', 'users.u_email')
+            // ->join('users', 'tickets.t_createdby', 'users.id')
+            // ->where('tickets.t_createdby', $ticketcreator->id)
+            // ->first();
+            // $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_resolution', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            // ->join('departments', 'users.u_department', 'departments.d_id')
+            // ->join('tickets', 'users.id', 'tickets.t_acknowledgedby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->orderby('tickets.t_id', 'desc')
+            // ->first();
+            // Mail::to($user2->u_email)->send(new TicketResolved($todepartment));
 
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' resolved!');
         }else{
@@ -322,21 +324,21 @@ class TicketController extends Controller
         ]);
 
         if($resolve){
-            $ticketcreator = User::select('id')
-            ->join('tickets', 'users.id', 'tickets.t_createdby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->first();
-            $user2 = Ticket::select('users.id', 'users.u_email')
-            ->join('users', 'tickets.t_createdby', 'users.id')
-            ->where('tickets.t_createdby', $ticketcreator->id)
-            ->first();
-            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_resolution', 'users.u_fname', 'users.u_lname', 'departments.d_description')
-            ->join('departments', 'users.u_department', 'departments.d_id')
-            ->join('tickets', 'users.id', 'tickets.t_resolvedby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->orderby('tickets.t_id', 'desc')
-            ->first();
-            Mail::to($user2->u_email)->send(new TicketClosed($todepartment));
+            // $ticketcreator = User::select('id')
+            // ->join('tickets', 'users.id', 'tickets.t_createdby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->first();
+            // $user2 = Ticket::select('users.id', 'users.u_email')
+            // ->join('users', 'tickets.t_createdby', 'users.id')
+            // ->where('tickets.t_createdby', $ticketcreator->id)
+            // ->first();
+            // $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_resolution', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            // ->join('departments', 'users.u_department', 'departments.d_id')
+            // ->join('tickets', 'users.id', 'tickets.t_resolvedby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->orderby('tickets.t_id', 'desc')
+            // ->first();
+            // Mail::to($user2->u_email)->send(new TicketClosed($todepartment));
 
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' closed!');
         }else{
@@ -368,21 +370,21 @@ class TicketController extends Controller
 
         if($cancel){
             //SENDING EMAIL TO TICKET CREATOR
-            $ticketcreator = User::select('id')
-            ->join('tickets', 'users.id', 'tickets.t_createdby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->first();
-            $user2 = Ticket::select('users.id', 'users.u_email')
-            ->join('users', 'tickets.t_createdby', 'users.id')
-            ->where('tickets.t_createdby', $ticketcreator->id)
-            ->first();
-            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_cancelreason', 'users.u_fname', 'users.u_lname', 'departments.d_description')
-            ->join('departments', 'users.u_department', 'departments.d_id')
-            ->join('tickets', 'users.id', 'tickets.t_cancelledby')
-            ->where('tickets.t_id', $ticket['t_id'])
-            ->orderby('tickets.t_id', 'desc')
-            ->first();
-            Mail::to($user2->u_email)->send(new TicketCancelled($todepartment));
+            // $ticketcreator = User::select('id')
+            // ->join('tickets', 'users.id', 'tickets.t_createdby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->first();
+            // $user2 = Ticket::select('users.id', 'users.u_email')
+            // ->join('users', 'tickets.t_createdby', 'users.id')
+            // ->where('tickets.t_createdby', $ticketcreator->id)
+            // ->first();
+            // $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'tickets.t_cancelreason', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            // ->join('departments', 'users.u_department', 'departments.d_id')
+            // ->join('tickets', 'users.id', 'tickets.t_cancelledby')
+            // ->where('tickets.t_id', $ticket['t_id'])
+            // ->orderby('tickets.t_id', 'desc')
+            // ->first();
+            // Mail::to($user2->u_email)->send(new TicketCancelled($todepartment));
 
             return redirect('/ticket/' . $ticket['t_id'])->with('success', 'Ticket ' . $ticket['t_id'] . ' cancelled!');
         }else{
@@ -468,21 +470,21 @@ class TicketController extends Controller
         
         if($assign){
             //SENDING EMAIL TO TICKET CREATOR
-            $ticketcreator = User::select('id')
-            ->join('tickets', 'users.id', 'tickets.t_createdby')
-            ->where('tickets.t_id', $user['t_id'])
-            ->first();
-            $user2 = Ticket::select('users.id', 'users.u_email')
-            ->join('users', 'tickets.t_createdby', 'users.id')
-            ->where('tickets.t_createdby', $ticketcreator->id)
-            ->first();
-            $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
-            ->join('departments', 'users.u_department', 'departments.d_id')
-            ->join('tickets', 'users.id', 'tickets.t_assignedto')
-            ->where('tickets.t_id', $user['t_id'])
-            ->orderby('tickets.t_id', 'desc')
-            ->first();
-            Mail::to($user2->u_email)->send(new TicketAssigned($todepartment));
+            // $ticketcreator = User::select('id')
+            // ->join('tickets', 'users.id', 'tickets.t_createdby')
+            // ->where('tickets.t_id', $user['t_id'])
+            // ->first();
+            // $user2 = Ticket::select('users.id', 'users.u_email')
+            // ->join('users', 'tickets.t_createdby', 'users.id')
+            // ->where('tickets.t_createdby', $ticketcreator->id)
+            // ->first();
+            // $todepartment = User::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'users.u_fname', 'users.u_lname', 'departments.d_description')
+            // ->join('departments', 'users.u_department', 'departments.d_id')
+            // ->join('tickets', 'users.id', 'tickets.t_assignedto')
+            // ->where('tickets.t_id', $user['t_id'])
+            // ->orderby('tickets.t_id', 'desc')
+            // ->first();
+            // Mail::to($user2->u_email)->send(new TicketAssigned($todepartment));
 
             return redirect('/ticket/' . $user['t_id'])->with('success', 'Ticket ' . $user['t_id'] . ' assigned!');
         }else{

@@ -29,24 +29,27 @@ class CommentController extends Controller
 
         if($save){
             //SENDING EMAIL TO TICKET RESOLVER
-            $tosender = Comment::select('users.u_email')
-            ->join('users', 'comments.comment_sender', 'users.id')
-            ->join('tickets', 'comments.comment_ticketid', 'tickets.t_id')
-            ->where('tickets.t_id', $data['comment_ticketid'])
-            ->first();
+            // $tosender = Comment::select('users.u_email')
+            // ->join('users', 'comments.comment_sender', 'users.id')
+            // ->join('tickets', 'comments.comment_ticketid', 'tickets.t_id')
+            // ->where('tickets.t_id', $data['comment_ticketid'])
+            // ->first();
 
-            $comment = Comment::select('comments.comment_ticketid', 'comments.comment_message', 'users.u_fname', 'users.u_lname', 'tickets.t_id', 'tickets.t_description')
-            ->join('tickets', 'comments.comment_ticketid', 'tickets.t_id')
-            ->join('users', 'comments.comment_sender', 'users.id')
-            ->where('tickets.t_id', $data['comment_ticketid'])
-            ->orderby('comment_id', 'desc')
-            ->first();
+            // $comment = Comment::select('comments.comment_ticketid', 'comments.comment_message', 'users.u_fname', 'users.u_lname', 'tickets.t_id', 'tickets.t_description')
+            // ->join('tickets', 'comments.comment_ticketid', 'tickets.t_id')
+            // ->join('users', 'comments.comment_sender', 'users.id')
+            // ->where('tickets.t_id', $data['comment_ticketid'])
+            // ->orderby('comment_id', 'desc')
+            // ->first();
 
-            Mail::to($tosender->u_email)->send(new CommentNotification($comment));
+            // Mail::to($tosender->u_email)->send(new CommentNotification($comment));
 
-            return redirect()->intended('/ticket/' . $comment['comment_ticketid'])->with('success', 'Comment saved!');
+            return redirect()->intended('/ticket/' . $data['comment_ticketid'])->with('success', 'Comment saved!');
         }else{
-            return redirect()->intended('/ticket/' . $comment['comment_ticketid'])->with('error', 'Failed to save comment!');
+            return redirect()->intended('/ticket/' . $data['comment_ticketid'])->with('error', 'Failed to save comment!');
         }
     }
 }
+
+
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt repellendus rerum vel in, nulla neque possimus sunt voluptatum eius ipsam.
