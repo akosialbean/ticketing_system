@@ -4,6 +4,7 @@ namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Auth;
 
 class CancelledTicketChart
 {
@@ -16,8 +17,9 @@ class CancelledTicketChart
 
     public function build(): \ArielMejiaDev\LarapexCharts\PieChart
     {
-        $closed = Ticket::where('t_status', 6)->count();
-        $cancelled = Ticket::where('t_status', 7)->count();
+        $userdept = Auth::user()->u_department;
+        $closed = Ticket::where('t_status', 6)->where('tickets.t_todepartment', $userdept)->count();
+        $cancelled = Ticket::where('t_status', 7)->where('tickets.t_todepartment', $userdept)->count();
 
         return $this->cancelled->pieChart()
             ->setTitle('Cancelled vs Closed-Resolved Tickets')

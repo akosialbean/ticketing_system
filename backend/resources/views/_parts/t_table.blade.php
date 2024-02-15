@@ -1,7 +1,7 @@
-<div class="table-responsive">
+<div class="table-responsive-sm">
     <table class="table table-sm table-hover table-striped table-bordered my-0">
         <thead>
-            <tr>
+            <tr class="table-secondary">
                 <th class="small">
                     @switch($order)
                         @case("asc")
@@ -82,15 +82,15 @@
             @if($tickets)
                 @foreach($tickets as $ticket)
                 <tr>
-                    <td class="small"><small>{{$ticket->ticketid}}</small></td>
+                    <td class="small text-center"><small>{{$ticket->ticketid}}</small></td>
                     <td class="small"><small>{{$ticket->t_title}}</small></td>
-                    <td class="small"><small>{{$ticket->d_code}}</small></td>
-                    <td class="small"><small>{{$ticket->creator}}</small></td>
-                    <td class="small"><small>{{$ticket->created_at}}</small></td>
-                    <td class="small"><small>{{$ticket->assignedto}}</small></td>
-                    <td class="small"><small>{{$ticket->t_severity}}</small></td>
-                    <td class="small"><small>{{$ticket->ticketStatus}}</small></td>
-                    <td>
+                    <td class="small text-center"><small>{{$ticket->d_code}}</small></td>
+                    <td class="small text-center"><small>{{$ticket->creator}}</small></td>
+                    <td class="small text-center"><small>{{$ticket->created_at}}</small></td>
+                    <td class="small text-center"><small>{{$ticket->assignedto}}</small></td>
+                    <td class="small text-center"><small>{{$ticket->t_severity}}</small></td>
+                    <td class="small text-center"><small>{{$ticket->ticketStatus}}</small></td>
+                    <td class="small text-center">
                         @if($ticket->ticketStatus == 'New' && Auth::user()->u_role == 1)
                             <form action="/openticket" method="POST">
                                 @csrf

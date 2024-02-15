@@ -177,7 +177,9 @@ class TicketController extends Controller
         $severities = Severity::where('s_status', 1)->orderby('s_id', 'asc')->get();
 
         $resolvers = User::orderby('u_fname', 'asc')
-        ->where('users.u_role', '1')->get();
+        ->where('users.u_role', '1')
+        ->where('users.u_department', Auth::user()->u_department)
+        ->get();
 
         $assignedto = DB::table('tickets')
             ->join('users', 'tickets.t_assignedto', 'users.id')
@@ -610,35 +612,34 @@ $userid = Auth::user()->id;
                     WHEN tickets.t_status = 7 THEN 'Cancelled' END as ticketStatus"))
             ->join('users', 'tickets.t_createdby', '=', 'users.id')
             ->join('departments', 'users.u_department', '=', 'departments.d_id')
-            ->where('tickets.t_todepartment', 1)
             ->where(function ($query) use ($myticket, $userdept, $userid) {
                 switch ($myticket) {
                     case 'alltickets':
-                        $query->where('tickets.t_todepartment', $userdept);
+                        $query->where('tickets.t_todepartment', $userdept)->orWhere('tickets.t_createdby', $userid);
                         break;
                     case 'mytickets':
                         $query->where('tickets.t_createdby', $userid);
                         break;
                     case 'newtickets':
-                        $query->where('tickets.t_status', 1);
+                        $query->where('tickets.t_status', 1)->where('tickets.t_todepartment', $userdept);
                         break;
                     case 'opentickets':
-                        $query->where('tickets.t_status', 2);
+                        $query->where('tickets.t_status', 2)->where('tickets.t_todepartment', $userdept);
                         break;
                     case 'assignedtickets':
-                        $query->where('tickets.t_status', 3);
+                        $query->where('tickets.t_status', 3)->where('tickets.t_todepartment', $userdept);
                         break;
                     case 'acknowledgedtickets':
-                        $query->where('tickets.t_status', 4);
+                        $query->where('tickets.t_status', 4)->where('tickets.t_todepartment', $userdept);
                         break;
                     case 'resolvedtickets':
-                        $query->where('tickets.t_status', 5);
+                        $query->where('tickets.t_status', 5)->where('tickets.t_todepartment', $userdept);
                         break;
                     case 'closedtickets':
-                        $query->where('tickets.t_status', 6);
+                        $query->where('tickets.t_status', 6)->where('tickets.t_todepartment', $userdept);
                         break;
                     case 'cancelledtickets':
-                        $query->where('tickets.t_status', 7);
+                        $query->where('tickets.t_status', 7)->where('tickets.t_todepartment', $userdept);
                         break;
                 }
             })
@@ -646,15 +647,15 @@ $userid = Auth::user()->id;
             ->paginate(10);
 
             $overallTickets = DB::table('tickets')->count();
-            $perDept = DB::table('tickets')->where('t_todepartment', 1)->count();
-            $myTickets = DB::table('tickets')->where('t_createdby', 3)->count();
-            $newTickets = DB::table('tickets')->where('t_status', 1)->where('t_todepartment', 1)->count();
-            $openTickets = DB::table('tickets')->where('t_status', 2)->where('t_todepartment', 1)->count();
-            $assignedTickets = DB::table('tickets')->where('t_status', 3)->where('t_todepartment', 1)->count();
-            $acknowledgedTickets = DB::table('tickets')->where('t_status', 4)->where('t_todepartment', 1)->count();
-            $resolvedTickets = DB::table('tickets')->where('t_status', 5)->where('t_todepartment', 1)->count();
-            $closedTickets = DB::table('tickets')->where('t_status', 6)->where('t_todepartment', 1)->count();
-            $cancelledTickets = DB::table('tickets')->where('t_status', 7)->where('t_todepartment', 1)->count();
+            $perDept = DB::table('tickets')->where('tickets.t_todepartment', $userdept)->orWhere('tickets.t_createdby', $userid)->count();
+            $myTickets = DB::table('tickets')->where('t_createdby', $userid)->count();
+            $newTickets = DB::table('tickets')->where('t_status', 1)->where('t_todepartment', $userdept)->count();
+            $openTickets = DB::table('tickets')->where('t_status', 2)->where('t_todepartment', $userdept)->count();
+            $assignedTickets = DB::table('tickets')->where('t_status', 3)->where('t_todepartment', $userdept)->count();
+            $acknowledgedTickets = DB::table('tickets')->where('t_status', 4)->where('t_todepartment', $userdept)->count();
+            $resolvedTickets = DB::table('tickets')->where('t_status', 5)->where('t_todepartment', $userdept)->count();
+            $closedTickets = DB::table('tickets')->where('t_status', 6)->where('t_todepartment', $userdept)->count();
+            $cancelledTickets = DB::table('tickets')->where('t_status', 7)->where('t_todepartment', $userdept)->count();
             $ticketcount = [
             'overallTickets' => $overallTickets,
             'perDept' => $perDept,

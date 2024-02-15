@@ -4,6 +4,7 @@ namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Auth;
 
 class TicketChart
 {
@@ -16,10 +17,11 @@ class TicketChart
 
     public function build(): \ArielMejiaDev\LarapexCharts\PieChart
     {
-        $newTicket = Ticket::where('tickets.t_status', 1)->count();
-        $viewedTicket = Ticket::where('tickets.t_status', 2)->count();
-        $assignedTicket = Ticket::where('tickets.t_status', 3)->count();
-        $acknowledgedTicket = Ticket::where('tickets.t_status', 4)->count();
+        $userdept = Auth::user()->u_department;
+        $newTicket = Ticket::where('tickets.t_status', 1)->where('tickets.t_todepartment', $userdept)->count();
+        $viewedTicket = Ticket::where('tickets.t_status', 2)->where('tickets.t_todepartment', $userdept)->count();
+        $assignedTicket = Ticket::where('tickets.t_status', 3)->where('tickets.t_todepartment', $userdept)->count();
+        $acknowledgedTicket = Ticket::where('tickets.t_status', 4)->where('tickets.t_todepartment', $userdept)->count();
 
         return $this->tickets->pieChart()
             ->setTitle('WMC Tickets')

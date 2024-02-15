@@ -5,9 +5,11 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-    <div class="container my-5 pt-5">
+    <div class="container mt-5 pt-5">
         <div class="card">
-            <div class="card-header"><strong>Ticket</strong></div>
+            @foreach($tickets as $ticket)
+                <div class="card-header"><strong>Ticket #{{$ticket->t_id}}</strong></div>
+            @endforeach
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -23,65 +25,80 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4">
-                            @foreach($tickets as $ticket)
-                                <div class="mb-3">
-                                    <label for="t_title" class="form-label h1">
-                                        #{{$ticket->t_id}}
-                                    </label>
-                                </div>
+                            <div class="card">
+                                <div class="card-header">Ticket Details</div>
+                                <div class="card-body">
+                                    @foreach($tickets as $ticket)
+                                        <div class="mb-3">
+                                            <label for="t_title" class="form-label"><strong>{{$ticket->t_title}}</strong></label>
+                                        </div>
 
-                                <div class="mb-3">
-                                    <label for="t_title" class="form-label h2">{{$ticket->t_title}}</label>
-                                </div>
+                                        <div class="mb-0">
+                                            <p>{{$ticket->t_description}}</p>
+                                        </div>
 
-                                <div class="mb-3">
-                                    <p>{{$ticket->t_description}}</p>
-                                </div>
+                                        <hr>
 
-                                <div class="mb-3">
-                                    <p>Category: {{$ticket->c_description}}</p>
-                                </div>
+                                        <div class="mb-0">
+                                            <strong>Category:</strong> {{$ticket->c_description}}
+                                        </div>
 
-                                <div class="mb-3">
-                                    <p>Requested by: {{$ticket->u_fname}} {{$ticket->u_lname}}</p>
-                                </div>
+                                        <div class="mb-1">
+                                            <strong>Requested by:</strong> {{$ticket->u_fname}} {{$ticket->u_lname}}
+                                        </div>
 
-                                <div class="mb-3">
-                                    <p>Severity: {{$ticket->t_severity}}</p>
-                                </div>
+                                        <div class="mb-1">
+                                            <strong>Severity:</strong> {{$ticket->t_severity}}
+                                        </div>
 
-                                <div class="mb-3">
-                                    <p>Assigned to: @if($assignedto){{$assignedto->u_fname}} {{$assignedto->u_lname}}@endif</p>
-                                </div>
+                                        <div class="mb-1">
+                                            <strong>Assigned to:</strong> @if($assignedto){{$assignedto->u_fname}} {{$assignedto->u_lname}}@endif
+                                        </div>
 
-                                <div class="mb-3">
-                                    <p>Resolution Time: {{$days}}:{{$hours}}:{{$minutes}}:{{$seconds}}</p>
-                                </div>
+                                        <div class="mb-0">
+                                            <strong>Resolution Time:</strong> {{$days}}:{{$hours}}:{{$minutes}}:{{$seconds}}
+                                        </div>
 
-                                @if($ticket->t_createdby == Auth::user()->id)
-                                    @if($ticket->t_status == 1 || $ticket->t_status == 2)
-                                        <a href="/ticket/{{$ticket->t_id}}/editticket" class="btn btn-sm btn-primary my-3">Edit</a>
-                                    @endif
-                                @endif
-
-                                @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3 || $ticket->t_status == 4)
-                                    <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
-                                @endif
-
-                                @if($ticket->t_severity != NULL)
-                                    @if(Auth::user()->u_role == 1)
-                                        @if($ticket->t_status == 3)
-                                            <form action="/acknowledge" method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                                <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
-                                            </form>
+                                        @if($ticket->t_createdby == Auth::user()->id)
+                                            @if($ticket->t_status == 1 || $ticket->t_status == 2)
+                                                <a href="/ticket/{{$ticket->t_id}}/editticket" class="btn btn-sm btn-primary my-1">Edit</a>
+                                            @endif
                                         @endif
-                                    @endif
-                                @endif
-                                
-                            @endforeach
+
+                                        @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3 || $ticket->t_status == 4)
+                                            <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
+                                        @endif
+
+                                        @if($ticket->t_severity != NULL)
+                                            @if(Auth::user()->u_role == 1)
+                                                @if($ticket->t_status == 3)
+                                                    <form action="/acknowledge" method="POST">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                                        <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
+                                                    </form>
+                                                @endif
+                                            @endif
+                                        @endif
+
+                                        @foreach($tickets as $ticket)
+                                            @if(($ticket->t_status == 5))
+                                                <form action="/close" method="post">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
+                                                    <div class="my-3">
+                                                        <button class="btn btn-sm btn-warning">Close Ticket</button>
+                                                    </div>
+                                                </form>
+                                            @endif
+                                        @endforeach
+                                        
+                                    @endforeach
+                                </div>
+                            </div>
+                            
                         </div>
 
                         <div class="col-sm-8">
@@ -125,73 +142,47 @@
                                         @endif
                                     @endif
                                 @endif
+
+                                @foreach($tickets as $ticket)
+                                    @if(($ticket->t_status == 7))
+                                        <div class="card mb-3">
+                                            <div class="card-header">Cancelled</div>
+                                            <div class="card-body">
+                                                <div class="mb-3">
+                                                    <label for="t_cancellationreason" class="form-label h6"><strong>Cancellation Reason</strong></label>
+                                                    <p>{{$ticket->t_cancelreason}}</p>
+                                                    <p><strong>Cancelled by: </strong>{{$cancelledby->u_fname}} {{$cancelledby->u_lname}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @endforeach
 
+                            @foreach($tickets as $ticket)
+                                @if(Auth::user()->u_role == 1 && $ticket->t_status == 4 && $ticket->t_todepartment == Auth::user()->u_department)
+                                    @include('_parts.t_resolution')
+                                @endif
+                            @endforeach
+
+                            @if(($ticket->t_status == 5 || $ticket->t_status == 6))
+                                <div class="card my-3">
+                                    <div class="card-header">Resolution</div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="t_title" class="form-label h2">Resolution</label>
+                                            <p>{{$ticket->t_resolution}}</p>
+                                            <p><strong>Resolved by: </strong>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</p>
+                                            <p><strong>Date Resolved: </strong>{{$ticket->t_resolveddate}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            
                             @include('_parts.t_comments')
                         </div>
                     </div>
                 </div>
-
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        @foreach($tickets as $ticket)
-                            @if(Auth::user()->u_role == 1 && $ticket->t_status == 4)
-                                <div class="mb-3">
-                                    <form action="/resolve" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                        <label for="t_resolution" class="form-label">Resolution</label>
-                                        <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
-                                        <div class="mt-3">
-                                            <button type="submit" class="btn btn-sm btn-success">Resolve</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            @endif
-
-                            @if(($ticket->t_status == 5 || $ticket->t_status == 6))
-                                <div class="mb-3">
-                                    <label for="t_title" class="form-label h2">Resolution</label>
-                                    <p>{{$ticket->t_resolution}}</p>
-                                    <p><strong>Resolved by: </strong>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</p>
-                                    <p><strong>Date Resolved: </strong>{{$ticket->t_resolveddate}}</p>
-                                </div>
-                            @endif
-
-                            @if(($ticket->t_status == 5))
-                                <form action="/close" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                    <div class="my-3">
-                                        <button class="btn btn-sm btn-warning">Close Ticket</button>
-                                    </div>
-                                </form>
-                            @endif
-
-                            @if(($ticket->t_status == 7))
-                                <div class="mb-3">
-                                    <label for="t_cancellationreason" class="form-label h6"><strong>Cancellation Reason</strong></label>
-                                    <p>{{$ticket->t_cancelreason}}</p>
-                                    <p><strong>Cancelled by: </strong>{{$cancelledby->u_fname}} {{$cancelledby->u_lname}}</p>
-                                </div>
-                            @endif
-
-                            {{-- @switch(Auth::user()->u_role)
-                                @case(1)
-                                    <a href="/{{Auth::user()->u_department}}/tickets/alltickets/t_id/desc" class="btn btn-sm btn-danger">Back</a>
-                                @break
-                                @default
-                                    <a href="/{{Auth::user()->u_department}}/tickets/mytickets/t_id/desc" class="btn btn-sm btn-danger">Back</a>
-                            @endswitch --}}
-
-                        @endforeach
-                    </div>
-                </div>
-
-                <hr>
 
                 <table class="table table-sm table-hover table-stripped" style="display: none">
                     <thead>

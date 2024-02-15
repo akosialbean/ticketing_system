@@ -29,36 +29,44 @@
                     {{-- @if(Auth::user()) --}}
                         @if(Auth::user() && Auth::user()->u_firstlogin == 2)
                             <ul class="navbar-nav ms-auto">
-                                @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
+                                @if(Auth::user()->u_role == 1)
                                     <li href="/dashboard" class="nav-item">
-                                        <a href="/dashboard" class="nav-link">Dashboard</a>
+                                        <a href="/dashboard" class="nav-link small"><i class="bi bi-speedometer"></i> Dashboard</a>
                                     </li>
                                 @endif
                                 <li class="nav-item">
                                     @switch(Auth::user()->u_role)
                                         @case(1)
-                                            <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/alltickets/ticketid/desc">Tickets</a>
+                                            <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/alltickets/ticketid/desc"><i class="bi bi-ticket-detailed"></i> Tickets</a>
                                         @break
                                         @default
-                                            <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/mytickets/ticketid/desc">Tickets</a>
+                                            <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/mytickets/ticketid/desc"><i class="bi bi-ticket-detailed"></i> Tickets</a>
                                     @endswitch
                                 </li>
+                                
                                 @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/categories">Categories</a>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-gear-fill"></i></a>
+                                        <ul class="dropdown-menu">
+                                            
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/categories">Categories</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/departments">Departments</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/severities">Severities</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/users">Users</a>
+                                                </li>
+                                                {{-- <li class="nav-item">
+                                                    <a class="nav-link" href="/report">Reports</a>
+                                                </li> --}}
+                                            
+                                        </ul>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/departments">Departments</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/severities">Severities</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/users">Users</a>
-                                    </li>
-                                    {{-- <li class="nav-item">
-                                        <a class="nav-link" href="/report">Reports</a>
-                                    </li> --}}
                                 @endif
 
                                 <li class="nav-item dropdown">

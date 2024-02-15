@@ -5,6 +5,7 @@ namespace App\Charts;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Carbon\Carbon;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Auth;
 
 class CreatedTicketChart
 {
@@ -17,18 +18,19 @@ class CreatedTicketChart
 
     public function build(): \ArielMejiaDev\LarapexCharts\BarChart
     {
-        $jan = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '01' . '%')->count();
-        $feb = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '02' . '%')->count();
-        $mar = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '03' . '%')->count();
-        $apr = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '04' . '%')->count();
-        $may = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '05' . '%')->count();
-        $jun = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '06' . '%')->count();
-        $jul = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '07' . '%')->count();
-        $aug = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '08' . '%')->count();
-        $sep = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '09' . '%')->count();
-        $oct = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '10' . '%')->count();
-        $nov = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '11' . '%')->count();
-        $dec = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '12' . '%')->count();
+        $userdept = Auth::user()->u_department;
+        $jan = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '01' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $feb = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '02' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $mar = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '03' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $apr = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '04' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $may = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '05' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $jun = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '06' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $jul = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '07' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $aug = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '08' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $sep = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '09' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $oct = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '10' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $nov = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '11' . '%')->where('tickets.t_todepartment', $userdept)->count();
+        $dec = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '12' . '%')->where('tickets.t_todepartment', $userdept)->count();
         return $this->createdticket->barChart()
             ->setTitle(now()->year . ' Tickets Created (Monthly)')
             ->addData('Tickets', [$jan, $feb, $mar, $apr, $may, $jun, $jul, $aug, $sep, $oct, $nov, $dec])
