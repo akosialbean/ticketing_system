@@ -52,4 +52,3 @@ class CommentController extends Controller
 }
 
 
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt repellendus rerum vel in, nulla neque possimus sunt voluptatum eius ipsam.

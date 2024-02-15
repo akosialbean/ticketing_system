@@ -12,7 +12,7 @@
             @endif
         </form>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-9" style="max-height: 300px; overflow-y:auto;">
         <table class="table table-sm table-hover table-striped">
             <tbody>
                 @foreach($comments as $comment)

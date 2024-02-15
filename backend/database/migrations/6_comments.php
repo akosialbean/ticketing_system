@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('comment_id');
             $table->integer('comment_ticketid');
             $table->integer('comment_sender')->nullable();
-            $table->string('comment_message')->nullable();
+            $table->text('comment_message')->nullable();
             $table->integer('comment_createdby')->nullable();
             $table->integer('comment_updatedby')->nullable();
             $table->timestamps();
