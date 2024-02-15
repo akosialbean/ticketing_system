@@ -13,6 +13,7 @@
                     <div class="row">
                         <div class="col-sm-4 my-3">
                             <div class="card">
+                                <div class="card-header"><strong>{{$userdept->d_code}} - Tickets</strong></div>
                                 <div class="card-body">
                                     {!! $tickets->container() !!}
                                 </div>
@@ -21,6 +22,7 @@
 
                         <div class="col-sm-4 my-3">
                             <div class="card">
+                                <div class="card-header"><strong>{{$userdept->d_code}} - Closed / Unresolved Tickets</strong></div>
                                 <div class="card-body">
                                     {!! $resolved->container() !!}
                                 </div>
@@ -29,6 +31,7 @@
 
                         <div class="col-sm-4 my-3">
                             <div class="card">
+                                <div class="card-header"><strong>{{$userdept->d_code}} - Cancelled / Resolved Tickets</strong></div>
                                 <div class="card-body">
                                     {!! $cancelled->container() !!}
                                 </div>
@@ -40,6 +43,7 @@
                     <div class="row">
                         <div class="col-sm-12 my-3">
                             <div class="card">
+                                <div class="card-header"><strong>{{$userdept->d_code}} - {{now()->year}} Tickets</strong></div>
                                 <div class="card-body">
                                     {!! $createdticket->container() !!}
                                 </div>

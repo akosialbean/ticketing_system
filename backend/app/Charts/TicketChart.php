@@ -24,7 +24,6 @@ class TicketChart
         $acknowledgedTicket = Ticket::where('tickets.t_status', 4)->where('tickets.t_todepartment', $userdept)->count();
 
         return $this->tickets->pieChart()
-            ->setTitle('WMC Tickets')
             ->addData([$newTicket, $viewedTicket, $assignedTicket, $acknowledgedTicket])
             ->setLabels(['New', 'Viewed', 'Assigned', 'Acknowledged']);
     }

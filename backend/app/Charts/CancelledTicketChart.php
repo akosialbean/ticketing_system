@@ -22,7 +22,6 @@ class CancelledTicketChart
         $cancelled = Ticket::where('t_status', 7)->where('tickets.t_todepartment', $userdept)->count();
 
         return $this->cancelled->pieChart()
-            ->setTitle('Cancelled vs Closed-Resolved Tickets')
             ->addData([$closed, $cancelled])
             ->setLabels(['Closed-Resolved', 'Cancelled']);
     }

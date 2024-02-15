@@ -32,7 +32,6 @@ class CreatedTicketChart
         $nov = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '11' . '%')->where('tickets.t_todepartment', $userdept)->count();
         $dec = Ticket::where('created_at', 'LIKE',  now()->year . '-' . '12' . '%')->where('tickets.t_todepartment', $userdept)->count();
         return $this->createdticket->barChart()
-            ->setTitle(now()->year . ' Tickets Created (Monthly)')
             ->addData('Tickets', [$jan, $feb, $mar, $apr, $may, $jun, $jul, $aug, $sep, $oct, $nov, $dec])
             ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
     }
