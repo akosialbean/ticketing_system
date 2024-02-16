@@ -85,6 +85,7 @@
                     @if($ticket->overdue > 3 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
                         class="table-danger"
                     @endif
+                    data-bs-toggle="tooltip" title="{{$ticket->t_description}}"
                 >
                     <td class="small text-center"><small>{{$ticket->ticketid}}</small></td>
                     <td class="small"><small>{{$ticket->t_title}}</small></td>

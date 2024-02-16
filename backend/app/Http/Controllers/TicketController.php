@@ -602,7 +602,7 @@ $userid = Auth::user()->id;
         ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code', 'tickets.t_resolveddate',
             DB::raw("DATEDIFF(CURDATE(), tickets.created_at) as overdue"),
             DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_createdby) as creator"),
-                'tickets.created_at', 'tickets.t_severity', 'tickets.t_cancelleddate',
+                'tickets.created_at', 'tickets.t_severity', 'tickets.t_cancelleddate', 'tickets.t_description',
             DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_assignedto) as assignedto"),
             DB::raw("CASE WHEN tickets.t_status = 1 THEN 'New'
                     WHEN tickets.t_status = 2 THEN 'Viewed'
