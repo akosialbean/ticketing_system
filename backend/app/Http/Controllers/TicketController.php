@@ -26,7 +26,7 @@ use Illuminate\Http\Request;
 class TicketController extends Controller
 {
     public function newticket(){
-        $departments = Department::where('d_status', 1)->orderby('d_id', 'desc')->get();
+        $departments = Department::where('d_status', 1)->orderby('d_code', 'asc')->get();
         $categories = Category::where('c_status', 1)->orderby('c_code', 'asc')->get();
         return view('tickets.newticket', compact('departments', 'categories'));
     }
