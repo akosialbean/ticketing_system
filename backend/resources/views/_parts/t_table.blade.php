@@ -82,7 +82,17 @@
             @if($tickets)
                 @foreach($tickets as $ticket)
                 <tr
-                    @if($ticket->overdue > 3 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
+                    @if($ticket->overdue > 5 && $ticket->t_severity == 1 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
+                        class="table-danger"
+                    @elseif($ticket->overdue > 5 && $ticket->t_severity == 2 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
+                        class="table-danger"
+                    @elseif($ticket->overdue > 3 && $ticket->t_severity == 3 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
+                        class="table-danger"
+                    @elseif($ticket->overdue > 1 && $ticket->t_severity == 4 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
+                        class="table-danger"
+                    @elseif($ticket->overdue > 1 && $ticket->t_severity == 5 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
+                        class="table-danger"
+                    @elseif($ticket->overdue > 7 && $ticket->t_severity == 0 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
                         class="table-danger"
                     @endif
                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{$ticket->t_description}}"
