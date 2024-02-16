@@ -48,21 +48,23 @@
 
                         </div>
 
-                        <div class="col-sm-6">
-                            <div class="my-3 p-3">
-                                <label for="u_role">Role</label>
-                                <select name="u_role" id="" class="form-select">
-                                    <option value="{{$user->u_role}}">
-                                        @if($user->u_role == 1)
-                                            Admin
-                                        @else
-                                            User
-                                        @endif
-                                    </option>
-                                    <option value="1">Admin</option>
-                                    <option value="2">User</option>
-                                </select>
-                            </div>
+                        @if(Auth::user()->u_department == 1)
+                            <div class="col-sm-6">
+                                <div class="my-3 p-3">
+                                    <label for="u_role">Role</label>
+                                    <select name="u_role" id="" class="form-select">
+                                        <option value="{{$user->u_role}}">
+                                            @if($user->u_role == 1)
+                                                Admin
+                                            @else
+                                                User
+                                            @endif
+                                        </option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">User</option>
+                                    </select>
+                                </div>
+                            @endif
 
                             <div class="col-sm-6">
                                 @if(Auth::user()->u_department == 1)
