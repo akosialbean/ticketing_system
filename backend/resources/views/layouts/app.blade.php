@@ -21,7 +21,7 @@
         </nav>
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand h1" href="/{{Auth::user()->u_department}}/tickets/alltickets/ticketid/desc">Westlake Medical Center</a>
+                <a class="navbar-brand h1" href="#">Westlake Medical Center</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
