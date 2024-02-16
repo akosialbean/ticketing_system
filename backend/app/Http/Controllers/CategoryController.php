@@ -88,6 +88,6 @@ class CategoryController extends Controller
         ->orwhere('categories.c_description', 'LIKE', '%' . $searchitem['searchitem'] . '%')
         ->orderby('c_id', 'desc')->paginate(10);
 
-        return view('categories.searchcategory', compact('categories'));
+        return view('categories.categories', compact('categories'));
     }
 }

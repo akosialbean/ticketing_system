@@ -8,7 +8,7 @@
     <div class="container my-5 py-5">
         <div class="card">
             <div class="card-header bg-dark">
-                <a href="/newcategory" class="btn btn-sm btn-primary float-start"><i class="bi bi-plus-circle"></i></a>
+                <div class="float-start"><a href="/newcategory" class="btn btn-sm btn-primary float-start" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Category"><i class="bi bi-plus-circle"></i></a></div>
                 <div class="float-end">@include('_parts.c_search')</div>
             </div>
             <div class="card-body">
