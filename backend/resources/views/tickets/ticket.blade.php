@@ -8,7 +8,12 @@
     <div class="container mt-5 pt-5">
         <div class="card">
             @foreach($tickets as $ticket)
-                <div class="card-header"><strong>Ticket #{{$ticket->t_id}}</strong></div>
+                <div class="card-header">
+                    <strong>Ticket #{{$ticket->t_id}}</strong> 
+                    @if($days > 3 && $ticket->t_resolveddate == NULL)
+                        <strong>  (TICKET IS OVERDUE)</strong>
+                    @endif
+                </div>
             @endforeach
             <div class="card-body">
                 @if (session()->has('success'))
@@ -30,7 +35,9 @@
                                 <div class="card-body">
                                     @foreach($tickets as $ticket)
                                         <div class="mb-3">
-                                            <label for="t_title" class="form-label"><strong>{{$ticket->t_title}}</strong></label>
+                                            <label for="t_title" class="form-label">
+                                                <strong>{{$ticket->t_title}}</strong>
+                                            </label>
                                         </div>
 
                                         <div class="mb-0">

@@ -81,7 +81,11 @@
         <tbody>
             @if($tickets)
                 @foreach($tickets as $ticket)
-                <tr>
+                <tr
+                    @if($ticket->overdue > 3 && $ticket->t_resolveddate == NULL && $ticket->t_cancelleddate == NULL)
+                        class="table-danger"
+                    @endif
+                >
                     <td class="small text-center"><small>{{$ticket->ticketid}}</small></td>
                     <td class="small"><small>{{$ticket->t_title}}</small></td>
                     <td class="small text-center"><small>{{$ticket->d_code}}</small></td>

@@ -599,9 +599,10 @@ $userid = Auth::user()->id;
         $userdept = Auth::user()->u_department;
 
         $tickets = DB::table('tickets')
-        ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code',
+        ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code', 'tickets.t_resolveddate',
+            DB::raw("DATEDIFF(CURDATE(), tickets.created_at) as overdue"),
             DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_createdby) as creator"),
-                'tickets.created_at', 'tickets.t_severity',
+                'tickets.created_at', 'tickets.t_severity', 'tickets.t_cancelleddate',
             DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_assignedto) as assignedto"),
             DB::raw("CASE WHEN tickets.t_status = 1 THEN 'New'
                     WHEN tickets.t_status = 2 THEN 'Viewed'
@@ -668,8 +669,6 @@ $userid = Auth::user()->id;
             'closedTickets' => $closedTickets,
             'cancelledTickets' => $cancelledTickets,
             ];
-
-
 
         // $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);        
 
