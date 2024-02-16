@@ -14,7 +14,10 @@
                 <div class="col-sm-10 pt-5">
                     <div class="card mt-5">
                         <div class="card-header bg-dark">
-                                <div class="float-start" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Ticket"><a href="/newticket" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i></a></div>
+                                <div class="float-start" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Ticket">
+                                    <strong class="text-light">TICKETS | </strong>
+                                    <a href="/newticket" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i></a>
+                                </div>
                                 <div class="float-end">@include('_parts.t_search')</div>
                         </div>
                         <div class="card-body">
