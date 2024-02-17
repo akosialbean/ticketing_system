@@ -21,12 +21,15 @@
                     </div>
                 @endif
 
-                <table class="table table-sm table-hover table-striped">
+                <table class="table table-sm table-hover table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Severity</th>
                             <th>Description</th>
+                            <th>Response Time</th>
+                            <th>Resolution Time</th>
+                            <th>Escalation Time</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -38,6 +41,9 @@
                                 <td>{{$severity->s_id}}</td>
                                 <td>{{$severity->s_title}}</td>
                                 <td>{{$severity->s_description}}</td>
+                                <td>{{$severity->s_responsetime}}</td>
+                                <td>{{$severity->s_resolutiontime}}</td>
+                                <td>{{$severity->s_escalationtime}}</td>
                                 <td>
                                     @if($severity->s_status == 1)
                                         Active

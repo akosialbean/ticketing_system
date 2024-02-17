@@ -36,6 +36,21 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="s_responsetime" class="form-label">Response Time (Days)</label>
+                        <input type="number" class="form-control" id="s_responsetime" name="s_responsetime" value="{{$severity->s_responsetime}}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="s_resolutiontime" class="form-label">Resolution Time (Days)</label>
+                        <input type="number" class="form-control" id="s_resolutiontime" name="s_resolutiontime" value="{{$severity->s_resolutiontime}}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="s_escalationtime" class="form-label">Escalation Time (Days)</label>
+                        <input type="number" class="form-control" id="s_escalationtime" name="s_escalationtime" value="{{$severity->s_escalationtime}}" required>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="s_status" class="form-label">Status</label>
                         <select class="form-select" id="s_status" name="s_status" required>
                             <option value="{{$severity->s_status}}">
