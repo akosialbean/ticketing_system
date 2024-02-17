@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id('s_id');
             $table->string('s_title');
             $table->string('s_description');
+            $table->text('s_responsetime')->nullable();
+            $table->text('s_resolutiontime')->nullable();
+            $table->text('s_escalationtime')->nullable();
             $table->integer('s_createdby')->default(1);
             $table->integer('s_updatedby')->default(1);
             $table->integer('s_status')->default(1);

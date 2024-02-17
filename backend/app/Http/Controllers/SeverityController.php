@@ -18,6 +18,9 @@ class SeverityController extends Controller
         $severity = $request->validate([
             's_title' => ['required'],
             's_description' => ['required'],
+            's_responsetime' => ['required'],
+            's_resolutiontime' => ['required'],
+            's_escalationtime' => ['required'],
             's_createdby',
             'created_at',
             's_status'
@@ -30,9 +33,9 @@ class SeverityController extends Controller
         $save = Severity::insert($severity);
 
         if($save){
-            return redirect('/newseverity')->with('success', 'New severity created!');
+            return redirect('/severities')->with('success', 'New severity created!');
         }else{
-            return redirect('/newseverity')->with('error', 'Failed to create!');
+            return redirect('/severities')->with('error', 'Failed to create!');
         }
     }
 
