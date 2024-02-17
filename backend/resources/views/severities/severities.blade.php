@@ -7,7 +7,7 @@
 @section('content')
     <div class="container d-flex justify-content-center align-items-center my-5 py-5">
         <div class="card">
-            <div class="card-header"><strong>Severities</strong></div>
+            <div class="card-header bg-dark text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Severity"><strong>Severities | <a href="/newseverity" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i></a></strong></div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -20,8 +20,6 @@
                         <strong>{{ session()->get('error') }}</strong>
                     </div>
                 @endif
-
-                <a href="/newseverity" class="btn btn-sm btn-primary my-3">Add Severity</a>
 
                 <table class="table table-sm table-hover table-striped">
                     <thead>

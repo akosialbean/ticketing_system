@@ -7,7 +7,12 @@
 @section('content')
     <div class="container my-5 py-5">
         <div class="card">
-            <div class="card-header">Users</div>
+            <div class="card-header bg-dark text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Add User">
+                <div class="float-start"><strong>Users | <a href="/register" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i></a></strong></div>
+                <div class="float-end">
+                    @include('_parts.u_search')
+                </div>
+            </div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -20,10 +25,6 @@
                         <strong>{{ session()->get('error') }}</strong>
                     </div>
                 @endif
-
-                <a href="/register" class="btn btn-sm btn-primary my-3">Add User</a>
-
-                @include('_parts.u_search')
                 
                 <table class="table table-sm table-hover table-striped table-bordered">
                     <thead>

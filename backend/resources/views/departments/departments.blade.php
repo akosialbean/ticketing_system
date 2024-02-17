@@ -7,7 +7,7 @@
 @section('content')
     <div class="container my-5 py-5">
         <div class="card">
-            <div class="card-header">Departments</div>
+            <div class="card-header bg-dark text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Department"><strong>Departments | <a href="/newdepartment" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i></a></strong></div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -21,7 +21,7 @@
                     </div>
                 @endif
 
-                <a href="/newdepartment" class="btn btn-sm btn-primary my-3">Add Department</a>
+                
                 
                 <table class="table table-sm table-hover table-striped table-bordered">
                     <thead>
