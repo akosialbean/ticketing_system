@@ -15,9 +15,9 @@ return new class extends Migration
             // $table->id('s_id');
             // $table->string('s_title');
             // $table->string('s_description');
-            // $table->integer('s_responsetime')->change();
-            // $table->integer('s_resolutiontime')->change();
-            // $table->integer('s_escalationtime')->change();
+            $table->integer('s_responsetime')->nullable();
+            $table->integer('s_resolutiontime')->nullable();
+            $table->integer('s_escalationtime')->nullable();
             // $table->integer('s_createdby')->default(1);
             // $table->integer('s_updatedby')->default(1);
             // $table->integer('s_status')->default(1);
