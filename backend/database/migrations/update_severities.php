@@ -30,6 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('severities', function (Blueprint $table){
+            $table->dropColumn('s_responsetime');
+            $table->dropColumn('s_resolutiontime');
+            $table->dropColumn('s_escalationtime');
+        });
     }
 };
