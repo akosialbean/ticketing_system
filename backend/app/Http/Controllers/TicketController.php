@@ -503,9 +503,10 @@ $userid = Auth::user()->id;
         $userdept = Auth::user()->u_department;
 
         $tickets = DB::table('tickets')
-        ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code',
+        ->select('tickets.t_id as ticketid', 'tickets.t_title', 'departments.d_code', 'tickets.t_description',
+            DB::raw("DATEDIFF(CURDATE(), tickets.created_at) as overdue"),
             DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_createdby) as creator"),
-                'tickets.created_at', 'tickets.t_severity',
+                'tickets.created_at', 'tickets.t_severity', 'tickets.t_resolveddate', 'tickets.t_cancelleddate',
             DB::raw("(SELECT CONCAT(users.u_fname, ' ', users.u_lname) FROM users WHERE users.id = tickets.t_assignedto) as assignedto"),
             DB::raw("CASE WHEN tickets.t_status = 1 THEN 'New'
                     WHEN tickets.t_status = 2 THEN 'Viewed'
@@ -566,15 +567,24 @@ $userid = Auth::user()->id;
         // $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);
 
         $overallTickets = DB::table('tickets')->count();
-            $perDept = DB::table('tickets')->where('t_todepartment', 1)->count();
-            $myTickets = DB::table('tickets')->where('t_createdby', 3)->count();
-            $newTickets = DB::table('tickets')->where('t_status', 1)->where('t_todepartment', 1)->count();
-            $openTickets = DB::table('tickets')->where('t_status', 2)->where('t_todepartment', 1)->count();
-            $assignedTickets = DB::table('tickets')->where('t_status', 3)->where('t_todepartment', 1)->count();
-            $acknowledgedTickets = DB::table('tickets')->where('t_status', 4)->where('t_todepartment', 1)->count();
-            $resolvedTickets = DB::table('tickets')->where('t_status', 5)->where('t_todepartment', 1)->count();
-            $closedTickets = DB::table('tickets')->where('t_status', 6)->where('t_todepartment', 1)->count();
-            $cancelledTickets = DB::table('tickets')->where('t_status', 7)->where('t_todepartment', 1)->count();
+            $perDept = DB::table('tickets')->where('t_todepartment', $userdept)->count();
+            $myTickets = DB::table('tickets')->where('t_createdby', Auth::user()->id)->count();
+            $newTickets = DB::table('tickets')->where('t_status', 1)->where('t_todepartment', $userdept)->count();
+            $openTickets = DB::table('tickets')->where('t_status', 2)->where('t_todepartment', $userdept)->count();
+            $assignedTickets = DB::table('tickets')->where('t_status', 3)->where('t_todepartment', $userdept)->count();
+            $acknowledgedTickets = DB::table('tickets')->where('t_status', 4)->where('t_todepartment', $userdept)->count();
+            $resolvedTickets = DB::table('tickets')->where('t_status', 5)->where('t_todepartment', $userdept)->count();
+            $closedTickets = DB::table('tickets')->where('t_status', 6)->where('t_todepartment', $userdept)->count();
+            $cancelledTickets = DB::table('tickets')->where('t_status', 7)->where('t_todepartment', $userdept)->count();
+            $overdueTickets = DB::table('tickets')
+            ->whereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 7 AND tickets.t_severity = 0 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 7 AND tickets.t_severity = 1 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 5 AND tickets.t_severity = 2 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 3 AND tickets.t_severity = 3 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 1 AND tickets.t_severity = 4 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 1 AND tickets.t_severity = 5 AND tickets.t_status < 5")
+            ->where('t_todepartment', $userdept)
+            ->count();
             $ticketcount = [
             'overallTickets' => $overallTickets,
             'perDept' => $perDept,
@@ -586,6 +596,7 @@ $userid = Auth::user()->id;
             'resolvedTickets' => $resolvedTickets,
             'closedTickets' => $closedTickets,
             'cancelledTickets' => $cancelledTickets,
+            'overdueTickets' => $overdueTickets
             ];
 
 
@@ -642,6 +653,16 @@ $userid = Auth::user()->id;
                     case 'cancelledtickets':
                         $query->where('tickets.t_status', 7)->where('tickets.t_todepartment', $userdept);
                         break;
+                    case 'overduetickets':
+                        $query->where('tickets.t_todepartment', $userdept)
+                        ->whereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 7 AND tickets.t_severity = 0 AND tickets.t_status < 5")
+                        ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 7 AND tickets.t_severity = 1 AND tickets.t_status < 5")
+                        ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 5 AND tickets.t_severity = 2 AND tickets.t_status < 5")
+                        ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 3 AND tickets.t_severity = 3 AND tickets.t_status < 5")
+                        ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 1 AND tickets.t_severity = 4 AND tickets.t_status < 5")
+                        ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 1 AND tickets.t_severity = 5 AND tickets.t_status < 5")
+                        ->where('tickets.t_todepartment', $userdept);
+                        break;
                 }
             })
             ->orderby($column, $order)
@@ -657,6 +678,15 @@ $userid = Auth::user()->id;
             $resolvedTickets = DB::table('tickets')->where('t_status', 5)->where('t_todepartment', $userdept)->count();
             $closedTickets = DB::table('tickets')->where('t_status', 6)->where('t_todepartment', $userdept)->count();
             $cancelledTickets = DB::table('tickets')->where('t_status', 7)->where('t_todepartment', $userdept)->count();
+            $overdueTickets = DB::table('tickets')
+            ->whereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 7 AND tickets.t_severity = 0 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 7 AND tickets.t_severity = 1 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 5 AND tickets.t_severity = 2 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 3 AND tickets.t_severity = 3 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 1 AND tickets.t_severity = 4 AND tickets.t_status < 5")
+            ->orWhereRaw("DATEDIFF(CURDATE(), tickets.created_at) > 1 AND tickets.t_severity = 5 AND tickets.t_status < 5")
+            ->where('t_todepartment', $userdept)
+            ->count();
             $ticketcount = [
             'overallTickets' => $overallTickets,
             'perDept' => $perDept,
@@ -668,6 +698,7 @@ $userid = Auth::user()->id;
             'resolvedTickets' => $resolvedTickets,
             'closedTickets' => $closedTickets,
             'cancelledTickets' => $cancelledTickets,
+            'overdueTickets' => $overdueTickets,
             ];
 
         // $ticketcount = DB::select("CALL ticketcount(?)", [$userdept]);        

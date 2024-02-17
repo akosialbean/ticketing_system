@@ -8,10 +8,18 @@
                 </a>
             </li>
 
+            
             <li class="nav-item">
                 <a class="nav-link text-light" href="/{{Auth::user()->u_department}}/tickets/newtickets/ticketid/desc">
                     <small><i class="bi bi-node-plus-fill"></i> New</small>
                     <span class="badge rounded-pill bg-primary">{{$ticketcount['newTickets']}}</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-light" href="/{{Auth::user()->u_department}}/tickets/overduetickets/ticketid/desc">
+                    <small><i class="bi bi-exclamation-circle"></i> Overdue</small>
+                    <span class="badge rounded-pill bg-primary">{{$ticketcount['overdueTickets']}}</span>
                 </a>
             </li>
         @endif
