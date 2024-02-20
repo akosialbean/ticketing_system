@@ -30,6 +30,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="id" value="{{$user->id}}">
+                                    <input type="hidden" name="u_department" value="{{$user->u_department}}">
+                                    <input type="hidden" name="u_role" value="{{$user->u_role}}">
                                     <div class="row">
                                         <div class="col-md-12 mb-3">
                                             <label for="u_fname"><strong>First Name</strong></label>
@@ -81,10 +83,15 @@
                                         </div>
                                     @endif
 
-                                    <form action="#" method="POST">
+                                    <form action="/user/updateuserprofile" method="POST">
                                         @csrf
-                                        @method('POST')
+                                        @method('PATCH')
                                         @if(Auth::user()->u_department == 1)
+                                            <input type="hidden" name="id" id="u_fname" class="form-control form-control-sm w100" value="{{$user->id}}">
+                                            <input type="hidden" name="u_fname" id="u_fname" class="form-control form-control-sm w100" value="{{$user->u_fname}}">
+                                            <input type="hidden" name="u_lname" id="u_fname" class="form-control form-control-sm w100" value="{{$user->u_lname}}">
+                                            <input type="hidden" name="u_mname" id="u_fname" class="form-control form-control-sm w100" value="{{$user->u_mname}}">
+                                            <input type="hidden" name="u_email" id="u_fname" class="form-control form-control-sm w100" value="{{$user->u_email}}">
                                             <div class="col-sm-12 mb-3">
                                                 <label for="u_department"><strong>Department</strong></label>
                                                 <select name="u_department" id="u_department" class="form-select form-select-sm">
@@ -111,15 +118,17 @@
                                                     <option value="2">User</option>
                                                 </select>
                                             </div>
+
+                                            <div class="col-md-12">
+                                                <button class="btn btn-sm btn-primary float-end"><strong class="small"><i class="bi bi-floppy me-2"></i>Save</strong></button>
+                                            </div>
                                         @endif
-                                        
-                                        <div class="col-md-12">
-                                            <button class="btn btn-sm btn-primary float-end"><strong class="small"><i class="bi bi-floppy me-2"></i>Save</strong></button>
-                                        </div>
                                     </form>
                                 </div>
 
-                                <hr>
+                                @if(Auth::user()->u_department == 1 && Auth::user()->u_role == 1)
+                                    <hr>
+                                @endif
 
                                 <div class="row">
                                     @if($user->id == Auth::user()->id)
