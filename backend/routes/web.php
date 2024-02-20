@@ -92,6 +92,8 @@ Route::middleware(['auth'])->group(function() {
     // SORTING
     Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
 
+    Route::get('/download/{file}', [TicketController::class, 'downloadfile'])->name('downloadfile');
+
     // Route::get('/report', [ReportController::class, 'report'])->name('report');
     // Route::post('/report/generate', [ReportController::class, 'generate'])->name('generate');
 });

@@ -188,6 +188,17 @@
                             
                             @include('_parts.t_comments')
                         </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="card-header"><strong>Files</strong></div>
+                                <div class="card-body">
+                                    @foreach($filtered as $file)
+                                        <a href="/download/{{$file}}" class="btn btn-sm btn-secondary mb-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to download file">{{$file}}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
