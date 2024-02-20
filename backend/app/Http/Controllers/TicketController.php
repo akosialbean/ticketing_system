@@ -20,6 +20,8 @@ use App\Mail\TicketResolved;
 use App\Mail\TicketClosed;
 use App\Mail\TicketCancelled;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 
@@ -39,15 +41,27 @@ class TicketController extends Controller
             't_todepartment' => ['required'],
             't_createdby',
             't_status',
-            'created_at'
+            'created_at',
         ]);
 
+        $files = $request->validate([
+            't_files.*' => ['file', 'max:10240'],
+        ]);
 
         $newticket['t_createdby'] = Auth::user()->id;
         $newticket['t_status'] = 1;
         $newticket['created_at'] = now();
 
         $save = Ticket::insert($newticket);
+
+        $getticketid = Ticket::select('t_id')->orderby('t_id', 'desc')->first();
+
+        if($files){
+            foreach ($files['t_files'] as $file) {
+                $fileName = $getticketid->t_id . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('uploads', $fileName);
+            }
+        }
 
         if($save){
             // $todepartment = $ticket = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
@@ -213,7 +227,19 @@ class TicketController extends Controller
         ->orderby('comments.comment_id', 'desc')
         ->get();
 
-        return view('tickets.ticket', compact('comments', 'tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto', 'days', 'hours', 'minutes', 'seconds'));
+        $files = Storage::files('uploads');
+        $filtered = [];
+        foreach($files as $file){
+            if(Str::startsWith(basename($file), $ticket)){
+                $filtered[] = basename($file);
+            }
+        }
+
+        return view('tickets.ticket', compact('filtered', 'comments', 'tickets', 'openedby', 'acknowledgedby', 'resolvedby', 'closedby', 'cancelledby', 'createdby', 'severities', 'resolvers', 'assignedto', 'days', 'hours', 'minutes', 'seconds'));
+    }
+
+    public function downloadfile($file){
+        return Storage::download("uploads/{$file}");
     }
 
     public function acknowledge(Request $request){
