@@ -14,12 +14,12 @@
 </head>
 <body>
     <header class="fixed-top mb-5 shadow">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <span class="navbar-text small p-0 m-0">Ticketing System</span>
             </div>
         </nav>
-        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <nav class="navbar navbar-expand-md bg-light navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand h1" href="#">Westlake Medical Center</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">

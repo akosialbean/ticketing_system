@@ -8,10 +8,10 @@
     @if(Auth::user()->u_role == 1)
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2 bg-dark">
+                <div class="col-md-2 bg-dark mb-0">
                     @include('_parts.t_sidebar')
                 </div>
-                <div class="col-sm-10 pt-5">
+                <div class="col-md-10 pt-5">
                     <div class="card mt-5">
                         <div class="card-header bg-dark">
                                 <div class="float-start" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Ticket">
@@ -22,7 +22,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-md-12">
                                     @if (session()->has('success'))
                                         <div class="alert alert-success">
                                             <strong>{{ session()->get('success') }}</strong>
@@ -47,7 +47,7 @@
     @else
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 pt-5">
+                <div class="col-md-12 pt-5">
                     <div class="card mt-5">
                         <div class="card-header bg-dark pb-0">
                                 <div class="float-start"><a href="/newticket" class="btn btn-sm btn-primary my-1">Create ticket</a></div>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-md-12">
                                     @if (session()->has('success'))
                                         <div class="alert alert-success">
                                             <strong>{{ session()->get('success') }}</strong>
