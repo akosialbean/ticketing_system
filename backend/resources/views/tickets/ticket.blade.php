@@ -8,7 +8,7 @@
     <div class="container mt-5 pt-5">
         <div class="card">
             @foreach($tickets as $ticket)
-                <div class="card-header">
+                <div class="card-header bg-dark text-light">
                     <strong>Ticket #{{$ticket->t_id}}</strong> 
                     @if($days > 3 && $ticket->t_resolveddate == NULL)
                         <strong>  (TICKET IS OVERDUE)</strong>
@@ -29,9 +29,9 @@
                 @endif
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="card">
-                                <div class="card-header">Ticket Details</div>
+                                <div class="card-header"><strong>Ticket Details</strong></div>
                                 <div class="card-body">
                                     @foreach($tickets as $ticket)
                                         <div class="mb-3">
@@ -108,7 +108,7 @@
                             
                         </div>
 
-                        <div class="col-sm-8">
+                        <div class="col-md-8">
                             @foreach($tickets as $ticket)
                                 @if(Auth::user()->u_role == 1)
                                     @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3)
@@ -191,7 +191,7 @@
                     </div>
                 </div>
 
-                <table class="table table-sm table-hover table-stripped" style="display: none">
+                {{-- <table class="table table-sm table-hover table-stripped" style="display: none">
                     <thead>
                         <tr>
                             <th colspan="4" class="text-center h3">History</th>
@@ -241,7 +241,7 @@
                             <td><small>{{$cancelledby->t_cancelleddate}}</small></td>
                         </tr>
                     </tbody>
-                </table>
+                </table> --}}
 
             </div>
             <div class="card-footer">

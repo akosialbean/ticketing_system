@@ -7,11 +7,11 @@
 @section('content')
     <div class="container-fluid mt-5 pt-5">
         <div class="card">
-            <div class="card-header"><strong class="small">Dashboard</strong></div>
+            <div class="card-header bg-dark text-light"><strong class="small">Dashboard</strong></div>
             <div class="card-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-4 my-3">
+                        <div class="col-lg-4 mb-3">
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - Tickets</strong></div>
                                 <div class="card-body">
@@ -20,7 +20,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-4 my-3">
+                        <div class="col-lg-4 mb-3">
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - Closed / Unresolved Tickets</strong></div>
                                 <div class="card-body">
@@ -29,7 +29,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-4 my-3">
+                        <div class="col-lg-4 mb-3">
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - Cancelled / Resolved Tickets</strong></div>
                                 <div class="card-body">
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12 my-3">
+                        <div class="col-lg-12 my-3">
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - {{now()->year}} Tickets</strong></div>
                                 <div class="card-body">

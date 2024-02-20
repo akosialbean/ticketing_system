@@ -14,12 +14,12 @@
 </head>
 <body>
     <header class="fixed-top mb-5 shadow">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <span class="navbar-text small p-0 m-0">Ticketing System</span>
             </div>
         </nav>
-        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <nav class="navbar navbar-expand-md bg-light navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand h1" href="#">Westlake Medical Center</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -43,23 +43,30 @@
                                             <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/mytickets/ticketid/desc"><i class="bi bi-ticket-detailed"></i> Tickets</a>
                                     @endswitch
                                 </li>
+
+                                {{-- <li class="nav-item">
+                                    <a href="#" class="nav-link"><i class="bi bi-book"></i> Knowledge Base</a>
+                                </li> --}}
                                 
                                 @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-gear-fill"></i></a>
                                         <ul class="dropdown-menu">
                                             
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="/categories">Categories</a>
+                                                <li class="nav-item px-1">
+                                                    <a class="nav-link" href="/categories"><i class="bi bi-tags"></i> Categories</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="/departments">Departments</a>
+                                                <li class="nav-item px-1">
+                                                    <a class="nav-link" href="/departments"><i class="bi bi-houses"></i> Departments</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="/severities">Severities</a>
+                                                <li class="nav-item px-1">
+                                                    <a class="nav-link" href="/severities"><i class="bi bi-exclamation-diamond"></i> Severities</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="/users">Users</a>
+                                                <li class="nav-item px-1">
+                                                    <a class="nav-link" href="/users"><i class="bi bi-people"></i> Users</a>
+                                                </li>
+                                                <li class="nav-item px-1">
+                                                    <a class="nav-link" href="#"><i class="bi bi-globe-central-south-asia"></i> Settings</a>
                                                 </li>
                                                 {{-- <li class="nav-item">
                                                     <a class="nav-link" href="/report">Reports</a>
