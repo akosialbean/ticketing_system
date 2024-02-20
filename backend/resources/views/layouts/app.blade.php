@@ -44,9 +44,9 @@
                                     @endswitch
                                 </li>
 
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="#" class="nav-link"><i class="bi bi-book"></i> Knowledge Base</a>
-                                </li>
+                                </li> --}}
                                 
                                 @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
                                     <li class="nav-item dropdown">
