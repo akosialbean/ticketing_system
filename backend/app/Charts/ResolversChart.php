@@ -40,7 +40,7 @@ class ResolversChart
         $chart = $this->chart->lineChart();
 
         foreach($resolvers as $resolver){
-            $chart->addData(($resolver->u_fname . ' ' . $resolver->u_lname), [$resolver->janresolved, $resolver->febresolved, $resolver->marresolved, $resolver->aprresolved, $resolver->mayresolved, $resolver->junresolved, $resolver->julresolved], $resolver->augresolved, $resolver->sepresolved, $resolver->octresolved, $resolver->novresolved, $resolver->decresolved);
+            $chart->addData(($resolver->u_fname . ' ' . $resolver->u_lname), [$resolver->janresolved, $resolver->febresolved, $resolver->marresolved, $resolver->aprresolved, $resolver->mayresolved, $resolver->junresolved, $resolver->julresolved, $resolver->augresolved, $resolver->sepresolved, $resolver->octresolved, $resolver->novresolved, $resolver->decresolved]);
         }
 
         return $chart->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
