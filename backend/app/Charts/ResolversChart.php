@@ -35,7 +35,7 @@ class ResolversChart
         )
         ->where('users.u_department', Auth::user()->u_department)
         ->where('users.id', '!=', 1)
-        ->groupBy('users.id')
+        ->groupBy('users.id', 'users.u_fname', 'users.u_lname')
         ->get();
         $chart = $this->chart->lineChart();
 
