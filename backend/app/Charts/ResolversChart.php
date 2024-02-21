@@ -34,10 +34,12 @@ class ResolversChart
         DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_status = 6 AND tickets.t_resolvedby = users.id AND MONTH(tickets.t_closeddate) = 12 AND YEAR(tickets.t_closeddate) = YEAR(CURRENT_DATE())) as decresolved"),
         )
         ->where('users.u_department', Auth::user()->u_department)
+        ->where('users.id', '!=', 1)
+        ->where('users.u_lname', '!=', 'Admin')
         ->where('users.u_fname', '!=', 'WMC')
-        -orWwhere('users.u_lname', '!=', 'Admin')
         ->groupBy('users.id', 'users.u_fname', 'users.u_lname')
         ->get();
+
         $chart = $this->chart->lineChart();
 
         foreach($resolvers as $resolver){
