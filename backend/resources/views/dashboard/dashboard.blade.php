@@ -49,6 +49,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12 my-3">
+                            <div class="card">
+                                <div class="card-header"><strong>{{now()->year}} Resolved Tickets</strong></div>
+                                <div class="card-body">
+                                    {!! $resolvers->container() !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,9 +68,11 @@
     <script src="{{ $resolved->cdn() }}"></script>
     <script src="{{ $createdticket->cdn() }}"></script>
     <script src="{{ $cancelled->cdn() }}"></script>
+    <script src="{{ $resolvers->cdn() }}"></script>
 
     {{ $tickets->script() }}
     {{ $resolved->script() }}
     {{ $createdticket->script() }}
     {{ $cancelled->script() }}
+    {{ $resolvers->script() }}
 @endsection
