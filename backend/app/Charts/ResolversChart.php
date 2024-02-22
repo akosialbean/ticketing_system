@@ -37,7 +37,7 @@ class ResolversChart
         ->where('users.id', '!=', 1)
         ->where('users.u_lname', '!=', 'Admin')
         ->where('users.u_fname', '!=', 'WMC')
-        ->groupBy('users.id', 'users.u_fname', 'users.u_lname', 'febresolved')
+        ->groupBy('users.id', 'users.u_fname', 'users.u_lname', 'janresolved', 'febresolved', 'marresolved')
         ->get();
 
         $chart = $this->chart->lineChart();
