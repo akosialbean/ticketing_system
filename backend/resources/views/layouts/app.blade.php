@@ -45,7 +45,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="/locals" class="nav-link"><i class="bi bi-telephone"></i> Locals</a>
+                                    {{-- <a href="/locals" class="nav-link"><i class="bi bi-telephone"></i> Locals</a> --}}
                                 </li>
 
                                 {{-- <li class="nav-item">
