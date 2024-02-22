@@ -54,7 +54,7 @@
                             <div class="card">
                                 <div class="card-header"><strong>{{now()->year}} Resolved Tickets</strong></div>
                                 <div class="card-body">
-                                    {!! $resolvers->container() !!}
+                                    {{ $resolvers->container() }}
                                 </div>
                             </div>
                         </div>

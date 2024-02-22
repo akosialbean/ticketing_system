@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\LocalController;
 use App\Http\Controllers\TestController;
 
 /*
@@ -96,6 +97,11 @@ Route::middleware(['auth'])->group(function() {
 
     // Route::get('/report', [ReportController::class, 'report'])->name('report');
     // Route::post('/report/generate', [ReportController::class, 'generate'])->name('generate');
+
+    // Locals
+    Route::get('/locals', [LocalController::class, 'locals'])->name('locals');
+    Route::get('/locals/newlocal', [LocalController::class, 'newlocal'])->name('newlocal');
+    Route::post('/locals/addlocal', [LocalController::class, 'addlocal'])->name('addlocal');
 });
 
 
