@@ -51,7 +51,7 @@
                     <div class="mb-3">
                         <label for="l_user" class="form-label">User (optional)</label>
                         <select name="l_user" id="l_user" class="form-select form-select-sm">
-                            <option value="">--</option>
+                            <option value="0">all</option>
                             @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->u_fname}} {{$user->u_lname}}</option>
                             @endforeach

@@ -121,7 +121,7 @@
                                                 <select name="t_severity" class="form-select" id="t_severity" class="mt-3">
                                                     <option value="">Not set</option>
                                                     @foreach($severities as $severity)
-                                                        <option value="{{$severity->s_id}}">{{$severity->s_description}}</option>
+                                                        <option value="{{$severity->s_id}}">{{$severity->s_title}} {{$severity->s_description}}</option>
                                                     @endforeach
                                                 </select>
                                                 <button class="btn btn-sm btn-primary my-3">Set</button>

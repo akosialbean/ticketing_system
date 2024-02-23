@@ -44,9 +44,9 @@
                                     @endswitch
                                 </li>
 
-                                <li class="nav-item">
-                                    {{-- <a href="/locals" class="nav-link"><i class="bi bi-telephone"></i> Locals</a> --}}
-                                </li>
+                                {{-- <li class="nav-item">
+                                    <a href="/locals" class="nav-link"><i class="bi bi-telephone"></i> Locals</a>
+                                </li> --}}
 
                                 {{-- <li class="nav-item">
                                     <a href="#" class="nav-link"><i class="bi bi-book"></i> Knowledge Base</a>

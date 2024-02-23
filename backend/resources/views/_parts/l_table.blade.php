@@ -5,7 +5,9 @@
             <th>Department</th>
             <th>User</th>
             <th>Local</th>
-            <th></th>
+            @if(Auth::user()->u_department == 1)
+                <th></th>
+            @endif
         </tr>
     </thead>
 
@@ -14,9 +16,18 @@
         <tr>
             <td>{{$local->l_level}}</td>
             <td>{{$local->d_code}}</td>
-            <td>{{$local->fullname}}</td>
+            <td>{{$local->u_fname}} {{$local->u_lname}}</td>
             <td>{{$local->l_number}}</td>
+            @if(Auth::user()->u_department == 1)
+            <td>
+                <button class="btn btn-sm btn-primary"></button>
+            </td>
+            @endif
         </tr>
         @endforeach
     </tbody>
 </table>
+
+<div class="d-flex justify-content-center py-0 mt-3">
+    {{$locals->links()}}
+</div>

@@ -102,6 +102,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/locals', [LocalController::class, 'locals'])->name('locals');
     Route::get('/locals/newlocal', [LocalController::class, 'newlocal'])->name('newlocal');
     Route::post('/locals/addlocal', [LocalController::class, 'addlocal'])->name('addlocal');
+    Route::post('/locals/search', [LocalController::class, 'searchlocal'])->name('searchlocal');
 });
 
 
