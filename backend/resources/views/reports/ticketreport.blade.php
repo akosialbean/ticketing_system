@@ -11,46 +11,42 @@
         <div class="card-header">Reports</div>
         <div class="card-body">
             <div class="container">
-                <form action="/report/generate" method="POST">
-                    @csrf
-                    @method('POST')
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label for="table">Table</label>
-                            <select name="table" id="table" class="form-select" required>
-                                <option value="">--</option>
-                                <option value="categories">Categories</option>
-                                <option value="comments">Comments</option>
-                                <option value="departments">Departments</option>
-                                <option value="severities">Severities</option>
-                                <option value="tickets">Tickets</option>
-                                <option value="users">Users</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label for="datefrom">From</label>
-                            <input type="date" name="datefrom" id="datefrom" class="form-control" required>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <label for="dateto">To</label>
-                            <input type="date" name="dateto" id="dateto" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <button type="submit" class="btn btn-sm btn-primary">Generate</button>
-                        </div>
-                    </div>
-                </form>
-
                 <div class="row">
-                    {{$reports->t_id}}
+                    <div class="col-md-6">
+                        <form action="/report/generate" method="POST">
+                            @csrf
+                            @method('POST')
+        
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="datefrom">From</label>
+                                    <input type="date" name="datefrom" id="datefrom" class="form-control form-control-sm" required>
+                                </div>
+        
+                                <div class="col-md-4">
+                                    <label for="dateto">To</label>
+                                    <input type="date" name="dateto" id="dateto" class="form-control form-control-sm" required>
+                                </div>
+        
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-sm btn-primary">Generate</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-md-6">
+                        @if($reports)
+                            <a href="/report/export" class="btn btn-sm btn-primary float-end">Export</a>
+                        @endif
+                    </div>
                 </div>
+                
+                <hr>
+
+                @if($reports)
+                    @include('_parts.r_table')
+                @endif
             </div>
         </div>
     </div>
