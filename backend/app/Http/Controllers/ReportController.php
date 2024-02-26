@@ -12,6 +12,8 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ReportController extends Controller
 {
@@ -64,22 +66,15 @@ class ReportController extends Controller
             'dateto' => $selection['dateto']
         ]);
     
+        session(['reports' => $reports]);
+
         return view('reports.ticketreport', compact('reports'));
     }
-    
+
+    public function export(){
+        $curdate = now();
+        $reports = session('reports');
+        return Excel::download(new ExportReportController($reports), $curdate . '_tickets_report.xlsx');
+    }
+  
 }
-
-
-// ticket#
-// category
-// title
-// description
-// createdby
-// department
-// created_at
-// resolvedate
-// closedatetime
-// resolvedby
-// status
-// TAT-ack-res
-// TAT-res-closing

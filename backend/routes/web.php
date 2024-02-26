@@ -97,6 +97,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('/report', [ReportController::class, 'report'])->name('report');
     Route::post('/report/generate', [ReportController::class, 'generate'])->name('generate');
+    Route::get('/report/export', [ReportController::class, 'export'])->name('export');
 
     // Locals
     Route::get('/locals', [LocalController::class, 'locals'])->name('locals');
