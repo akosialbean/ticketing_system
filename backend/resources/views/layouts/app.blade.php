@@ -44,6 +44,12 @@
                                     @endswitch
                                 </li>
 
+                                @if(Auth::user()->u_role == 1)
+                                    <li class="nav-item px-1">
+                                        <a class="nav-link" href="/report"><i class="bi bi-table"></i> Reports</a>
+                                    </li>
+                                @endif
+
                                 {{-- <li class="nav-item">
                                     <a href="/locals" class="nav-link"><i class="bi bi-telephone"></i> Locals</a>
                                 </li> --}}
@@ -55,27 +61,22 @@
                                 @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-gear-fill"></i></a>
-                                        <ul class="dropdown-menu">
-                                            
-                                                <li class="nav-item px-1">
-                                                    <a class="nav-link" href="/categories"><i class="bi bi-tags"></i> Categories</a>
-                                                </li>
-                                                <li class="nav-item px-1">
-                                                    <a class="nav-link" href="/departments"><i class="bi bi-houses"></i> Departments</a>
-                                                </li>
-                                                <li class="nav-item px-1">
-                                                    <a class="nav-link" href="/severities"><i class="bi bi-exclamation-diamond"></i> Severities</a>
-                                                </li>
-                                                <li class="nav-item px-1">
-                                                    <a class="nav-link" href="/users"><i class="bi bi-people"></i> Users</a>
-                                                </li>
-                                                <li class="nav-item px-1">
-                                                    <a class="nav-link" href="#"><i class="bi bi-globe-central-south-asia"></i> Settings</a>
-                                                </li>
-                                                <li class="nav-item px-1">
-                                                    <a class="nav-link" href="/report"><i class="bi bi-table"></i> Reports</a>
-                                                </li>
-                                            
+                                        <ul class="dropdown-menu">                                            
+                                            <li class="nav-item px-1">
+                                                <a class="nav-link" href="/categories"><i class="bi bi-tags"></i> Categories</a>
+                                            </li>
+                                            <li class="nav-item px-1">
+                                                <a class="nav-link" href="/departments"><i class="bi bi-houses"></i> Departments</a>
+                                            </li>
+                                            <li class="nav-item px-1">
+                                                <a class="nav-link" href="/severities"><i class="bi bi-exclamation-diamond"></i> Severities</a>
+                                            </li>
+                                            <li class="nav-item px-1">
+                                                <a class="nav-link" href="/users"><i class="bi bi-people"></i> Users</a>
+                                            </li>
+                                            <li class="nav-item px-1">
+                                                <a class="nav-link" href="#"><i class="bi bi-globe-central-south-asia"></i> Settings</a>
+                                            </li>                                          
                                         </ul>
                                     </li>
                                 @endif
