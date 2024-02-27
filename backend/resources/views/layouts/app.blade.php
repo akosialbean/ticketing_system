@@ -74,9 +74,9 @@
                                             <li class="nav-item px-1">
                                                 <a class="nav-link" href="/users"><i class="bi bi-people"></i> Users</a>
                                             </li>
-                                            <li class="nav-item px-1">
+                                            {{-- <li class="nav-item px-1">
                                                 <a class="nav-link" href="#"><i class="bi bi-globe-central-south-asia"></i> Settings</a>
-                                            </li>                                          
+                                            </li>                                           --}}
                                         </ul>
                                     </li>
                                 @endif
