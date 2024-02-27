@@ -72,8 +72,8 @@
                                                 <li class="nav-item px-1">
                                                     <a class="nav-link" href="#"><i class="bi bi-globe-central-south-asia"></i> Settings</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="/report">Reports</a>
+                                                <li class="nav-item px-1">
+                                                    <a class="nav-link" href="/report"><i class="bi bi-table"></i> Reports</a>
                                                 </li>
                                             
                                         </ul>
