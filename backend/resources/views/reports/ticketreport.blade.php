@@ -8,7 +8,7 @@
 
 <div class="container-fluid mt-5 pt-5">
     <div class="card">
-        <div class="card-header"><strong class="small"><i class="bi bi-table me-2"></i>Reports</strong></div>
+        <div class="card-header bg-dark text-light"><strong class="small"><i class="bi bi-table me-2"></i>Reports</strong></div>
         <div class="card-body">
             <div class="container-fluid">
                 <div class="row">
