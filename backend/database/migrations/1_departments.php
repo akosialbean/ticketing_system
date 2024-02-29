@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('d_id');
             $table->string('d_code');
             $table->string('d_description');
-            $table->string('d_email')->default(null);
+            $table->string('d_email')->nullable();
             $table->integer('d_createdby')->default(1);
             $table->integer('d_updatedby')->default(1);
             $table->integer('d_status')->default(1);
