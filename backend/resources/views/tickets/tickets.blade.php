@@ -15,7 +15,44 @@
                     <div class="card mt-5">
                         <div class="card-header bg-dark">
                                 <div class="float-start" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Ticket">
-                                    <strong class="text-light">TICKETS | </strong>
+                                    <strong class="text-light">
+                                        @switch($myticket)                                            
+                                            @case('search')
+                                                Search Tickets
+                                                @break
+                                            @case('newtickets')
+                                                New Tickets
+                                                @break
+                                            @case('overduetickets')
+                                                Overdue Tickets
+                                                @break
+                                            @case('mytickets')
+                                                My Tickets
+                                                @break
+                                            @case('assignedtickets')
+                                                Assigned Tickets
+                                                @break
+                                            @case('opentickets')
+                                                Open Tickets
+                                                @break
+                                            @case('acknowledgedtickets')
+                                                Acknowledged Tickets
+                                                @break
+                                            @case('resolvedtickets')
+                                                Resolved Tickets
+                                                @break
+                                            @case('closedtickets')
+                                                Closed Tickets
+                                                @break
+                                            @case('cancelledtickets')
+                                                Cancelled Tickets
+                                                @break
+                                            @default
+                                                All Tickets
+                                                @break
+                                        @endswitch 
+                                        |
+                                    </strong>
                                     <a href="/newticket" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i></a>
                                 </div>
                                 <div class="float-end">@include('_parts.t_search')</div>
