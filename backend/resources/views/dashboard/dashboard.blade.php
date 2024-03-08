@@ -10,6 +10,17 @@
             <div class="card-header bg-dark text-light"><strong class="small">Dashboard</strong></div>
             <div class="card-body">
                 <div class="container">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success">
+                            <strong>{{ session()->get('success') }}</strong>
+                        </div>
+                    @endif
+
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            <strong>{{ session()->get('error') }}</strong>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-lg-4 mb-3">
                             <div class="card">

@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Validator;
 class LoginController extends Controller
 {
     public function login(){
+        if(Auth::user()){
+            if(Auth::user()->id > 0){
+                return redirect()->intended('/dashboard')->with('success', 'Welcome back ' . Auth::user()->u_fname . '!');
+            }
+        }
+
         $checkadmin = User::where('u_username', 'wmcadmin')->count();
         if($checkadmin < 1){
             //creates an admin account
