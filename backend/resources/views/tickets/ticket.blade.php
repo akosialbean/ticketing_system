@@ -173,12 +173,15 @@
                             @endforeach
 
                             @if(($ticket->t_status == 5 || $ticket->t_status == 6))
-                                <div class="card my-3">
+                                <div class="card mb-3">
                                     <div class="card-header">Resolution</div>
                                     <div class="card-body">
                                         <div class="mb-3">
-                                            <label for="t_title" class="form-label h2">Resolution</label>
-                                            <p>{{$ticket->t_resolution}}</p>
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <small class="small">{{$ticket->t_resolution}}</small>
+                                                </div>
+                                            </div>
                                             <p><strong>Resolved by: </strong>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</p>
                                             <p><strong>Date Resolved: </strong>{{$ticket->t_resolveddate}}</p>
                                         </div>
