@@ -37,6 +37,7 @@ class ResolversChart
         ->where('users.id', '!=', 1)
         ->where('users.u_lname', '!=', 'Admin')
         ->where('users.u_fname', '!=', 'WMC')
+        ->where('users.u_status', 1)
         ->groupBy('users.id', 'users.u_fname', 'users.u_lname', 'janresolved', 'febresolved', 'marresolved', 'aprresolved', 'mayresolved', 'junresolved', 'julresolved', 'augresolved', 'sepresolved', 'octresolved', 'novresolved', 'decresolved')
         ->get();
 
