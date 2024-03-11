@@ -22,7 +22,7 @@
                         </div>
                     @endif
                     <div class="row">
-                        <div class="col-lg-4 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - Tickets</strong></div>
                                 <div class="card-body">
@@ -31,7 +31,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - Closed / Unresolved Tickets</strong></div>
                                 <div class="card-body">
@@ -40,14 +40,14 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 mb-3">
+                        {{-- <div class="col-lg-4 mb-3">
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - Cancelled / Resolved Tickets</strong></div>
                                 <div class="card-body">
                                     {!! $cancelled->container() !!}
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         
                     </div>
 

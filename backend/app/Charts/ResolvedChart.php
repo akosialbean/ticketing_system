@@ -18,11 +18,12 @@ class ResolvedChart
     public function build(): \ArielMejiaDev\LarapexCharts\PieChart
     {
         $userdept = Auth::user()->u_department;
+        $cancelled = Ticket::where('t_status', 7)->where('tickets.t_todepartment', $userdept)->count();
         $resolved = Ticket::where('t_status', 5)->where('tickets.t_todepartment', $userdept)->count();
         $closedresolved = Ticket::where('t_status', 6)->where('tickets.t_todepartment', $userdept)->count();
         $unresolved = Ticket::where('t_status', '!=', 5)->where('t_status', '!=', 6)->where('t_status', '!=', 7)->where('tickets.t_todepartment', $userdept)->count();
         return $this->resolved->pieChart()
-            ->addData([$resolved, $closedresolved, $unresolved])
-            ->setLabels(['Resolved', 'Closed-Resolved', 'Unresolved']);
+            ->addData([$cancelled, $closedresolved, $unresolved, $resolved])
+            ->setLabels(['Cancelled', 'Resolved', 'Closed-Resolved', 'Unresolved']);
     }
 }
