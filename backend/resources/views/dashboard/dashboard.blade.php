@@ -24,8 +24,8 @@
                     <div class="row">
                         <div class="col-lg-6 mb-3">
                             <div class="card">
-                                <div class="card-header"><strong>{{$userdept->d_code}} - Tickets</strong></div>
-                                <div class="card-body">
+                                <div class="card-header"><strong>{{$userdept->d_code}} - New Ticket Status</strong></div>
+                                <div class="card-body pb-1">
                                     {!! $tickets->container() !!}
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
 
                         <div class="col-lg-6 mb-3">
                             <div class="card">
-                                <div class="card-header"><strong>{{$userdept->d_code}} - Closed / Unresolved Tickets</strong></div>
+                                <div class="card-header"><strong>{{$userdept->d_code}} - Ticket Resolutions</strong></div>
                                 <div class="card-body">
                                     {!! $resolved->container() !!}
                                 </div>
