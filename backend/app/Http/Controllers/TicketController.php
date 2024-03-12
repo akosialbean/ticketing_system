@@ -692,7 +692,7 @@ $userid = Auth::user()->id;
                 }
             })
             ->orderby($column, $order)
-            ->paginate(10);
+            ->paginate(15);
 
             $overallTickets = DB::table('tickets')->count();
             $perDept = DB::table('tickets')->where('tickets.t_todepartment', $userdept)->orWhere('tickets.t_createdby', $userid)->count();
