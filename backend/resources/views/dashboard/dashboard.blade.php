@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header bg-dark text-light"><strong class="small">Dashboard</strong></div>
             <div class="card-body">
-                <div class="container">
+                <div class="container-fluid">
                     @if (session()->has('success'))
                         <div class="alert alert-success">
                             <strong>{{ session()->get('success') }}</strong>
