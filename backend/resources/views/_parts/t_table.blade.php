@@ -1,7 +1,7 @@
 <div class="table-responsive-sm">
-    <table class="table table-sm table-hover table-striped table-bordered my-0">
-        <thead>
-            <tr class="table-secondary">
+    <table class="table table-sm table-hover table-striped my-0">
+        <thead class="table-secondary">
+            <tr>
                 <th class="small">
                     @switch($order)
                         @case("asc")
@@ -114,7 +114,7 @@
                                 <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-three-dots-vertical"></i></button>
                             </form>
                         @else
-                            <a href="/ticket/{{$ticket->ticketid}}" class="btn btn-sm btn-primary"><i class="bi bi-three-dots-vertical"></i>
+                            <a href="/ticket/{{$ticket->ticketid}}" class="btn btn-sm"><i class="bi bi-three-dots-vertical"></i>
                             </a>
                         @endif
                     </td>
