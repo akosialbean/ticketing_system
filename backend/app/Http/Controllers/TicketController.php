@@ -72,28 +72,28 @@ class TicketController extends Controller
         }
 
         if($save){
-            $ticketReceipt = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
-                ->join('departments', 'tickets.t_todepartment', 'd_id')
-                ->join('users', 'tickets.t_createdby', 'users.id')
-                ->where('tickets.t_createdby', $newticket['t_createdby'])
-                ->orderby('tickets.t_id', 'desc')
-                ->first();
+            // $ticketReceipt = Ticket::select('tickets.t_id', 'tickets.t_title', 'tickets.t_description', 'departments.d_description')
+            //     ->join('departments', 'tickets.t_todepartment', 'd_id')
+            //     ->join('users', 'tickets.t_createdby', 'users.id')
+            //     ->where('tickets.t_createdby', $newticket['t_createdby'])
+            //     ->orderby('tickets.t_id', 'desc')
+            //     ->first();
 
-            Mail::to(Auth::user()->u_email)->queue(new TicketCreated($ticketReceipt));
+            // Mail::to(Auth::user()->u_email)->queue(new TicketCreated($ticketReceipt));
 
-            // //SENDING EMAIL TO TICKET RESOLVER
-            $department2 = Department::select('d_email')
-            ->where('d_id', $newticket['t_todepartment'])
-            ->first();
+            // // //SENDING EMAIL TO TICKET RESOLVER
+            // $department2 = Department::select('d_email')
+            // ->where('d_id', $newticket['t_todepartment'])
+            // ->first();
 
-            $fromdepartment = User::select('users.u_fname', 'users.u_lname', 'departments.d_description', 'tickets.t_id', 'tickets.t_title', 'tickets.t_description')
-            ->join('tickets', 'users.id', 'tickets.t_createdby')
-            ->join('departments', 'users.u_department', 'departments.d_id')
-            ->where('tickets.t_createdby', Auth::user()->id)
-            ->where('users.u_department', Auth::user()->u_department)
-            ->orderby('t_id', 'desc')
-            ->first();
-            Mail::to($department2->d_email)->queue(new HelpdeskNotification($fromdepartment));
+            // $fromdepartment = User::select('users.u_fname', 'users.u_lname', 'departments.d_description', 'tickets.t_id', 'tickets.t_title', 'tickets.t_description')
+            // ->join('tickets', 'users.id', 'tickets.t_createdby')
+            // ->join('departments', 'users.u_department', 'departments.d_id')
+            // ->where('tickets.t_createdby', Auth::user()->id)
+            // ->where('users.u_department', Auth::user()->u_department)
+            // ->orderby('t_id', 'desc')
+            // ->first();
+            // Mail::to($department2->d_email)->queue(new HelpdeskNotification($fromdepartment));
 
             if(Auth::user()->u_role == 1){
                 return redirect(Auth::user()->u_department . '/tickets/alltickets/t_id/desc')->with('success', 'New ticket created!');
@@ -566,6 +566,10 @@ class TicketController extends Controller
         $userdept = Auth::user()->u_department;
 
         $tickets = $this->ticketModel->getAllTickets($department, $myticket, $column, $order, $userid, $userdept);
+
+        if($tickets->count() == 0){
+            $tickets = false;
+        }
 
         $overallTickets = $this->ticketModel->getAllTicketCount();
         $perDept = $this->ticketModel->getTicketPerDepartmentCount($userdept, $userid);

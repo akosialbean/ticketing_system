@@ -7,7 +7,7 @@
 @section('content')
     <div class="container d-flex justify-content-center align-items-center my-5 py-5">
         <div class="card">
-            <div class="card-header"><strong>New Category</strong></div>
+            <div class="card-header bg-dark text-light"><strong>New Category</strong></div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">
@@ -37,7 +37,8 @@
                     <hr>
 
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-primary" onclick="disablebtn()">Save</button>
+                        <a href="/categories" class="btn btn-sm btn-danger float-start"><strong class="small">Cancel</strong></a>
+                        <button type="submit" class="btn btn-primary btn-sm float-end" onclick="disablebtn()"><strong class="small">Save</strong></button>
                     </div>
                 </form>
             </div>

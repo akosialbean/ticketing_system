@@ -7,7 +7,7 @@
 @section('content')
     <div class="container my-5 py-5">
         <div class="card">
-            <div class="card-header">Category</div>
+            <div class="card-header bg-dark text-light"><strong>Category</strong></div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">

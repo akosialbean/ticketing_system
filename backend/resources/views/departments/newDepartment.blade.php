@@ -7,7 +7,7 @@
 @section('content')
     <div class="container d-flex justify-content-center align-items-center my-5 py-5">
         <div class="card">
-            <div class="card-header"><strong>New Department</strong></div>
+            <div class="card-header bg-dark text-light"><strong>New Department</strong></div>
             <div class="card-body">
                 @if (session()->has('success'))
                     <div class="alert alert-success">

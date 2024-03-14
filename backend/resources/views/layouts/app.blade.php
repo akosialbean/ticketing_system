@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <link href="{{asset('imgs/wmc_logo.png')}}" rel="icon">
 </head>
-<body>
+<body class="bg-dark-subtle">
     <header class="fixed-top mb-5 shadow">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
@@ -21,7 +22,13 @@
         </nav>
         <nav class="navbar navbar-expand-md bg-light navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand h1" href="#">Westlake Medical Center</a>
+                <a class="navbar-brand h1" href="/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
+                        <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1zM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25zM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z"/>
+                        <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1zm2 14h2v-3H7zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1zm0-14H6v1h4zm2 7v7h3V8zm-8 7V8H1v7z"/>
+                    </svg>
+                    Westlake Medical Center
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -31,22 +38,22 @@
                             <ul class="navbar-nav ms-auto">
                                 @if(Auth::user()->u_role == 1)
                                     <li href="/dashboard" class="nav-item">
-                                        <a href="/dashboard" class="nav-link small"><i class="bi bi-speedometer"></i> Dashboard</a>
+                                        <a href="/dashboard" class="nav-link small icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -0.25rem, 0);"><i class="bi bi-speedometer"></i> Dashboard</a>
                                     </li>
                                 @endif
                                 <li class="nav-item">
                                     @switch(Auth::user()->u_role)
                                         @case(1)
-                                            <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/alltickets/ticketid/desc"><i class="bi bi-ticket-detailed"></i> Tickets</a>
+                                            <a class="nav-link icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -0.25rem, 0);" href="/{{Auth::user()->u_department}}/tickets/alltickets/ticketid/desc"><i class="bi bi-ticket-detailed"></i> Tickets</a>
                                         @break
                                         @default
-                                            <a class="nav-link" href="/{{Auth::user()->u_department}}/tickets/mytickets/ticketid/desc"><i class="bi bi-ticket-detailed"></i> Tickets</a>
+                                            <a class="nav-link icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -0.25rem, 0);" href="/{{Auth::user()->u_department}}/tickets/mytickets/ticketid/desc"><i class="bi bi-ticket-detailed"></i> Tickets</a>
                                     @endswitch
                                 </li>
 
                                 @if(Auth::user()->u_role == 1)
                                     <li class="nav-item px-1">
-                                        <a class="nav-link" href="/report"><i class="bi bi-table"></i> Reports</a>
+                                        <a class="nav-link icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -0.25rem, 0);" href="/report"><i class="bi bi-table"></i> Reports</a>
                                     </li>
                                 @endif
 
@@ -60,7 +67,7 @@
                                 
                                 @if(Auth::user()->u_role == 1 && Auth::user()->u_department == 1)
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-gear-fill"></i></a>
+                                        <a class="nav-link dropdown-toggle icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -0.25rem, 0);" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-gear-fill"></i></a>
                                         <ul class="dropdown-menu">                                            
                                             <li class="nav-item px-1">
                                                 <a class="nav-link" href="/categories"><i class="bi bi-tags"></i> Categories</a>
@@ -82,7 +89,7 @@
                                 @endif
 
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{Auth::user()->u_fname}} {{Auth::user()->u_lname}}</a>
+                                    <a class="nav-link dropdown-toggle icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -0.25rem, 0);" href="#" role="button" data-bs-toggle="dropdown">{{Auth::user()->u_fname}} {{Auth::user()->u_lname}}</a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a href="/user/{{Auth::user()->id}}" class="dropdown-item">Account</a>

@@ -7,7 +7,7 @@
 @section('content')
 <div class="container d-flex justify-content-center align-items-center mt-5 pt-5">
     <div class="card w-50">
-        <div class="card-header"><strong>New Ticket</strong></div>
+        <div class="card-header bg-dark text-light"><strong>New Ticket</strong></div>
         <div class="card-body">
             @if (session()->has('success'))
                 <div class="alert alert-success">
@@ -62,7 +62,7 @@
 
                     <div class="col-md-12">
                         <button type="submit" id="submit-btn" class="btn btn-primary btn-sm float-end ms-3" onclick="disablebtn()"><strong class="small"><i class="bi bi-send me-2"></i>Submit</strong></button>
-                        <a href="/tickets" class="btn btn-sm btn-danger float-end"><strong class="small"><i class="bi bi-x-circle me-2"></i>Cancel</strong></a>
+                        <a href="/{{Auth::user()->u_department}}/tickets/alltickets/id/desc" class="btn btn-sm btn-danger float-end"><strong class="small"><i class="bi bi-x-circle me-2"></i>Cancel</strong></a>
                     </div>
                 </div>
             </form>

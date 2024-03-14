@@ -5,9 +5,9 @@
 <!-- --------------------------------------------------------- -->
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 9vh;">
+<div class="container d-flex justify-content-center align-items-center mt-5 pt-5">
     <div class="card">
-        <div class="card-header"><strong>New Ticket</strong></div>
+        <div class="card-header bg-dark text-light"><strong>Edit Ticket #{{$ticket->t_id}}</strong></div>
         <div class="card-body">
             @if (session()->has('success'))
                 <div class="alert alert-success">
@@ -55,7 +55,7 @@
                     </select>
                 </div>
 
-                <a href="/tickets" class="btn btn-sm btn-danger">Cancel</a>
+                <a href="/{{Auth::user()->u_department}}/tickets/alltickets/id/desc" class="btn btn-sm btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-primary btn-sm" onclick="disablebtn()">Save</button>
             </form>
         </div>

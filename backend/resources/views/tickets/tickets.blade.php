@@ -8,14 +8,14 @@
     @if(Auth::user()->u_role == 1)
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 bg-dark mb-0">
+                <div class="col-md-2 bg-secondary mb-0">
                     @include('_parts.t_sidebar')
                 </div>
                 <div class="col-md-10 pt-5">
                     <div class="card mt-5">
-                        <div class="card-header bg-dark">
+                        <div class="card-header bg-dark clearfix">
                                 <div class="float-start" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Ticket">
-                                    <strong class="text-light">
+                                    <strong class="text-light me-3">
                                         @switch($myticket)                                            
                                             @case('search')
                                                 Search Tickets
@@ -50,14 +50,13 @@
                                             @default
                                                 All Tickets
                                                 @break
-                                        @endswitch 
-                                        |
+                                        @endswitch
                                     </strong>
                                     <a href="/newticket" class="btn btn-sm btn-primary"><i class="bi bi-plus-circle"></i></a>
                                 </div>
                                 <div class="float-end">@include('_parts.t_search')</div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body  bg-body-secondary">
                             <div class="row">
                                 <div class="col-md-12">
                                     @if (session()->has('success'))

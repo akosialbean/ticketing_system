@@ -125,6 +125,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerate();
 
-        return redirect()->route('welcome')->with('success', 'Logged out');
+        return redirect()->route('login')->with('success', 'Logged out');
     }
 }
