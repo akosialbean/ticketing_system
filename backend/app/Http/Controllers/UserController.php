@@ -5,26 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Department;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public $userModel;
+    public $departmentModel;
+    public function __construct(User $userModel, Department $departmentModel){
+        $this->userModel = $userModel;
+        $this->departmentModel = $departmentModel;
+    }
     public function users(){
-        $users = User::join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->orderby('users.id', 'desc')->paginate(10);
+        $users = $this->userModel->getUsersList()->paginate(10);
         return view('users.users', compact('users'));
     }
 
     public function user($userid){
-        $user = DB::table('users')
-        ->where('id', $userid)
-        ->join('departments', 'users.u_department', 'departments.d_id')
-        ->first();
-
-        $departments = Department::orderby('d_description', 'asc')->get();
-
+        $user = $this->userModel->viewUser($userid);
+        $departments = $this->departmentModel->getDepartmentList()->get();
         return view('users.user', compact('user', 'departments'));
     }
 
@@ -37,24 +36,14 @@ class UserController extends Controller
         ]);
 
 
-        $checkoldpassword = Auth::attempt([
-            'id' => $user['id'],
-            'password' => $user['old_password'],
-        ]);
-
+        $checkoldpassword = $this->userModel->checkOldPassword($user);
         if($checkoldpassword){
             $newpassword = $user['u_password'];
             $newpassword2 = $user['u_password2'];
-
             if($newpassword === $newpassword2){
                 $hashed = Hash::make($newpassword);
                 if($hashed){
-                    $updatepassword = User::where('id', $user['id'])
-                    ->update([
-                        'password' => $hashed,
-                        'updated_at' => now()
-                    ]);
-
+                    $updatepassword = $this->userModel->updatePassword($user, $hashed);
                     if($updatepassword){
                         return redirect('/user/' . Auth::user()->id)->with('success', 'Password updated!');
                     }else{
@@ -66,24 +55,14 @@ class UserController extends Controller
             }else{
                 return redirect('/user/' . Auth::user()->id)->with('error', 'New Password and Password2 doesn\'t match!');
             }
-
-            // return redirect('/user/' . Auth::user()->id)->with('success', 'Password matched!');
         }else{
             return redirect('/user/' . Auth::user()->id)->with('error', 'Password doesn\'t match!');
         }
     }
 
     public function disable(Request $request){
-        $user = $request->validate([
-            'id' => ['required'],
-        ]);
-
-        $disable = User::where('id', $user['id'])
-        ->update([
-            'u_status' => 2,
-            'updated_at' => now(),
-        ]);
-
+        $user = $request->validate(['id' => ['required']]);
+        $disable = $this->userModel->disableUser($user);
         if($disable){
             return redirect('/user/' . $user['id'])->with('success', 'User disabled!');
         }else{
@@ -92,17 +71,9 @@ class UserController extends Controller
     }
 
     public function reactivate(Request $request){
-        $user = $request->validate([
-            'id' => ['required'],
-        ]);
-
-        $disable = User::where('id', $user['id'])
-        ->update([
-            'u_status' => 1,
-            'updated_at' => now(),
-        ]);
-
-        if($disable){
+        $user = $request->validate(['id' => ['required']]);
+        $reactivate = $this->userModel->reactivateUser($user);
+        if($reactivate){
             return redirect('/user/' . $user['id'])->with('success', 'User re-activated!');
         }else{
             return redirect('/user/' . $user['id'])->with('success', 'Failed to re-activate user!');
@@ -110,20 +81,11 @@ class UserController extends Controller
     }
 
     public function resetpassword(Request $request){
-        $user = $request->validate([
-            'id' => ['required'],
-        ]);
-
+        $user = $request->validate(['id' => ['required']]);
         $hashed = Hash::make('abcd_123');
+        $resetPassword = $this->userModel->resetPassword($user, $hashed);
 
-        $disable = User::where('id', $user['id'])
-        ->update([
-            'password' => $hashed,
-            'u_firstlogin' => 1,
-            'updated_at' => now(),
-        ]);
-
-        if($disable){
+        if($resetPassword){
             return redirect('/user/' . $user['id'])->with('success', 'Password reset successful!');
         }else{
             return redirect('/user/' . $user['id'])->with('success', 'Failed to reset password!');
@@ -139,7 +101,6 @@ class UserController extends Controller
             'u_email' => ['nullable'],
             'u_role' => ['required'],
             'u_department' => ['required'],
-            // 'u_username',
         ]);
 
         // $fname = strtolower($user['u_fname']);
@@ -151,17 +112,7 @@ class UserController extends Controller
         //     $user['u_username'] = ($user['u_username'] . $checkusername);
         // }
 
-        $updateuserprofile = User::where('id', $user['id'])
-        ->update([
-            'u_fname' => $user['u_fname'],
-            'u_lname' => $user['u_lname'],
-            'u_mname' => $user['u_mname'],
-            // 'u_username' => $user['u_username'],
-            'u_email' => $user['u_email'],
-            'u_role' => $user['u_role'],
-            'u_department' => $user['u_department'],
-            'updated_at' => now(),
-        ]);
+        $updateuserprofile = $this->userModel->updateUserProfile($user);
 
         if($updateuserprofile){
             return redirect('/user/' . $user['id'])->with('success', 'User profile update successful!');
@@ -172,27 +123,18 @@ class UserController extends Controller
 
     public function searchuser(Request $request){
         $searchitem = $request->validate(['searchitem' => ['required']]);
-
-        $users = User::where('users.id', 'LIKE', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('users.u_fname', 'LIKE', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('users.u_lname', 'LIKE', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('users.u_mname', 'LIKE', '%' . $searchitem['searchitem'] . '%')
-        ->orwhere('users.u_username', 'LIKE', '%' . $searchitem['searchitem'] . '%')
-        ->join('departments', 'users.u_department', '=', 'departments.d_id')
-        ->orderby('users.id', 'desc')->get();
-
+        $users = $this->userModel->searchUser($searchitem);
         return view('users.searchuser', compact('users'));
     }
 
     public function changeusername(Request $request, $id){
         $user = $request->validate(['u_username' => ['required']]);
+        $checkUsername = $this->userModel->checkUsername($user);
+        if($checkUsername >= 1){
+            return redirect()->intended('/user/' . $user['id'])->with('error', 'Username already exists!');
+        }
 
-        $update = User::where('id', $id)
-        ->update([
-            'u_username' => $user['u_username'],
-            'updated_at' => now()
-        ]);
-
+        $update = $this->userModel->updateUsername($id, $user);
         if($update){
             return redirect('/user/' . $id)->with('success', 'Username change successful!');
         }else{

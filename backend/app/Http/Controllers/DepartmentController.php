@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
+    public $departmentModel;
+    public function __construct(Department $departmentModel){
+        $this->departmentModel = $departmentModel;
+    }
     public function newdepartment(){
         return view('departments.newDepartment');
     }
@@ -30,13 +31,13 @@ class DepartmentController extends Controller
 
         $department['created_at'] = now();
 
-        $checkduplicate = Department::where('d_description', 'LIKE', '%' . $department['d_description'] . '%')->count();
+        $checkduplicate = $this->departmentModel->checkDuplicateDepartment($department);
 
         if($checkduplicate >= 1){
             return redirect('/newdepartment')->with('error', ' Department already exists!');
         }
 
-        $save = Department::insert($department);
+        $save = $this->departmentModel->addDepartment($department);
 
         if($save){
             return redirect('/newdepartment')->with('success',  $department['d_description'] .  ' ' . 'Department added!');
@@ -46,12 +47,12 @@ class DepartmentController extends Controller
     }
 
     public function departments(){
-        $departments = Department::orderby('d_id', 'desc')->paginate(10);
+        $departments = $this->departmentModel->getDepartmentList()->paginate(10);
         return view('departments.departments', compact('departments'));
     }
 
     public function department($d_id){
-        $department = Department::where('d_id', $d_id)->first();
+        $department = $this->departmentModel->viewDepartment($d_id);
         return view('departments.department', compact('department'));
     }
 
@@ -66,20 +67,12 @@ class DepartmentController extends Controller
             'd_status' => ['nullable'],
         ]);
 
-        $update = Department::where('d_id', $department['d_id'])
-            ->update([
-                'd_code' => $department['d_code'],
-                'd_description' => $department['d_description'],
-                'd_email' => $department['d_email'],
-                'updated_at' => now(),
-                'd_updatedby' => Auth::user()->id,
-                'd_status' => $department['d_status'],
-            ]);
+        $update = $this->departmentModel->updateDepartment($department);
         
         if($update){
-            return redirect('/department/' . $department['d_id'])->with('success',  $department['d_description'] .  ' ' . 'Department updated!');
+            return redirect('/departments')->with('success',  $department['d_description'] .  ' ' . 'Department updated!');
         }else{
-            return redirect('/department/' . $department['d_id'])->with('error', 'Failed to update '. $department['d_description'] . ' department!');
+            return redirect('/departments')->with('error', 'Failed to update '. $department['d_description'] . ' department!');
         }
     }
 }

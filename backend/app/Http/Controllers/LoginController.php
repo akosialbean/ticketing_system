@@ -7,10 +7,15 @@ use App\Models\User;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
+    public $userModel;
+    public $departmentModel;
+    public function __construct(User $userModel, Department $departmentModel){
+        $this->userModel = $userModel;
+        $this->departmentModel = $departmentModel;
+    }
     public function login(){
         if(Auth::user()){
             if(Auth::user()->id > 0){
@@ -18,7 +23,7 @@ class LoginController extends Controller
             }
         }
 
-        $checkadmin = User::where('u_username', 'wmcadmin')->count();
+        $checkadmin = $this->userModel->checkAdmin();
         if($checkadmin < 1){
             //creates an admin account
             $admin = [
@@ -32,16 +37,17 @@ class LoginController extends Controller
                 'u_status' => 1,
                 'created_at' => now()
             ];
-            $createadmin = User::insert($admin);
 
-            $checkdepartment = Department::count();
+            $this->userModel->createAdminAccount($admin);
+
+            $checkdepartment = $this->departmentModel->checkITDepartment();
             if($checkdepartment < 1){
                 $department = [
                     'd_code' => 'ICT',
                     'd_description' => 'Information and Communications Technology',
                     'created_at' => now(),
                 ];
-                $createdepartment = Department::insert($department);
+                $this->departmentModel->createITDepartment($department);
             }
             return view('welcome');
         }else{
@@ -74,10 +80,10 @@ class LoginController extends Controller
                 }
             }else{
                 $request->session()->invalidate();
-                return redirect()->intended('/')->with('error', 'User account is disabled!');
+                return redirect()->route('welcome')->with('error', 'User account is disabled!');
             }
         } else {
-            return redirect()->intended('/')->with('error', 'Incorrect username / password!');
+            return redirect()->route('welcome')->with('error', 'Incorrect username / password!');
         }
 
         
@@ -99,16 +105,12 @@ class LoginController extends Controller
 
         if($password1 === $password2){
             $hash = Hash::make($password1);
-            $updatepassword = User::where('id', $user['id'])->update([
-                'password' => $hash,
-                'u_firstlogin' => 2,
-                'updated_at' => now()
-        ]);
+            $updatepassword = $this->userModel->firstLogin($user, $hash);
             if($updatepassword){
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerate();
-                return redirect('/')->with('success', 'Please login');
+                return redirect()->route('welcome')->with('success', 'Please login');
             }
         }else{
             return redirect('/user/firstlogin')->with('error', 'Password1 and Password2 matched');
@@ -117,12 +119,12 @@ class LoginController extends Controller
 
     public function logout(Request $request){
         if(!Auth::user()){
-            return redirect('/')->with('error', 'Please login!');
+            return redirect()->route('welcome')->with('error', 'Please login!');
         }
         
         $request->session()->invalidate();
         $request->session()->regenerate();
 
-        return redirect('/')->with('success', 'Logged out');
+        return redirect()->route('welcome')->with('success', 'Logged out');
     }
 }

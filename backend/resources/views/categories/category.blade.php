@@ -23,25 +23,25 @@
 
                 <div class="row">
                     <div class="col-6 px-5 mx-5 justify-content-center">
-                        <form action="/category/{{$category->c_id}}/edit" method="POST">
+                        <form action="/category/{{$data->c_id}}/edit" method="POST">
                             @csrf
                             @method('PATCH')
-                            <input type="hidden" name="c_id" value="{{$category->c_id}}">
+                            <input type="hidden" name="c_id" value="{{$data->c_id}}">
                             <div class="mb-3">
                                 <label for="c_code" class="form-label">Category Code</label>
-                                <input type="text" class="form-control" id="c_code" name="c_code" value="{{$category->c_code}}" required>
+                                <input type="text" class="form-control" id="c_code" name="c_code" value="{{$data->c_code}}" required>
                             </div>
         
                             <div class="mb-3">
                                 <label for="c_description" class="form-label">Description</label>
-                                <input type="text" class="form-control" id="c_description" name="c_description" value="{{$category->c_description}}" required>
+                                <input type="text" class="form-control" id="c_description" name="c_description" value="{{$data->c_description}}" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="c_status" class="form-label">Status</label>
                                 <select name="c_status" id="c_status" class="form-select">
-                                    <option value="{{$category->c_status}}">
-                                        @if($category->c_status == 1)
+                                    <option value="{{$data->c_status}}">
+                                        @if($data->c_status == 1)
                                             Active
                                         @else
                                             Disabled

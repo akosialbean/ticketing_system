@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
+    public $comment;
+
+    public function __construct(Comment $comment){
+        $this->comment = $comment;
+    }
     public function addcomment(Request $request){
         $data = $request->validate([
             'comment_ticketid' => ['required'],
@@ -25,7 +30,7 @@ class CommentController extends Controller
         $data['created_at'] = now();
         $data['comment_sender'] = Auth::user()->id;
 
-        $save = Comment::insert($data);
+        $save = $this->comment->addComment($data);
 
         if($save){
             //SENDING EMAIL TO TICKET RESOLVER
