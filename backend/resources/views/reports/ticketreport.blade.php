@@ -33,7 +33,7 @@
                                 </div>
         
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-sm btn-primary"><strong class="small"><i class="bi bi-funnel me-2"></i>Generate</strong></button>
+                                    <button type="submit" class="btn btn-sm btn-primary" onclick="disablebtn()"><strong class="small"><i class="bi bi-funnel me-2"></i>Generate</strong></button>
                                 </div>
                             </div>
                         </form>

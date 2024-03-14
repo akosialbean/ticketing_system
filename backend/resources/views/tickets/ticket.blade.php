@@ -73,7 +73,7 @@
                                         @endif
 
                                         @if($ticket->t_status == 1 || $ticket->t_status == 2 || $ticket->t_status == 3 || $ticket->t_status == 4)
-                                            <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason">Cancel Ticket</button>
+                                            <button type="submit" class="btn btn-sm btn-danger my-3" data-bs-toggle="modal" data-bs-target="#cancellationReason" onclick="disablebtn()">Cancel Ticket</button>
                                         @endif
 
                                         @if($ticket->t_severity != NULL)
@@ -83,7 +83,7 @@
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                                        <button type="submit" class="btn btn-sm btn-primary">Acknowledge</button>
+                                                        <button type="submit" class="btn btn-sm btn-primary" onclick="disablebtn()">Acknowledge</button>
                                                     </form>
                                                 @endif
                                             @endif
@@ -96,7 +96,7 @@
                                                     @method('PATCH')
                                                     <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
                                                     <div class="my-3">
-                                                        <button class="btn btn-sm btn-warning">Close Ticket</button>
+                                                        <button class="btn btn-sm btn-warning" onclick="disablebtn()">Close Ticket</button>
                                                     </div>
                                                 </form>
                                             @endif
@@ -124,7 +124,7 @@
                                                         <option value="{{$severity->s_id}}">{{$severity->s_title}} {{$severity->s_description}}</option>
                                                     @endforeach
                                                 </select>
-                                                <button class="btn btn-sm btn-primary my-3">Set</button>
+                                                <button class="btn btn-sm btn-primary my-3" onclick="disablebtn()">Set</button>
                                             </form>
                                         @endif
                                     @endif
@@ -144,7 +144,7 @@
                                                         <option value="{{$resolver->id}}">{{$resolver->u_fname}} {{$resolver->u_lname}}</option>
                                                     @endforeach
                                                 </select>
-                                                <button class="btn btn-sm btn-success my-3">Assign</button>
+                                                <button class="btn btn-sm btn-success my-3" onclick="disablebtn()">Assign</button>
                                             </form>
                                         @endif
                                     @endif
@@ -204,58 +204,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <table class="table table-sm table-hover table-stripped" style="display: none">
-                    <thead>
-                        <tr>
-                            <th colspan="4" class="text-center h3">History</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th><small>Name</small></th>
-                            <th><small>Dates</small></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th><small>Created by</small></th>
-                            <td><small>{{$createdby->u_fname}} {{$createdby->u_lname}}</small></td>
-                            <td><small>{{$createdby->created_at}}</small></td>
-                        </tr>
-                        <tr>
-                            <th><small>Viewed by</small></th>
-                            <td><small>{{$openedby->u_fname}} {{$openedby->u_lname}}</small></td>
-                            <td><small>{{$openedby->t_dateopened}}</small></td>
-                        </tr>
-                        <tr>
-                            <th><small>Assigned to</small></th>
-                            @if($assignedto)
-                                <td><small>{{$assignedto->u_fname}} {{$assignedto->u_lname}}</small></td>
-                                <td><small>{{$assignedto->created_at}}</small></td>
-                            @endif
-                        </tr>
-                        <tr>
-                            <th><small>Acknowledged by</small></th>
-                            <td><small>{{$acknowledgedby->u_fname}} {{$acknowledgedby->u_lname}}</small></td>
-                            <td><small>{{$acknowledgedby->t_acknowledgeddate}}</small></td>
-                        </tr>
-                        <tr>
-                            <th><small>Resolved by</small></th>
-                            <td><small>{{$resolvedby->u_fname}} {{$resolvedby->u_lname}}</small></td>
-                            <td><small>{{$resolvedby->t_resolveddate}}</small></td>
-                        </tr>
-                        <tr>
-                            <th><small>Closed by</small></th>
-                            <td><small>{{$closedby->u_fname}} {{$closedby->u_lname}}</small></td>
-                            <td><small>{{$closedby->t_closeddate}}</small></td>
-                        </tr>
-                        <tr>
-                            <th><small>Cancelled by</small></th>
-                            <td><small>{{$cancelledby->u_fname}} {{$cancelledby->u_lname}}</small></td>
-                            <td><small>{{$cancelledby->t_cancelleddate}}</small></td>
-                        </tr>
-                    </tbody>
-                </table> --}}
 
             </div>
             <div class="card-footer">
@@ -340,7 +288,7 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Cancel Ticket #{{$ticket->t_id}}?</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="disablebtn()"></button>
                     </div>
             
                     <!-- Modal body -->
@@ -351,7 +299,7 @@
                             <input type="hidden" name="t_id" value="{{$ticket->t_id}}" class="form-control">
                             <label for="t_cancelreason" class="form-label h6">Reason: </label>
                             <textarea name="t_cancelreason" id="t_cancelreason" class="form-control" required></textarea>
-                            <button type="submit" class="btn btn-sm btn-danger my-3 float-end">Cancel Ticket</button>
+                            <button type="submit" class="btn btn-sm btn-danger my-3 float-end" onclick="disablebtn()">Cancel Ticket</button>
                         </form>
                     </div>
             

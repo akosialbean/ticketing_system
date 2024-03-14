@@ -63,7 +63,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" onclick="disablebtn()">Save</button>
             </form>
         </div>
     </div>

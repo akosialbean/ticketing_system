@@ -74,7 +74,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="t_id" value="{{$ticket->t_id}}">
-                                <button type="submit" class="btn btn-sm btn-info"><i class="bi bi-three-dots-vertical"></i></button>
+                                <button type="submit" class="btn btn-sm btn-info" onclick="disablebtn()"><i class="bi bi-three-dots-vertical"></i></button>
                             </form>
                         @else
                             <a href="/ticket/{{$ticket->t_id}}" class="btn btn-sm btn-primary"><i class="bi bi-three-dots-vertical"></i>

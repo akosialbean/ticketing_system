@@ -78,7 +78,7 @@
                         </div>
                         <div class="row justify-content-center py-3">
                             <div class="col-2">
-                                <button type="submit" class="btn btn-primary btn-sm ms-auto float-start">Login</button>
+                                <button type="submit" class="btn btn-primary btn-sm ms-auto float-start" onclick="disablebtn()">Login</button>
                             </div>
                         </div>
                     </div>

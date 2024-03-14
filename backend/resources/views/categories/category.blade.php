@@ -55,7 +55,7 @@
                             <hr>
         
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                <button type="submit" class="btn btn-sm btn-primary" onclick="disablebtn()">Update</button>
                             </div>
                         </form>
                     </div>

@@ -23,7 +23,7 @@
                         @if($ticket->t_status <= 5)
                             <input type="hidden" name="comment_ticketid" class="form-control" value="{{$ticket->t_id}}">
                             <textarea name="comment_message" id="" cols="30" rows="1" class="form-control mb-3 w-100"></textarea>
-                            <button type="submit" class="btn btn-sm btn-primary w-100">
+                            <button type="submit" class="btn btn-sm btn-primary w-100" onclick="disablebtn()">
                                 Add Comment
                             </button>
                         @endif

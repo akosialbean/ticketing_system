@@ -90,7 +90,7 @@
                                         <li>
                                             <form action="/logout" method="post">
                                                 @csrf
-                                                <button type="submit" class="btn btn-sm btn-secondary dropdown-item">Logout</button>
+                                                <button type="submit" class="btn btn-sm btn-secondary dropdown-item" onclick="disablebtn()">Logout</button>
                                             </form>
                                         </li>
                                     </ul>
@@ -114,10 +114,11 @@
     <script>
         function disablebtn(){
             const btn = document.querySelector('.btn');
-            btn.addEventListener('click' () => {
-                button.disabled = true;
+            btn.addEventListener('click', () => {
+                btn.setAttribute('disabled', true);
             });
         }
+
     </script>
 
     <script>

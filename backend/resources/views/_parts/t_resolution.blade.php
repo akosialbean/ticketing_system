@@ -10,7 +10,7 @@
                 <label for="t_resolution" class="form-label">Resolution</label>
                 <textarea name="t_resolution" id="t_resolution" class="form-control" required></textarea>
                 <div class="mt-3">
-                    <button type="submit" class="btn btn-sm btn-success">Resolve</button>
+                    <button type="submit" class="btn btn-sm btn-success" onclick="disablebtn()">Resolve</button>
                 </div>
             </form>
         </div>

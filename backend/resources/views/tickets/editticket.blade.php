@@ -56,7 +56,7 @@
                 </div>
 
                 <a href="/tickets" class="btn btn-sm btn-danger">Cancel</a>
-                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                <button type="submit" class="btn btn-primary btn-sm" onclick="disablebtn()">Save</button>
             </form>
         </div>
     </div>
