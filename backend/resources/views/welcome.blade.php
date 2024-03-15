@@ -43,46 +43,48 @@
 @section('content')
     <div class="container my-5 py-5">
         <div class="card">
-            <div class="card-header">Login</div>
-            <div class="card-body px-5">
-                @if (session()->has('success'))
-                    <div class="alert alert-success">
-                        <strong>{{ session()->get('success') }}</strong>
-                    </div>
-                @endif
+            <div class="card-header"><strong class="small">Login</strong></div>
+            <div class="card-body px-5" style="background:url({{asset('imgs/wmc.jpg')}}) fixed no-repeat;background-size: cover;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9" style="height: 100%"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                        <form action="/log" method="POST">
+                            @csrf
+                            <div class="card">
+                                <div class="card-body">
+                                    @if (session()->has('success'))
+                                        <div class="alert alert-success">
+                                            <strong>{{ session()->get('success') }}</strong>
+                                        </div>
+                                    @endif
 
-                @if (session()->has('error'))
-                    <div class="alert alert-danger">
-                        <strong>{{ session()->get('error') }}</strong>
+                                    @if (session()->has('error'))
+                                        <div class="alert alert-danger">
+                                            <strong>{{ session()->get('error') }}</strong>
+                                        </div>
+                                    @endif
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-text"><strong class="small">Username</strong></span>
+                                                <input type="text" name="u_username" id="u_username" class="form-control form-control-sm" placeholder="Username" autofocus required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-text"><strong class="small">Password</strong></span>
+                                                <input type="password" name="password" id="u_password" class="form-control form-control-sm" placeholder="******" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <button type="submit" class="btn btn-primary btn-sm ms-auto float-end" onclick="disablebtn()"><strong class="small">Login</strong></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                @endif
-
-                <form action="/log" method="POST">
-                    @csrf
-                    <div class="container px-5">
-                        <div class="row justify-content-center">
-                            <div class="col-2 px-5 py-3">
-                                <label for="u_username">Username</label>
-                            </div>
-                            <div class="col-5 px-5">
-                                <input type="text" id="u_username" class="form-control" name="u_username" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-2 px-5 py-3">
-                                <label for="u_password">Password</label>
-                            </div>
-                            <div class="col-5 px-5">
-                                <input type="password" id="u_password" name="password" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center py-3">
-                            <div class="col-2">
-                                <button type="submit" class="btn btn-primary btn-sm ms-auto float-start" onclick="disablebtn()">Login</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="card-footer">
                 
