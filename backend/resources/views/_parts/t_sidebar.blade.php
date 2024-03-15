@@ -71,7 +71,7 @@
         @endif
     </ul> --}}
 
-    <ul class="list-group mt-5" style="height:100vh;">
+    <ul class="list-group mt-5">
         <li class="list-group-item list-group-item-action list-group-item-dark mt-5 {{$myticket == 'alltickets' ? 'active' : 'null'}}">
             <a class="nav-link"  href="/{{Auth::user()->u_department}}/tickets/alltickets/ticketid/desc">
                 <strong><i class="bi bi-ticket-detailed-fill"></i> All</strong>

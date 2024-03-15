@@ -8,11 +8,11 @@
     @if(Auth::user()->u_role == 1)
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 bg-secondary mb-0">
+                <div class=" col-sm-12 col-md-4 col-lg-3 col-xl-2 mb-0">
                     @include('_parts.t_sidebar')
                 </div>
-                <div class="col-md-10 pt-5">
-                    <div class="card mt-5">
+                <div class=" col-sm-12 col-md-8 col-lg-9 col-xl-10 pt-5">
+                    <div class="card mt-5 rounded-3">
                         <div class="card-header bg-dark clearfix">
                                 <div class="float-start" data-bs-toggle="tooltip" data-bs-placement="top" title="Create Ticket">
                                     <strong class="text-light me-3">

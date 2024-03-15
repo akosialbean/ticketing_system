@@ -23,6 +23,7 @@ class CancelledTicketChart
 
         return $this->cancelled->pieChart()
             ->addData([$closed, $cancelled])
+            ->setFontColor('inherit')
             ->setLabels(['Closed-Resolved', 'Cancelled']);
     }
 }

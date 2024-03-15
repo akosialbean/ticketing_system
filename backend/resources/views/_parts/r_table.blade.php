@@ -1,5 +1,5 @@
 <div class="row">
-    <table class="table-sm table-striped table-bordered table-hover">
+    <table class="table-sm table-striped table-bordered table-hover table-responsive">
         <thead>
             <tr class="bg-primary">
                 <th class="small text-center"><small class="small">TICKET #</small></th>
@@ -23,7 +23,7 @@
                 <td class="small text-center"><small class="small">{{$report->t_id}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->c_code}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->t_title}}</small></td>
-                <td class="small text-center"><small class="small">{{$report->t_description}}</small></td>
+                <td class="small text-center text-truncate"><small class="small">{{$report->t_description}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->created_by}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->d_code}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->created_at}}</small></td>

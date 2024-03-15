@@ -25,6 +25,6 @@ class TicketChart
 
         return $this->tickets->pieChart()
             ->addData([$newTicket, $viewedTicket, $assignedTicket, $acknowledgedTicket])
-            ->setLabels(['New', 'Viewed', 'Assigned', 'Acknowledged']);
+            ->setLabels(['New', 'Viewed', 'Assigned', 'Acknowledged'])->setFontColor('inherit');
     }
 }

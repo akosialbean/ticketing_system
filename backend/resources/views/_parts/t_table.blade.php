@@ -1,6 +1,6 @@
 <div class="table-responsive-sm">
     <table class="table table-sm table-hover table-striped my-0">
-        <thead class="table-secondary">
+        <thead>
             <tr>
                 <th class="small">
                     @switch($order)
@@ -78,7 +78,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="table-group-divider">
             @if($tickets)
                 @foreach($tickets as $ticket)
                     <tr
@@ -162,7 +162,7 @@
             @endif
         </tbody>
 
-        <tfoot class="table-secondary">
+        <tfoot class="table-group-divider">
             <tr>
                 <th class="small">
                     @switch($order)

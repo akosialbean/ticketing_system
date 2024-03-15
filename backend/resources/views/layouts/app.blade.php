@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlTag" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +13,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
     <link href="{{asset('imgs/wmc_logo.png')}}" rel="icon">
 </head>
-<body class="bg-dark-subtle">
+<body class="bg-body-secondary">
     <header class="fixed-top mb-5 shadow">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <span class="navbar-text small p-0 m-0">Ticketing System</span>
+                <button class="btn btn-sm p-0 m-0" id="darkmodeToggle" onclick="toggleTheme()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hexagon-half" viewBox="0 0 16 16">
+                    <path d="M14 4.577v6.846L8 15V1zM8.5.134a1 1 0 0 0-1 0l-6 3.577a1 1 0 0 0-.5.866v6.846a1 1 0 0 0 .5.866l6 3.577a1 1 0 0 0 1 0l6-3.577a1 1 0 0 0 .5-.866V4.577a1 1 0 0 0-.5-.866z"/>
+                  </svg>
+                </button>
             </div>
         </nav>
-        <nav class="navbar navbar-expand-md bg-light navbar-light">
+        <nav class="navbar navbar-expand-md bg-auto bg-body-tertiary" data-bs-theme="auto">
             <div class="container-fluid">
                 <a class="navbar-brand h1" href="/">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
@@ -134,6 +139,32 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+    </script>
+
+    <script>
+        window.onload = function() {
+            var htmlTag = document.getElementById('htmlTag');
+            var theme = localStorage.getItem('theme');
+            var darkmode = document.getElementById('darkmodeToggle');
+
+            if (theme) {
+                htmlTag.setAttribute('data-bs-theme', theme);
+                darkmode.style.color = "#fff";
+            }
+        }
+
+        function toggleTheme() {
+            var htmlTag = document.getElementById('htmlTag');
+            var currentTheme = htmlTag.getAttribute('data-bs-theme');
+
+            if (currentTheme === 'dark') {
+                htmlTag.setAttribute('data-bs-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlTag.setAttribute('data-bs-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
     </script>
 </body>
 </html>
