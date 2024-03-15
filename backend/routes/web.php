@@ -13,6 +13,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\TestController;
+use App\Http\Middleware\CheckSession;
+use App\Http\Middleware\CheckUserRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,84 +27,66 @@ use App\Http\Controllers\TestController;
 |
 */
 
-Route::get('/', [LoginController::class, 'login'])->name('login');
+Route::get('/', [LoginController::class, 'login'])->middleware(CheckSession::class)->name('login');
 Route::post('/log', [LoginController::class, 'log'])->name('log');
-Route::get('/user/firstlogin', [LoginController::class, 'firstlogin'])->name('firstlogin');
+Route::get('/user/firstlogin', [LoginController::class, 'firstlogin'])->middleware(CheckSession::class)->name('firstlogin');
 Route::patch('/user/firstlogin/changepassword', [LoginController::class, 'changepassword'])->name('changepassword');
 
-Route::get('/test/date', [TestController::class, 'dateTimeDiff'])->name('dateTimeDiff');
-
-
-
 Route::middleware(['auth'])->group(function() {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-
-    Route::get('/register', [RegisterController::class, 'newuser'])->name('newuser');
-    Route::post('/adduser', [RegisterController::class, 'adduser'])->name('adduser');
-    Route::get('/users', [UserController::class, 'users'])->name('users');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(CheckUserRole::class)->name('dashboard');
+    Route::get('/register', [RegisterController::class, 'newuser'])->middleware(CheckUserRole::class)->name('newuser');
+    Route::post('/adduser', [RegisterController::class, 'adduser'])->middleware(CheckUserRole::class)->name('adduser');
+    Route::get('/users', [UserController::class, 'users'])->middleware(CheckUserRole::class)->name('users');
     Route::get('/user/{userid}', [UserController::class, 'user'])->name('user');
     Route::patch('/user/changepassword', [UserController::class, 'changepassword'])->name('changepassword');
-    Route::patch('/user/disable', [UserController::class, 'disable'])->name('disable');
-    Route::patch('/user/reactivate', [UserController::class, 'reactivate'])->name('reactivate');
-    Route::patch('/user/resetpassword', [UserController::class, 'resetpassword'])->name('resetpassword');
+    Route::patch('/user/disable', [UserController::class, 'disable'])->middleware(CheckUserRole::class)->name('disable');
+    Route::patch('/user/reactivate', [UserController::class, 'reactivate'])->middleware(CheckUserRole::class)->name('reactivate');
+    Route::patch('/user/resetpassword', [UserController::class, 'resetpassword'])->middleware(CheckUserRole::class)->name('resetpassword');
     Route::patch('/user/updateuserprofile', [UserController::class, 'updateuserprofile'])->name('updateuserprofile');
-    Route::post('/users/search', [UserController::class, 'searchuser'])->name('searchuser');
-    Route::patch('/user/{id}/changeusername', [UserController::class, 'changeusername'])->name('changeusername');
+    Route::post('/users/search', [UserController::class, 'searchuser'])->middleware(CheckUserRole::class)->name('searchuser');
+    Route::patch('/user/{id}/changeusername', [UserController::class, 'changeusername'])->middleware(CheckUserRole::class)->name('changeusername');
 
-    Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->name('newdepartment');
-    Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->name('adddepartment');
-    Route::get('/departments', [DepartmentController::class, 'departments'])->name('departments');
-    Route::get('/department/{d_id}', [DepartmentController::class, 'department'])->name('department');
-    Route::patch('/department/{d_id}/edit', [DepartmentController::class, 'editdepartment'])->name('editdepartment');
+    Route::get('/newdepartment', [DepartmentController::class, 'newdepartment'])->middleware(CheckUserRole::class)->name('newdepartment');
+    Route::post('/adddepartment', [DepartmentController::class, 'adddepartment'])->middleware(CheckUserRole::class)->name('adddepartment');
+    Route::get('/departments', [DepartmentController::class, 'departments'])->middleware(CheckUserRole::class)->name('departments');
+    Route::get('/department/{d_id}', [DepartmentController::class, 'department'])->middleware(CheckUserRole::class)->name('department');
+    Route::patch('/department/{d_id}/edit', [DepartmentController::class, 'editdepartment'])->middleware(CheckUserRole::class)->name('editdepartment');
 
-    Route::get('/newseverity', [SeverityController::class, 'newseverity'])->name('newseverity');
-    Route::post('/addseverity', [SeverityController::class, 'add'])->name('addseverity');
-    Route::get('/severities', [SeverityController::class, 'severities'])->name('severities');
-    Route::get('/severity/{s_id}', [SeverityController::class, 'severity'])->name('severity');
-    Route::patch('/severity/{s_id}/edit', [SeverityController::class, 'editseverity'])->name('editseverity');
+    Route::get('/newseverity', [SeverityController::class, 'newseverity'])->middleware(CheckUserRole::class)->name('newseverity');
+    Route::post('/addseverity', [SeverityController::class, 'add'])->middleware(CheckUserRole::class)->name('addseverity');
+    Route::get('/severities', [SeverityController::class, 'severities'])->middleware(CheckUserRole::class)->name('severities');
+    Route::get('/severity/{s_id}', [SeverityController::class, 'severity'])->middleware(CheckUserRole::class)->name('severity');
+    Route::patch('/severity/{s_id}/edit', [SeverityController::class, 'editseverity'])->middleware(CheckUserRole::class)->name('editseverity');
 
-    Route::get('/newcategory', [CategoryController::class, 'newcategory'])->name('newcategory');
-    Route::post('/addcategory', [CategoryController::class, 'add'])->name('addcategory');
-    Route::get('/categories', [CategoryController::class, 'categories'])->name('categories');
-    Route::get('/category/{c_id}', [CategoryController::class, 'category'])->name('category');
-    Route::patch('/category/{c_id}/edit', [CategoryController::class, 'editcategory'])->name('editcategory');
-    Route::post('/categories/search', [CategoryController::class, 'searchcategory'])->name('searchcategory');
+    Route::get('/newcategory', [CategoryController::class, 'newcategory'])->middleware(CheckUserRole::class)->name('newcategory');
+    Route::post('/addcategory', [CategoryController::class, 'add'])->middleware(CheckUserRole::class)->name('addcategory');
+    Route::get('/categories', [CategoryController::class, 'categories'])->middleware(CheckUserRole::class)->name('categories');
+    Route::get('/category/{c_id}', [CategoryController::class, 'category'])->middleware(CheckUserRole::class)->name('category');
+    Route::patch('/category/{c_id}/edit', [CategoryController::class, 'editcategory'])->middleware(CheckUserRole::class)->name('editcategory');
+    Route::post('/categories/search', [CategoryController::class, 'searchcategory'])->middleware(CheckUserRole::class)->name('searchcategory');
 
     Route::get('/newticket', [TicketController::class, 'newticket'])->name('newticket');
     Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
-    Route::patch('/openticket', [TicketController::class, 'openticket'])->name('openticket');
+    Route::patch('/openticket', [TicketController::class, 'openticket'])->middleware(CheckUserRole::class)->name('openticket');
     Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
-    Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->name('acknowledge');
-    Route::patch('/resolve', [TicketController::class, 'resolve'])->name('resolve');
+    Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->middleware(CheckUserRole::class)->name('acknowledge');
+    Route::patch('/resolve', [TicketController::class, 'resolve'])->middleware(CheckUserRole::class)->name('resolve');
     Route::patch('/close', [TicketController::class, 'close'])->name('close');
     Route::patch('/cancel', [TicketController::class, 'cancel'])->name('cancel');
-    Route::get('/tickets/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
-    Route::get('/tickets/mytickets', [TicketController::class, 'mytickets'])->name('mytickets');
-    Route::get('/tickets/opentickets', [TicketController::class, 'opentickets'])->name('opentickets');
-    Route::get('/tickets/acknowledgedtickets', [TicketController::class, 'acknowledgedtickets'])->name('acknowledgedtickets');
-    Route::get('/tickets/resolvedtickets', [TicketController::class, 'resolvedtickets'])->name('resolvedtickets');
-    Route::get('/tickets/closedtickets', [TicketController::class, 'closedtickets'])->name('closedtickets');
-    Route::get('/tickets/cancelledtickets', [TicketController::class, 'cancelledtickets'])->name('cancelledtickets');
-    Route::get('/ticket/{ticket}/editticket', [TicketController::class, 'editticket'])->name('editticket');
-    Route::patch('/ticket/{ticket}/editticket/edit', [TicketController::class, 'edit'])->name('edit');
-    Route::patch('/ticket/{ticket}/setseverity', [TicketController::class, 'setseverity'])->name('setseverity');
-    Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignto'])->name('assignto');
-    Route::get('/tickets/assignedtickets', [TicketController::class, 'assignedtickets'])->name('assignedtickets');
     Route::post('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'searchticket'])->name('searchticket');
     Route::post('/tickets/addcomment', [CommentController::class, 'addcomment'])->name('addcomment');
-    // SORTING
-    Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('sort');
+    Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('tickets');
 
     Route::get('/download/{file}', [TicketController::class, 'downloadfile'])->name('downloadfile');
 
-    Route::get('/report', [ReportController::class, 'report'])->name('report');
-    Route::post('/report/generate', [ReportController::class, 'generate'])->name('generate');
-    Route::get('/report/export', [ReportController::class, 'export'])->name('export');
+    Route::get('/report', [ReportController::class, 'report'])->middleware(CheckUserRole::class)->name('report');
+    Route::post('/report/generate', [ReportController::class, 'generate'])->middleware(CheckUserRole::class)->name('generate');
+    Route::get('/report/export', [ReportController::class, 'export'])->middleware(CheckUserRole::class)->name('export');
 
     // Locals
     Route::get('/locals', [LocalController::class, 'locals'])->name('locals');
-    Route::get('/locals/newlocal', [LocalController::class, 'newlocal'])->name('newlocal');
-    Route::post('/locals/addlocal', [LocalController::class, 'addlocal'])->name('addlocal');
+    Route::get('/locals/newlocal', [LocalController::class, 'newlocal'])->middleware(CheckUserRole::class)->name('newlocal');
+    Route::post('/locals/addlocal', [LocalController::class, 'addlocal'])->middleware(CheckUserRole::class)->name('addlocal');
     Route::post('/locals/search', [LocalController::class, 'searchlocal'])->name('searchlocal');
 });
 

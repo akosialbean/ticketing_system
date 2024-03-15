@@ -17,12 +17,6 @@ class LoginController extends Controller
         $this->departmentModel = $departmentModel;
     }
     public function login(){
-        if(Auth::user()){
-            if(Auth::user()->id > 0){
-                return redirect()->intended('/dashboard')->with('success', 'Welcome back ' . Auth::user()->u_fname . '!');
-            }
-        }
-
         $checkadmin = $this->userModel->checkAdmin();
         if($checkadmin < 1){
             //creates an admin account
