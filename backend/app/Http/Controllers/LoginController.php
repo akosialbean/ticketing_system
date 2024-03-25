@@ -74,10 +74,10 @@ class LoginController extends Controller
                 }
             }else{
                 $request->session()->invalidate();
-                return redirect()->route('welcome')->with('error', 'User account is disabled!');
+                return redirect()->route('login')->with('error', 'User account is disabled!');
             }
         } else {
-            return redirect()->route('welcome')->with('error', 'Incorrect username / password!');
+            return redirect()->route('login')->with('error', 'Incorrect username / password!');
         }
 
         
