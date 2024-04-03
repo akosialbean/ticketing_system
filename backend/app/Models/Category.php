@@ -51,4 +51,8 @@ class Category extends Model
     public function getCategoryCodes(){
         return Category::where('c_status', 1)->orderby('c_code', 'asc')->get();
     }
+
+    public function checkDuplicates($data){
+        return Category::where('c_code', 'LIKE', '%' . $data['c_code'] . '%')->count();
+    }
 }

@@ -27,8 +27,7 @@ class SendMail implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
-    {
+    public function handle(): void{
         Mail::to($this->recipient)->send(new YourMailable($this->subject, $this->body));
     }
 }

@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
         $data['created_at'] = now();
 
-        $checkduplicate = Category::where('c_code', 'LIKE', '%' . $data['c_code'] . '%')->count();
+        $checkduplicate = $this->category->checkDuplicates($data);
 
         if($checkduplicate >= 1){
             return redirect('/newcategory')->with('error', ' Category already exists!');

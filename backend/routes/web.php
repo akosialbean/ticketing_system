@@ -69,12 +69,15 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/addticket', [TicketController::class, 'add'])->name('addticket');
     Route::patch('/openticket', [TicketController::class, 'openticket'])->middleware(CheckUserRole::class)->name('openticket');
     Route::get('/ticket/{ticket}', [TicketController::class, 'ticket'])->name('ticket');
+    Route::patch('/ticket/{ticket}/setseverity', [TicketController::class, 'setSeverity'])->middleware(CheckUserRole::class)->name('setSeverity');
+    Route::patch('/ticket/{ticket}/assignto', [TicketController::class, 'assignTo'])->middleware(CheckUserRole::class)->name('assignTo');
     Route::patch('/acknowledge', [TicketController::class, 'acknowledge'])->middleware(CheckUserRole::class)->name('acknowledge');
     Route::patch('/resolve', [TicketController::class, 'resolve'])->middleware(CheckUserRole::class)->name('resolve');
     Route::patch('/close', [TicketController::class, 'close'])->name('close');
     Route::patch('/cancel', [TicketController::class, 'cancel'])->name('cancel');
     Route::post('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'searchticket'])->name('searchticket');
     Route::post('/tickets/addcomment', [CommentController::class, 'addcomment'])->name('addcomment');
+    
     Route::get('{department}/tickets/{mytickets}/{column}/{order}', [TicketController::class, 'sort'])->name('tickets');
 
     Route::get('/download/{file}', [TicketController::class, 'downloadfile'])->name('downloadfile');

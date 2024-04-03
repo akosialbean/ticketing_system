@@ -27,14 +27,15 @@ class DashboardController extends Controller
         }
 
         $userdept = $this->departmentCode->getUserDepartment($department);
-        return view('dashboard.dashboard', [
-            'tickets' => $tickets->build(),
-            'resolved' => $resolved->build(),
-            'createdticket' => $createdticket->build(),
-            'cancelled' => $cancelled->build(),
-            'resolvers' => $resolvers->build(),
-        ],
-        compact('userdept')
+        return view('dashboard.dashboard',
+            [
+                'tickets' => $tickets->build(),
+                'resolved' => $resolved->build(),
+                'createdticket' => $createdticket->build(),
+                'cancelled' => $cancelled->build(),
+                'resolvers' => $resolvers->build(),
+            ],
+            compact('userdept')
         );
     }
 }

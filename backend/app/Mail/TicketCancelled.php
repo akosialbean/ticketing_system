@@ -17,10 +17,12 @@ class TicketCancelled extends Mailable
      * Create a new message instance.
      */
     public $todepartment;
+    public $ticketviewer;
 
-    public function __construct($todepartment)
+    public function __construct($todepartment, $ticketviewer)
     {
         $this->todepartment = $todepartment;
+        $this->ticketviewer = $ticketviewer;
     }
 
     /**
@@ -40,7 +42,10 @@ class TicketCancelled extends Mailable
     {
         return new Content(
             view: 'mail.ticketcancelled',
-            with: ['ticket' => $this->todepartment]
+            with: [
+                'ticket' => $this->todepartment,
+                'ticketviewer' => $this->ticketviewer
+            ]
         );
     }
 
