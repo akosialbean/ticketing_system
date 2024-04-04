@@ -1,5 +1,5 @@
 <div class="table-responsive-sm">
-    <table class="table table-sm table-hover table-striped my-0">
+    <table class="table table-sm table-hover table-striped table-bordered my-0">
         <thead>
             <tr>
                 <th class="small">
