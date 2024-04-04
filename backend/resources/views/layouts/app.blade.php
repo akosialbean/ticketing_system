@@ -6,7 +6,7 @@
     <meta name="author" content="Alvin Castor">
     <meta name="project" content="E-Ticketing System">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="refresh" content="30">
+    <meta http-equiv="refresh" content="300">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
