@@ -23,7 +23,7 @@
                 <td class="small text-center"><small class="small">{{$report->t_id}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->c_code}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->t_title}}</small></td>
-                <td class="small text-center"><small class="small">{{ Str::limit($report->t_description, 20, $end='...') }}</small></td>
+                <td class="small text-center"><small class="small">{{ Str::limit($report->t_description, 27, $end='...') }}</small></td>
                 <td class="small text-center"><small class="small">{{$report->created_by}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->d_code}}</small></td>
                 <td class="small text-center"><small class="small">{{$report->created_at}}</small></td>
