@@ -26,7 +26,7 @@
                             <div class="card">
                                 <div class="card-header"><strong>{{$userdept->d_code}} - Total Tickets</strong></div>
                                 <div class="card-body text-center">
-                                    <strong class="h1">{{$totalTickets}}</strong>
+                                    <strong class="display-3">{{$totalTickets}}</strong>
                                 </div>
                             </div>
                         </div>
@@ -70,6 +70,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12 my-3">
+                            <div class="card">
+                                <div class="card-header"><strong>{{now()->year}} Tickets Created Per Department</strong></div>
+                                <div class="card-body">
+                                    {{ $departments->container() }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,10 +90,25 @@
     <script src="{{ $createdticket->cdn() }}"></script>
     <script src="{{ $cancelled->cdn() }}"></script>
     <script src="{{ $resolvers->cdn() }}"></script>
+    <script src="{{ $departments->cdn() }}"></script>
 
     {{ $tickets->script() }}
     {{ $resolved->script() }}
     {{ $createdticket->script() }}
     {{ $cancelled->script() }}
     {{ $resolvers->script() }}
+    {{ $departments->script() }}
 @endsection
+
+
+//HIGHEST UNIT: HRS
+
+// ADD DATE CREATED TO DATE RESOLVED (MINUTES)
+
+// REPLACED ACKNOWLEDGED TO RESOLVE WITH DATE CREATED TO DATE RESOLVED
+
+// SHOW CLOSE BUTTON FOR USER
+
+// ADD DATE CLOSE AND CLOSED BY
+
+// ADD GRAPH FOR DEPARTMENT THAT HAS THE MOST NUMBER OF CREATED TICKETS

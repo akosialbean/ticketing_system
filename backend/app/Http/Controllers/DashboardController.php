@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\DepartmentTicketChart;
 use App\Charts\TicketChart;
 use App\Charts\ResolvedChart;
 use App\Charts\CreatedTicketChart;
@@ -20,7 +21,7 @@ class DashboardController extends Controller
         $this->departmentCode = $departmentCode;
         $this->totalTickets = $totalTickets;
     }
-    public function dashboard(TicketChart $tickets, ResolvedChart $resolved, CreatedTicketChart $createdticket, CancelledTicketChart $cancelled, ResolversChart $resolvers){
+    public function dashboard(TicketChart $tickets, ResolvedChart $resolved, CreatedTicketChart $createdticket, CancelledTicketChart $cancelled, ResolversChart $resolvers, DepartmentTicketChart $departments){
         $department = Auth::user()->u_department;
         $filter = 'mytickets';
         $sortBy = 'ticketid';
@@ -41,6 +42,7 @@ class DashboardController extends Controller
                 'createdticket' => $createdticket->build(),
                 'cancelled' => $cancelled->build(),
                 'resolvers' => $resolvers->build(),
+                'departments' => $departments->build()
             ],
             compact('userdept', 'totalTickets')
         );
