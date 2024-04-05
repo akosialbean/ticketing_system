@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('t_title');
             $table->string('t_description');
             $table->string('t_category');
-            $table->integer('t_todepartment');
+            $table->integer('t_fromdepartment')->nullable();
+            $table->integer('t_todepartment')->nullable();
             $table->integer('t_createdby')->references('u_id')->on('users')->default(1);
             $table->integer('t_assignedby')->references('u_id')->on('users')->nullable();
             $table->integer('t_assignedto')->references('u_id')->on('users')->nullable();

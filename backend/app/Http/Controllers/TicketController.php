@@ -46,6 +46,7 @@ class TicketController extends Controller
             't_title' => ['required'],
             't_description' => ['required'],
             't_category' => ['required'],
+            't_fromdepartment',
             't_todepartment' => ['required'],
             't_createdby',
             't_status',
@@ -56,6 +57,7 @@ class TicketController extends Controller
             't_files.*' => ['file', 'max:10240'],
         ]);
 
+        $newticket['t_fromdepartment'] = Auth::user()->u_department;
         $newticket['t_createdby'] = Auth::user()->id;
         $newticket['t_status'] = 1;
         $newticket['created_at'] = now();

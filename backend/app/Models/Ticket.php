@@ -19,6 +19,7 @@ class Ticket extends Model
         't_title',
         't_description',
         't_category',
+        't_fromdepartment',
         't_todepartment',
         't_createdby',
         't_assignedby',

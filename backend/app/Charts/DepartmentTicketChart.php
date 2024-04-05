@@ -20,24 +20,23 @@ class DepartmentTicketChart
     {
         $userDept = Auth::user()->u_department;
         $departments = Ticket::select('departments.d_code',
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 01 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as jancreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 02 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as febcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 03 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as marcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 04 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as aprcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 05 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as maycreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 06 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as juncreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 07 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as julcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 08 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as augcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 09 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as sepcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 10 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as octcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 11 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as novcreated"),
-            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 12 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as deccreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 01 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as jancreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 02 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as febcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 03 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as marcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 04 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as aprcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 05 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as maycreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 06 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as juncreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 07 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as julcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 08 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as augcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 09 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as sepcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 10 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as octcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 11 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as novcreated"),
+            DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_fromdepartment=departments.d_id AND MONTH(tickets.created_at) = 12 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as deccreated"),
         )
-        ->join('users', 'tickets.t_createdby', 'users.id')
-        ->join('departments', 'users.u_department', 'departments.d_id')
+        ->join('departments', 'tickets.t_fromdepartment', 'departments.d_id')
         ->where('tickets.t_todepartment', $userDept)
-        ->groupBy('departments.d_id', 'departments.d_code', 'jancreated', 'febcreated', 'marcreated', 'aprcreated', 'maycreated', 'juncreated', 'julcreated', 'augcreated','sepcreated', 'octcreated', 'novcreated', 'deccreated')
-        ->setBindings(['userDept' => $userDept])
+        ->groupBy('tickets.t_fromdepartment', 'departments.d_id', 'departments.d_code', 'jancreated', 'febcreated', 'marcreated', 'aprcreated', 'maycreated', 'juncreated', 'julcreated', 'augcreated','sepcreated', 'octcreated', 'novcreated', 'deccreated')
+        // ->groupBy('departments.d_id', 'departments.d_code', 'jancreated', 'febcreated', 'marcreated', 'aprcreated', 'maycreated')
         ->get();
 
         $chart = $this->chart->lineChart();
