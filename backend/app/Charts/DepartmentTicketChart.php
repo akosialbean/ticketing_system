@@ -34,10 +34,12 @@ class DepartmentTicketChart
             DB::raw("(SELECT COUNT('*') FROM tickets WHERE tickets.t_todepartment=$userDept AND MONTH(tickets.created_at) = 12 AND YEAR(tickets.created_at) = YEAR(CURRENT_DATE())) as deccreated"),
         )
         ->join('users', 'tickets.t_createdby', 'users.id')
-        ->join('departments', 'users.id', 'departments.d_id')
-        ->groupBy('departments.d_code')
+        ->join('departments', 'users.u_department', 'departments.d_id')
+        ->where('tickets.t_todepartment', $userDept)
+        ->groupBy('departments.d_id', 'departments.d_code', 'jancreated', 'febcreated', 'marcreated', 'aprcreated', 'maycreated', 'juncreated', 'julcreated', 'augcreated','sepcreated', 'octcreated', 'novcreated', 'deccreated')
+        ->setBindings(['userDept' => $userDept])
         ->get();
-        
+
         $chart = $this->chart->lineChart();
 
         foreach($departments as $department){
@@ -58,5 +60,6 @@ class DepartmentTicketChart
         }
 
         return $chart->setXAxis(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
+
     }
 }
