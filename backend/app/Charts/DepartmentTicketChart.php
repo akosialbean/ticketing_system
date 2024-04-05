@@ -35,7 +35,7 @@ class DepartmentTicketChart
         )
         ->join('users', 'tickets.t_createdby', 'users.id')
         ->join('departments', 'users.id', 'departments.d_id')
-        ->groupBy('departments.d_code', 'jancreated')
+        ->groupBy('departments.d_code')
         ->get();
         
         $chart = $this->chart->lineChart();
