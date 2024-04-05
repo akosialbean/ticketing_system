@@ -9,13 +9,16 @@ use App\Charts\CancelledTicketChart;
 use App\Charts\ResolversChart;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Department;
+use App\Models\Ticket;
 
 class DashboardController extends Controller
 {
     public $departmentCode;
+    public $totalTickets;
 
-    public function __construct(Department $departmentCode){
+    public function __construct(Department $departmentCode, Ticket $totalTickets){
         $this->departmentCode = $departmentCode;
+        $this->totalTickets = $totalTickets;
     }
     public function dashboard(TicketChart $tickets, ResolvedChart $resolved, CreatedTicketChart $createdticket, CancelledTicketChart $cancelled, ResolversChart $resolvers){
         $department = Auth::user()->u_department;
@@ -27,6 +30,10 @@ class DashboardController extends Controller
         }
 
         $userdept = $this->departmentCode->getUserDepartment($department);
+
+        $totalTickets = $this->totalTickets->getAllTicketCount();
+
+
         return view('dashboard.dashboard',
             [
                 'tickets' => $tickets->build(),
@@ -35,7 +42,7 @@ class DashboardController extends Controller
                 'cancelled' => $cancelled->build(),
                 'resolvers' => $resolvers->build(),
             ],
-            compact('userdept')
+            compact('userdept', 'totalTickets')
         );
     }
 }

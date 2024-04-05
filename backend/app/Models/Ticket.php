@@ -11,6 +11,7 @@ use App\Models\Severity;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Ticket extends Model
 {
@@ -38,7 +39,7 @@ class Ticket extends Model
     }
 
     public function getAllTicketCount(){
-        return Ticket::count();
+        return Ticket::where('t_todepartment', Auth::user()->u_department)->count();
     }
 
     public function getTicketPerDepartmentCount($userdept, $userid){
