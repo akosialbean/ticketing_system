@@ -11,7 +11,8 @@
     <br><br>
     This is to inform you that your ticket was resolved by <strong>{{$ticket->u_fname}} {{$ticket->u_lname}}</strong> from {{$ticket->d_description}}.
     <br><br>
-    <strong>Ticket #: #{{$ticket->t_id}}#</strong><br>
+    Please close your ticket as soon as possible.<br><br>
+    <strong>Ticket: #{{$ticket->t_id}}#</strong><br>
     <i>{{$ticket->t_description}}</i>
     <br><br>
     <strong>Resolution:</strong><br>
