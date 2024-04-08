@@ -41,8 +41,8 @@ class ExportReportController extends Controller implements FromCollection, WithH
             'Closed Date',
             'Resolver',
             'Status',
-            'TAT Acknowledge to Resolve',
-            'TAT Resolve to Close',
+            'TAT Creation to Resolution (MINUTES)'
+            // 'TAT Resolve to Close',
         ];
     }
 
@@ -80,7 +80,7 @@ class ExportReportController extends Controller implements FromCollection, WithH
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                $cellRange = 'A2:M1000'; // All cells
+                $cellRange = 'A2:L1000'; // All cells
                 $event->sheet->getDelegate()->getStyle($cellRange)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
                 // Apply array of styles to range of cells

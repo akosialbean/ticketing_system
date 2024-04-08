@@ -21,18 +21,7 @@ class Report extends Model
                 WHEN tickets.t_status = 6 THEN 'Closed-Resolved'
                 WHEN tickets.t_status = 7 THEN 'Cancelled'
             END AS 'status',
-            CONCAT(
-                TIMESTAMPDIFF(DAY, tickets.t_acknowledgeddate, tickets.t_resolveddate), ' days ',
-                MOD(TIMESTAMPDIFF(HOUR, tickets.t_acknowledgeddate, tickets.t_resolveddate), 24), ' hrs ',
-                MOD(TIMESTAMPDIFF(MINUTE, tickets.t_acknowledgeddate, tickets.t_resolveddate), 60), ' mins ',
-                MOD(TIMESTAMPDIFF(SECOND, tickets.t_acknowledgeddate, tickets.t_resolveddate), 60), ' sec '
-            ) AS 'tat_ack_res',
-            CONCAT(
-                TIMESTAMPDIFF(DAY, tickets.t_resolveddate, tickets.t_closeddate), ' days ',
-                MOD(TIMESTAMPDIFF(HOUR, tickets.t_resolveddate, tickets.t_closeddate), 24), ' hrs ',
-                MOD(TIMESTAMPDIFF(MINUTE, tickets.t_resolveddate, tickets.t_closeddate), 60), ' mins ',
-                MOD(TIMESTAMPDIFF(SECOND, tickets.t_resolveddate, tickets.t_closeddate), 60), ' sec '
-            ) AS 'tat_res_clo'
+            TIMESTAMPDIFF(MINUTE, tickets.created_at, tickets.t_resolveddate) AS 'tat_ack_res'
             FROM tickets
             LEFT JOIN users ON tickets.t_createdby = users.id
             RIGHT JOIN categories on tickets.t_category = categories.c_id
